@@ -1,0 +1,19 @@
+{
+  "name": "item-specs-and-seller-reviews",
+  "version": "1.0.0",
+  "description": "For seller reviews (and item specs if we have time).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HRR47-FEC-Burke/item-specs-and-seller-reviews.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HRR47-FEC-Burke/item-specs-and-seller-reviews/issues"
+  },
+  "homepage": "https://github.com/HRR47-FEC-Burke/item-specs-and-seller-reviews#readme"
+}
