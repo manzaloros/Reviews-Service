@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/HRR47-FEC-Burke/item-specs-and-seller-reviews/issues"
   },
-  "homepage": "https://github.com/HRR47-FEC-Burke/item-specs-and-seller-reviews#readme"
+  "homepage": "https://github.com/HRR47-FEC-Burke/item-specs-and-seller-reviews#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.27",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
 }
