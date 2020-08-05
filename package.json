@@ -1,5 +1,5 @@
 {
-  "name": "item-specs-and-seller-reviews",
+  "name": "seller-reviews",
   "version": "1.0.0",
   "description": "For seller reviews (and item specs if we have time).",
   "main": "index.js",
@@ -8,18 +8,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HRR47-FEC-Burke/item-specs-and-seller-reviews.git"
+    "url": "git+https://github.com/HRR47-FEC-Burke/seller-reviews.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/HRR47-FEC-Burke/item-specs-and-seller-reviews/issues"
+    "url": "https://github.com/HRR47-FEC-Burke/seller-reviews/issues"
   },
-  "homepage": "https://github.com/HRR47-FEC-Burke/item-specs-and-seller-reviews#readme",
+  "homepage": "https://github.com/HRR47-FEC-Burke/seller-reviews#readme",
   "dependencies": {
+    "babel": "^6.23.0",
     "express": "^4.17.1",
+    "jquery": "^3.5.1",
     "mongoose": "^5.9.27",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }
