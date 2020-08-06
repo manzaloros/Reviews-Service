@@ -55,9 +55,17 @@ class ReviewList extends React.Component {
   }
 
   render() {
+    let divStyle = {
+      fontFamily: 'sans-serif',
+      fontStyle: 'oblique'
+    };
+    let toggleStyle = {
+      fontFamily: 'sans-serif',
+      color: 'blue'
+    }
     return (
-      <div className="review-list">
-        <div id="toggle" onClick={this.toggleReadMore}>
+      <div style={divStyle}>
+        <div style={toggleStyle} onClick={this.toggleReadMore}>
           {this.state.reviews.length} reviews ({this.state.rating.toFixed(2)}/5)
         </div>
         <div>
