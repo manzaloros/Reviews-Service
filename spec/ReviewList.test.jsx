@@ -18,19 +18,3 @@ beforeAll(async () => {
 afterAll(() => {
   browser.close();
 });
-
-//basically a 'hello world' for tests
-
-// describe('basic stuff', () => {
-
-//   beforeEach(async () => {
-//     await page.goto(pageUrl, {waitUntil: 'networkidle2'});
-//   });
-
-
-//   test('page title is correct', async () => {
-//     var div = "body";
-//     const title = await page.$eval(div, (e) => e.textContent);
-//     expect(title).to.exist;
-//   });
-// });
