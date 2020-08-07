@@ -80,4 +80,11 @@ var createConnection = MongoClient.connect(url, function(err, db) {
       });
     });
   });
+<<<<<<< HEAD
 });
+=======
+  // db.close();
+});
+
+//console.log(sellers);
+>>>>>>> 639728401050eab57f37bb1021707e81e46ceefc
