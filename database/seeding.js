@@ -78,8 +78,18 @@ var createConnection = MongoClient.connect(url, function(err, db) {
       });
     });
   });
+<<<<<<< HEAD
 });
+=======
+<<<<<<< HEAD
+});
+=======
+>>>>>>> de8a0350e49d2d0d389988f59b4c6724908232b6
   // db.close();
 });
 
 //console.log(sellers);
+<<<<<<< HEAD
+=======
+>>>>>>> 639728401050eab57f37bb1021707e81e46ceefc
+>>>>>>> de8a0350e49d2d0d389988f59b4c6724908232b6
