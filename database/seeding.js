@@ -1,12 +1,16 @@
 const faker = require('faker');
 const [Listing, Seller, Review] = require('./schema.js');
-const db = require('./index.js');
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/";
+const Schema = require('./schema.js');
+
+//const db = require('./index.js');
 
 var conditions = ['Mint', 'Near Mint', 'Damaged'];
 
 var generateSellers = function() {
   var Sellers = [];
-  for (var i = 0; i < 20; i++) {
+  for (var i = 0; i < 50; i++) {
     var reviewCount = Math.floor(Math.random() * 10);
     var seller = new Seller({
       name: faker.name.findName(),
@@ -29,7 +33,7 @@ var generateSellers = function() {
 
 var generateListings = function() {
   var Listings = [];
-  for (var i = 0; i < 50; i++) {
+  for (var i = 0; i < 100; i++) {
     var listing = new Listing({
       name: faker.name.findName(),
       condition: conditions[Math.floor(Math.random() * 3)],
@@ -47,7 +51,7 @@ var generateListings = function() {
 var linkListingsAndSellers = function(listings, sellers) {
   for (var i = 0; i < listings.length; i++) {
     var randomSellerIndex = Math.floor(Math.random() * sellers.length);
-    listings[i].seller = sellers[randomSellerIndex._id];
+    listings[i].seller = sellers[randomSellerIndex]._id;
     sellers[randomSellerIndex].listings.push(listings[i]._id);
   }
 };
@@ -56,5 +60,24 @@ var listings = generateListings();
 var sellers = generateSellers();
 linkListingsAndSellers(listings, sellers);
 
-console.log(listings);
-console.log(sellers);
+var createConnection = MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db('reviewsdb');
+  dbo.createCollection('listings', (err, res) => {
+    if (err) throw err;
+    console.log('listings created');
+    dbo.createCollection('sellers', (err, res) => {
+      if (err) throw err;
+      console.log('sellers created');
+      dbo.collection('listings').insertMany(listings, (err, res) => {
+        if (err) throw err;
+        console.log('Number of listings inserted:', res.insertedCount);
+        dbo.collection('sellers').insertMany(sellers, (err, res) => {
+          if (err) throw err;
+          console.log('Number of sellers inserted:', res.insertedCount);
+          db.close();
+        });
+      });
+    });
+  });
+});
