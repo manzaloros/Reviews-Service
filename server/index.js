@@ -1,8 +1,11 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const app = express();
-
 const db = require('../database');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const port = 2625;
 
@@ -11,6 +14,30 @@ app.use(express.static(path.join(__dirname.slice(0, -6) + 'public')));
 
 app.get('/', (req, res) => {
   res.sendStatus(200);
+});
+
+app.get('/api/sellers', (req, res) => {
+  db.getAllSellers((data) => {
+    res.send(data);
+  });
+});
+
+app.get('/api/listings', (req, res) => {
+  db.getAllListings((data) => {
+    res.send(data);
+  });
+});
+
+app.get('/item/:listingId', (req, res) => {
+  db.getOneListing(req.params.listingId, (data) => {
+    res.send(data);
+  });
+});
+
+app.get('/item/:listingId/reviews', (req, res) => {
+  db.getSellerReviewsForListing(req.params.listingId, (data) => {
+    res.send(data);
+  });
 });
 
 app.listen(port, () => {
