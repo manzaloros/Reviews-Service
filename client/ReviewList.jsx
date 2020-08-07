@@ -70,11 +70,13 @@ class ReviewList extends React.Component {
         </div>
         <div>
           {this.getRenderedReviews().map((review, i) => {
-            return (<div>
-                      {review.rating}/5
-                      <div>{review.date}</div>
-                      <p>{review.description}</p>
-                    </div>);
+            return (
+              <div>
+                {review.rating}/5
+                <div>{review.date}</div>
+                <p>{review.description}</p>
+              </div>
+            );
           })}
         </div>
       </div>
