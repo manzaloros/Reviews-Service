@@ -35,7 +35,7 @@ app.get('/item/:listingId', (req, res) => {
 });
 
 app.get('/item/:listingId/reviews', (req, res) => {
-  db.getSellerForListing(req.params.listingId, (data) => {
+  db.getSellerReviewsForListing(req.params.listingId, (data) => {
     res.send(data);
   });
 });

@@ -2,12 +2,11 @@ const faker = require('faker');
 const [Listing, Seller, Review] = require('./schema.js');
 const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/";
-const Schema = require('./schema.js');
 
 var conditions = ['Mint', 'Near Mint', 'Damaged'];
 
 var generateSellers = function() {
-  var Sellers = [];
+  var sellersArray = [];
   for (var i = 0; i < 50; i++) {
     var reviewCount = Math.floor(Math.random() * 10);
     var seller = new Seller({
@@ -15,22 +14,22 @@ var generateSellers = function() {
       listings: [],
       reviews: []
     });
-    Sellers.push(seller);
+    sellersArray.push(seller);
     for (var j = 0; j < reviewCount; j++) {
-      var review = new Review({
+      var review = {
         rating: Math.floor(Math.random() * 5) + 1,
         author: faker.name.findName(),
         date: faker.date.past(),
         description: faker.lorem.paragraph()
-      });
+      };
       seller.reviews.push(review);
     }
   }
-  return Sellers;
+  return sellersArray;
 }
 
 var generateListings = function() {
-  var Listings = [];
+  var listingsArray = [];
   for (var i = 0; i < 100; i++) {
     var listing = new Listing({
       name: faker.name.findName(),
@@ -41,9 +40,9 @@ var generateListings = function() {
       asDescribed: !!(Math.floor(Math.random() * 2)),
       description: faker.lorem.paragraph()
     });
-    Listings.push(listing);
-  };
-  return Listings;
+    listingsArray.push(listing);
+  }
+  return listingsArray;
 }
 
 var linkListingsAndSellers = function(listings, sellers) {
@@ -58,13 +57,13 @@ var listings = generateListings();
 var sellers = generateSellers();
 linkListingsAndSellers(listings, sellers);
 
-var createConnection = MongoClient.connect(url, function(err, db) {
+MongoClient.connect(url, function(err, db) {
   if (err) throw err;
   var dbo = db.db('reviewsdb');
-  dbo.createCollection('listings', (err, res) => {
+  dbo.createCollection('listings', (err) => {
     if (err) throw err;
     console.log('listings created');
-    dbo.createCollection('sellers', (err, res) => {
+    dbo.createCollection('sellers', (err) => {
       if (err) throw err;
       console.log('sellers created');
       dbo.collection('listings').insertMany(listings, (err, res) => {

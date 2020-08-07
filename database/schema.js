@@ -23,8 +23,10 @@ var sellerSchema = new Schema({
     ref: 'Listing'
   }],
   reviews: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Review'
+    rating: Number,
+    author: String,
+    date: Date,
+    description: String
   }]
 });
 

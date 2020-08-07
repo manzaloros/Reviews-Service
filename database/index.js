@@ -1,9 +1,8 @@
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectId;
-var Schema = require('./schema.js');
 var url = "mongodb://localhost:27017/reviewsdb";
 
-var createConnection = MongoClient.connect(url, function(err, db) {
+MongoClient.connect(url, function(err, db) {
   if (err) throw err;
   console.log("Database created!");
   db.close();
@@ -46,7 +45,7 @@ module.exports.getOneListing = function(input, callback) {
   })
 }
 
-module.exports.getSellerForListing = function(input, callback) {
+module.exports.getSellerReviewsForListing = function(input, callback) {
   MongoClient.connect(url, (err, db) => {
     if (err) throw err;
     var dbo = db.db('reviewsdb');
@@ -54,7 +53,7 @@ module.exports.getSellerForListing = function(input, callback) {
     console.log(query);
     dbo.collection('sellers').findOne(query, (err, result) => {
       if (err) throw err;
-      callback(result);
+      callback(result.reviews);
       db.close();
     });
   });
