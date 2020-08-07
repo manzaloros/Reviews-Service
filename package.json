@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon server/index.js",
-    "build": "webpack --watch"
+    "build": "webpack --watch",
+    "seed": "node database/seeding.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,8 @@
     "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "faker": "^4.1.0",
     "jest": "^26.2.2",
     "puppeteer": "^5.2.1",
     "webpack": "^4.44.1",
