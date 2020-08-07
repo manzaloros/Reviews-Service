@@ -13,6 +13,14 @@ app.get('/', (req, res) => {
   res.sendStatus(200);
 });
 
+app.get('/api/sellers', (req, res) => {
+
+});
+
+app.get('/api/listings', (req, res) => {
+
+});
+
 app.listen(port, () => {
   console.log('Listening in on port', port);
 });

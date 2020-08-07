@@ -4,8 +4,6 @@ const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/";
 const Schema = require('./schema.js');
 
-//const db = require('./index.js');
-
 var conditions = ['Mint', 'Near Mint', 'Damaged'];
 
 var generateSellers = function() {
@@ -81,3 +79,7 @@ var createConnection = MongoClient.connect(url, function(err, db) {
     });
   });
 });
+  // db.close();
+});
+
+//console.log(sellers);
