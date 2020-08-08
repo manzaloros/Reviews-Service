@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon eslint server/index.js",
+    "start": "nodemon server/index.js",
     "build": "webpack --watch",
     "seed": "node database/seeding.js"
   },

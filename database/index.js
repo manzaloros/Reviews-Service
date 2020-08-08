@@ -50,10 +50,12 @@ module.exports.getSellerReviewsForListing = function(input, callback) {
     if (err) throw err;
     var dbo = db.db('reviewsdb');
     var query = { "listings": {$in: [ObjectId(input)]} };
-    console.log(query);
     dbo.collection('sellers').findOne(query, (err, result) => {
       if (err) throw err;
-      callback(result.reviews);
+      var sortedReviews = result.reviews.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+      callback(sortedReviews);
       db.close();
     });
   });

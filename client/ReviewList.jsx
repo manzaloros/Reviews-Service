@@ -1,9 +1,11 @@
 import React from 'react';
+import $ from 'jquery';
 
 class ReviewList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentItem: {},
       reviews: [],
       rating: 0,
       isShowingReviews: false,
@@ -11,26 +13,40 @@ class ReviewList extends React.Component {
     }
     this.toggleReadMore = this.toggleReadMore.bind(this);
     this.getRenderedReviews = this.getRenderedReviews.bind(this);
+    this.assignReviewNames = this.assignReviewNames.bind(this);
   }
 
   componentDidMount() {
-    var tempReviews = [];
-    var tempRating = 0;
-    var reviewCount = Math.floor(Math.random() * 10) + 3;
-    for (var i = 0; i < reviewCount; i++) {
-      tempReviews.push({
-        description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-        rating: Math.floor(Math.random() * 5) + 1,
-        date: Math.floor(Math.random() * 50)
+    $.get('/item', (data) => {
+      var currentItem = data[Math.floor(Math.random() * data.length)];
+      this.setState({
+        currentItem: currentItem
       });
-      tempRating += tempReviews[i].rating;
-    }
-    this.setState({
-      reviews: tempReviews.sort((a, b) => {
-        return (b.date - a.date);
-      }),
-      rating: tempRating / reviewCount
+      $.get(`/item/${currentItem._id}/reviews`, (data) => {
+        var averageRating = 0;
+        for (var i = 0; i < data.length; i++) {
+          averageRating += data[i].rating;
+        }
+        this.setState({
+          rating: averageRating / data.length
+        });
+        this.assignReviewNames(data);
+      });
     });
+  }
+
+  assignReviewNames(input, index = 0) {
+    if (index === input.length) {
+      this.setState({
+        reviews: input
+      });
+    } else {
+      var currentId = input[index].listing_id;
+      $.get(`/item/${currentId}`, (data) => {
+        input[index].listingName = data.name;
+        this.assignReviewNames(input, index + 1);
+      });
+    }
   }
 
   toggleReadMore() {
@@ -65,15 +81,17 @@ class ReviewList extends React.Component {
     }
     return (
       <div style={divStyle}>
+        <div>{this.state.currentItem.name}</div>
         <div style={toggleStyle} onClick={this.toggleReadMore}>
-          {this.state.reviews.length} reviews ({this.state.rating.toFixed(2)}/5)
+          Seller Reviews: {this.state.rating.toFixed(2)}/5 ({this.state.reviews.length})
         </div>
         <div>
           {this.getRenderedReviews().map((review, i) => {
             return (
               <div>
-                {review.rating}/5
-                <div>{review.date}</div>
+                <div>{review.rating}/5</div>
+                <div>{review.listingName}</div>
+                <div>{review.author} - {review.date.slice(0,10)}</div>
                 <p>{review.description}</p>
               </div>
             );

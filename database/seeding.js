@@ -32,7 +32,7 @@ var generateListings = function() {
   var listingsArray = [];
   for (var i = 0; i < 100; i++) {
     var listing = new Listing({
-      name: faker.name.findName(),
+      name: faker.commerce.productAdjective() + ' ' + faker.commerce.productMaterial() + ' Guitar',
       condition: conditions[Math.floor(Math.random() * 3)],
       category: faker.lorem.word(),
       style: faker.hacker.adjective(),
@@ -53,9 +53,21 @@ var linkListingsAndSellers = function(listings, sellers) {
   }
 };
 
+var linkReviewsAndListings = function(listings, sellers) {
+  for (var i = 0; i < sellers.length; i++) {
+    for (var j = 0; j < sellers[i].reviews.length; j++) {
+      if (sellers[i].listings.length > 0) {
+        var randomListingIndex = Math.floor(Math.random() * sellers[i].listings.length);
+        sellers[i].reviews[j].listing_id = sellers[i].listings[randomListingIndex]._id;
+      }
+    }
+  }
+}
+
 var listings = generateListings();
 var sellers = generateSellers();
 linkListingsAndSellers(listings, sellers);
+linkReviewsAndListings(listings, sellers);
 
 MongoClient.connect(url, function(err, db) {
   if (err) throw err;

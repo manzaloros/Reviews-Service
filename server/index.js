@@ -16,13 +16,13 @@ app.get('/', (req, res) => {
   res.sendStatus(200);
 });
 
-app.get('/api/sellers', (req, res) => {
+app.get('/seller', (req, res) => {
   db.getAllSellers((data) => {
     res.send(data);
   });
 });
 
-app.get('/api/listings', (req, res) => {
+app.get('/item', (req, res) => {
   db.getAllListings((data) => {
     res.send(data);
   });
