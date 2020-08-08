@@ -96,7 +96,13 @@ class ReviewList extends React.Component {
     return (
       <div style={divStyle}>
         <div>{currentItem.name}</div>
-        <div style={toggleStyle} role="link" tabIndex="0" onClick={this.toggleReadMore} onKeyDown={this.handleSpacebar}>
+        <div
+          style={toggleStyle}
+          role="link"
+          tabIndex="0"
+          onClick={this.toggleReadMore}
+          onKeyDown={this.handleSpacebar}
+        >
           <span>
             Seller Reviews:
             {rating.toFixed(2)}
