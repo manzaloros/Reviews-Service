@@ -1,9 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var listingSchema = new Schema({
+const listingSchema = new mongoose.Schema({
   seller: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Seller'
   },
   name: String,
@@ -11,21 +10,21 @@ var listingSchema = new Schema({
   category: String,
   style: String,
   brand: String,
-  //For description component
+  //  For description component
   asDescribed: Boolean,
   description: String
 });
 
-var sellerSchema = new Schema({
+const sellerSchema = new mongoose.Schema({
   name: String,
   listings: [{
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Listing'
   }],
   reviews: [{
     rating: Number,
     listing_id: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Listing'
     },
     author: String,
@@ -34,16 +33,8 @@ var sellerSchema = new Schema({
   }]
 });
 
-var reviewSchema = new Schema({
-  rating: Number,
-  author: String,
-  date: Date,
-  description: String
-});
-
-var Listing = mongoose.model('Listing', listingSchema);
-var Seller = mongoose.model('Seller', sellerSchema);
-var Review = mongoose.model('Review', reviewSchema);
+const Listing = mongoose.model('Listing', listingSchema);
+const Seller = mongoose.model('Seller', sellerSchema);
 module.exports = [
-  Listing, Seller, Review
+  Listing, Seller
 ];

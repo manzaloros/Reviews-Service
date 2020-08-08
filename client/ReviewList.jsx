@@ -10,7 +10,7 @@ class ReviewList extends React.Component {
       rating: 0,
       isShowingReviews: false,
       readMoreButtonText: 'Show Reviews'
-    }
+    };
     this.toggleReadMore = this.toggleReadMore.bind(this);
     this.getRenderedReviews = this.getRenderedReviews.bind(this);
     this.assignReviewNames = this.assignReviewNames.bind(this);
@@ -18,21 +18,35 @@ class ReviewList extends React.Component {
 
   componentDidMount() {
     $.get('/item', (data) => {
-      var currentItem = data[Math.floor(Math.random() * data.length)];
+      const currentItem = data[Math.floor(Math.random() * data.length)];
       this.setState({
-        currentItem: currentItem
+        currentItem
       });
       $.get(`/item/${currentItem._id}/reviews`, (data) => {
-        var averageRating = 0;
-        for (var i = 0; i < data.length; i++) {
-          averageRating += data[i].rating;
+        let averageRating = 0;
+        if (data.length !== 0) {
+          for (let i = 0; i < data.length; i += 1) {
+            averageRating += data[i].rating;
+          }
+          this.setState({
+            rating: averageRating / data.length
+          });
+        } else {
+          this.setState({
+            rating: 0
+          });
         }
-        this.setState({
-          rating: averageRating / data.length
-        });
         this.assignReviewNames(data);
       });
     });
+  }
+
+  getRenderedReviews() {
+    const { items } = this.state;
+    if (items.isShowingReviews) {
+      return items.reviews.slice(0, 5);
+    }
+    return [];
   }
 
   assignReviewNames(input, index = 0) {
@@ -41,7 +55,7 @@ class ReviewList extends React.Component {
         reviews: input
       });
     } else {
-      var currentId = input[index].listing_id;
+      const currentId = input[index].listing_id;
       $.get(`/item/${currentId}`, (data) => {
         input[index].listingName = data.name;
         this.assignReviewNames(input, index + 1);
@@ -50,52 +64,59 @@ class ReviewList extends React.Component {
   }
 
   toggleReadMore() {
-    var tempText;
-    if (this.state.readMoreButtonText === 'Show Reviews') {
-      tempText = 'Hide Reviews';
+    const { items } = this.state;
+    if (items.isShowingReviews === true) {
+      this.setState({
+        isShowingReviews: false
+      });
     } else {
-        tempText = 'Show Reviews';
-      }
-    this.setState({
-      isShowingReviews: !this.state.isShowingReviews,
-      readMoreButtonText: tempText
-    });
-  }
-
-  getRenderedReviews() {
-    if (this.state.isShowingReviews) {
-      return this.state.reviews.slice(0, 5);
-    } else {
-      return [];
+      this.setState({
+        isShowingReviews: true
+      });
     }
   }
 
   render() {
-    let divStyle = {
+    const { items } = this.state;
+    const divStyle = {
       fontFamily: 'sans-serif',
       fontStyle: 'oblique'
     };
-    let toggleStyle = {
+    const toggleStyle = {
       fontFamily: 'sans-serif',
       color: 'blue'
-    }
+    };
     return (
       <div style={divStyle}>
-        <div>{this.state.currentItem.name}</div>
-        <div style={toggleStyle} onClick={this.toggleReadMore}>
-          Seller Reviews: {this.state.rating.toFixed(2)}/5 ({this.state.reviews.length})
+        <div>{items.currentItem.name}</div>
+        <div style={toggleStyle} role="link" tabIndex="0" onClick={this.toggleReadMore} onKeyDown={this.toggleReadMore}>
+          <span>
+            Seller Reviews:
+            {items.rating.toFixed(2)}
+            /5 (
+            {items.reviews.length}
+            )
+          </span>
         </div>
         <div>
-          {this.getRenderedReviews().map((review, i) => {
-            return (
+          {this.getRenderedReviews().map((review) => (
+            <div>
               <div>
-                <div>{review.rating}/5</div>
-                <div>{review.listingName}</div>
-                <div>{review.author} - {review.date.slice(0,10)}</div>
-                <p>{review.description}</p>
+                <span>
+                  {review.rating}
+                  /5
+                </span>
               </div>
-            );
-          })}
+              <div>{review.listingName}</div>
+              <div>
+                <span>
+                  {review.author} -
+                  {review.date.slice(0, 10)}
+                </span>
+              </div>
+              <p>{review.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     );

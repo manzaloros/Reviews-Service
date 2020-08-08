@@ -1,22 +1,25 @@
 const faker = require('faker');
-const [Listing, Seller, Review] = require('./schema.js');
-const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/";
+const mongodb = require('mongodb');
+const [Listing, Seller] = require('./schema.js');
 
-var conditions = ['Mint', 'Near Mint', 'Damaged'];
+const url = 'mongodb://localhost:27017/';
+const conditions = ['Mint', 'Near Mint', 'Damaged'];
 
-var generateSellers = function() {
-  var sellersArray = [];
-  for (var i = 0; i < 50; i++) {
-    var reviewCount = Math.floor(Math.random() * 10);
-    var seller = new Seller({
+const generateSellers = () => {
+  const sellersArray = [];
+  let seller;
+  let review;
+  let reviewCount;
+  for (let i = 0; i < 50; i += 1) {
+    reviewCount = Math.floor(Math.random() * 10);
+    seller = new Seller({
       name: faker.name.findName(),
       listings: [],
       reviews: []
     });
     sellersArray.push(seller);
-    for (var j = 0; j < reviewCount; j++) {
-      var review = {
+    for (let j = 0; j < reviewCount; j += 1) {
+      review = {
         rating: Math.floor(Math.random() * 5) + 1,
         author: faker.name.findName(),
         date: faker.date.past(),
@@ -26,13 +29,14 @@ var generateSellers = function() {
     }
   }
   return sellersArray;
-}
+};
 
-var generateListings = function() {
-  var listingsArray = [];
-  for (var i = 0; i < 100; i++) {
-    var listing = new Listing({
-      name: faker.commerce.productAdjective() + ' ' + faker.commerce.productMaterial() + ' Guitar',
+const generateListings = () => {
+  const listingsArray = [];
+  let listing;
+  for (let i = 0; i < 100; i += 1) {
+    listing = new Listing({
+      name: faker.commerce.productAdjective().concat(' ', faker.commerce.productMaterial(), ' Guitar'),
       condition: conditions[Math.floor(Math.random() * 3)],
       category: faker.lorem.word(),
       style: faker.hacker.adjective(),
@@ -43,35 +47,37 @@ var generateListings = function() {
     listingsArray.push(listing);
   }
   return listingsArray;
-}
+};
 
-var linkListingsAndSellers = function(listings, sellers) {
-  for (var i = 0; i < listings.length; i++) {
-    var randomSellerIndex = Math.floor(Math.random() * sellers.length);
-    listings[i].seller = sellers[randomSellerIndex]._id;
+const linkListingsAndSellers = (listings, sellers) => {
+  let randomSellerIndex;
+  for (let i = 0; i < listings.length; i += 1) {
+    randomSellerIndex = Math.floor(Math.random() * sellers.length);
+    listings[i].seller += sellers[randomSellerIndex]._id;
     sellers[randomSellerIndex].listings.push(listings[i]._id);
   }
 };
 
-var linkReviewsAndListings = function(listings, sellers) {
-  for (var i = 0; i < sellers.length; i++) {
-    for (var j = 0; j < sellers[i].reviews.length; j++) {
+const linkReviewsAndListings = (listings, sellers) => {
+  let randomListingIndex;
+  for (let i = 0; i < sellers.length; i += 1) {
+    for (let j = 0; j < sellers[i].reviews.length; j += 1) {
       if (sellers[i].listings.length > 0) {
-        var randomListingIndex = Math.floor(Math.random() * sellers[i].listings.length);
+        randomListingIndex = Math.floor(Math.random() * sellers[i].listings.length);
         sellers[i].reviews[j].listing_id = sellers[i].listings[randomListingIndex]._id;
       }
     }
   }
-}
+};
 
-var listings = generateListings();
-var sellers = generateSellers();
+const listings = generateListings();
+const sellers = generateSellers();
 linkListingsAndSellers(listings, sellers);
 linkReviewsAndListings(listings, sellers);
 
-MongoClient.connect(url, function(err, db) {
+mongodb.MongoClient.connect(url, (err, db) => {
   if (err) throw err;
-  var dbo = db.db('reviewsdb');
+  const dbo = db.db('reviewsdb');
   dbo.createCollection('listings', (err) => {
     if (err) throw err;
     console.log('listings created');
