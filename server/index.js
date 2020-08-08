@@ -22,6 +22,12 @@ app.get('/seller', (req, res) => {
   });
 });
 
+app.get('/seller/:id', (req, res) => {
+  db.getOneSeller(req.params.id, (data) => {
+    res.send(data);
+  });
+});
+
 app.get('/item', (req, res) => {
   db.getAllListings((data) => {
     res.send(data);

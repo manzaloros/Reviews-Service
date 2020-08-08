@@ -11,6 +11,7 @@ class ReviewList extends React.Component {
       isShowingReviews: false
     };
     this.toggleReadMore = this.toggleReadMore.bind(this);
+    this.handleSpacebar = this.handleSpacebar.bind(this);
     this.getRenderedReviews = this.getRenderedReviews.bind(this);
     this.assignReviewNames = this.assignReviewNames.bind(this);
   }
@@ -41,9 +42,9 @@ class ReviewList extends React.Component {
   }
 
   getRenderedReviews() {
-    const { items } = this.state;
-    if (items.isShowingReviews) {
-      return items.reviews.slice(0, 5);
+    const { reviews, isShowingReviews } = this.state;
+    if (isShowingReviews && reviews.length > 0) {
+      return reviews.slice(0, 5);
     }
     return [];
   }
@@ -56,9 +57,16 @@ class ReviewList extends React.Component {
     } else {
       const currentId = input[index].listing_id;
       $.get(`/item/${currentId}`, (data) => {
-        input[index].listingName = data.name;
-        this.assignReviewNames(input, index + 1);
+        const temp = input;
+        temp[index].listingName = data.name;
+        this.assignReviewNames(temp, index + 1);
       });
+    }
+  }
+
+  handleSpacebar(e) {
+    if (e.keyCode === 32) {
+      this.toggleReadMore();
     }
   }
 
@@ -88,7 +96,7 @@ class ReviewList extends React.Component {
     return (
       <div style={divStyle}>
         <div>{currentItem.name}</div>
-        <div style={toggleStyle} role="link" tabIndex="0" onClick={this.toggleReadMore} onKeyDown={this.toggleReadMore}>
+        <div style={toggleStyle} role="link" tabIndex="0" onClick={this.toggleReadMore} onKeyDown={this.handleSpacebar}>
           <span>
             Seller Reviews:
             {rating.toFixed(2)}
@@ -109,7 +117,9 @@ class ReviewList extends React.Component {
               <div>{review.listingName}</div>
               <div>
                 <span>
-                  {review.author} -
+                  {review.author}
+                  {' '}
+                  -
                   {review.date.slice(0, 10)}
                 </span>
               </div>

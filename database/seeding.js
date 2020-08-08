@@ -10,10 +10,16 @@ const generateSellers = () => {
   let seller;
   let review;
   let reviewCount;
+  let name;
   for (let i = 0; i < 50; i += 1) {
     reviewCount = Math.floor(Math.random() * 10);
+    if (i === 0) {
+      name = 'Willie Dustice';
+    } else {
+      name = faker.name.findName();
+    }
     seller = new Seller({
-      name: faker.name.findName(),
+      name,
       listings: [],
       reviews: []
     });
@@ -50,30 +56,34 @@ const generateListings = () => {
 };
 
 const linkListingsAndSellers = (listings, sellers) => {
+  const updatedListings = listings;
   let randomSellerIndex;
   for (let i = 0; i < listings.length; i += 1) {
     randomSellerIndex = Math.floor(Math.random() * sellers.length);
-    listings[i].seller += sellers[randomSellerIndex]._id;
+    updatedListings[i].seller = sellers[randomSellerIndex]._id;
     sellers[randomSellerIndex].listings.push(listings[i]._id);
   }
+  return updatedListings;
 };
 
 const linkReviewsAndListings = (listings, sellers) => {
+  const updatedSellers = sellers;
   let randomListingIndex;
   for (let i = 0; i < sellers.length; i += 1) {
     for (let j = 0; j < sellers[i].reviews.length; j += 1) {
       if (sellers[i].listings.length > 0) {
         randomListingIndex = Math.floor(Math.random() * sellers[i].listings.length);
-        sellers[i].reviews[j].listing_id = sellers[i].listings[randomListingIndex]._id;
+        updatedSellers[i].reviews[j].listing_id = sellers[i].listings[randomListingIndex]._id;
       }
     }
   }
+  return updatedSellers;
 };
 
-const listings = generateListings();
-const sellers = generateSellers();
-linkListingsAndSellers(listings, sellers);
-linkReviewsAndListings(listings, sellers);
+let listings = generateListings();
+let sellers = generateSellers();
+listings = linkListingsAndSellers(listings, sellers);
+sellers = linkReviewsAndListings(listings, sellers);
 
 MongoClient.connect(url, (err, db) => {
   if (err) throw err;
