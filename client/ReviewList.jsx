@@ -1,83 +1,137 @@
 import React from 'react';
+import $ from 'jquery';
 
 class ReviewList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentItem: {},
       reviews: [],
       rating: 0,
-      isShowingReviews: false,
-      readMoreButtonText: 'Show Reviews'
-    }
+      isShowingReviews: false
+    };
     this.toggleReadMore = this.toggleReadMore.bind(this);
+    this.handleSpacebar = this.handleSpacebar.bind(this);
     this.getRenderedReviews = this.getRenderedReviews.bind(this);
+    this.assignReviewNames = this.assignReviewNames.bind(this);
   }
 
   componentDidMount() {
-    var tempReviews = [];
-    var tempRating = 0;
-    var reviewCount = Math.floor(Math.random() * 10) + 3;
-    for (var i = 0; i < reviewCount; i++) {
-      tempReviews.push({
-        description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-        rating: Math.floor(Math.random() * 5) + 1,
-        date: Math.floor(Math.random() * 50)
+    $.get('/item', (data) => {
+      const currentItem = data[Math.floor(Math.random() * data.length)];
+      this.setState({
+        currentItem
       });
-      tempRating += tempReviews[i].rating;
-    }
-    this.setState({
-      reviews: tempReviews.sort((a, b) => {
-        return (b.date - a.date);
-      }),
-      rating: tempRating / reviewCount
-    });
-  }
-
-  toggleReadMore() {
-    var tempText;
-    if (this.state.readMoreButtonText === 'Show Reviews') {
-      tempText = 'Hide Reviews';
-    } else {
-        tempText = 'Show Reviews';
-      }
-    this.setState({
-      isShowingReviews: !this.state.isShowingReviews,
-      readMoreButtonText: tempText
+      $.get(`/item/${currentItem._id}/reviews`, (data) => {
+        let averageRating = 0;
+        if (data.length !== 0) {
+          for (let i = 0; i < data.length; i += 1) {
+            averageRating += data[i].rating;
+          }
+          this.setState({
+            rating: averageRating / data.length
+          });
+        } else {
+          this.setState({
+            rating: 0
+          });
+        }
+        this.assignReviewNames(data);
+      });
     });
   }
 
   getRenderedReviews() {
-    if (this.state.isShowingReviews) {
-      return this.state.reviews.slice(0, 5);
+    const { reviews, isShowingReviews } = this.state;
+    if (isShowingReviews && reviews.length > 0) {
+      return reviews.slice(0, 5);
+    }
+    return [];
+  }
+
+  assignReviewNames(input, index = 0) {
+    if (index === input.length) {
+      this.setState({
+        reviews: input
+      });
     } else {
-      return [];
+      const currentId = input[index].listing_id;
+      $.get(`/item/${currentId}`, (data) => {
+        const temp = input;
+        temp[index].listingName = data.name;
+        this.assignReviewNames(temp, index + 1);
+      });
+    }
+  }
+
+  handleSpacebar(e) {
+    if (e.keyCode === 32) {
+      this.toggleReadMore();
+    }
+  }
+
+  toggleReadMore() {
+    const { isShowingReviews } = this.state;
+    if (isShowingReviews === true) {
+      this.setState({
+        isShowingReviews: false
+      });
+    } else {
+      this.setState({
+        isShowingReviews: true
+      });
     }
   }
 
   render() {
-    let divStyle = {
+    const { currentItem, reviews, rating } = this.state;
+    const divStyle = {
       fontFamily: 'sans-serif',
       fontStyle: 'oblique'
     };
-    let toggleStyle = {
+    const toggleStyle = {
       fontFamily: 'sans-serif',
       color: 'blue'
-    }
+    };
     return (
       <div style={divStyle}>
-        <div style={toggleStyle} onClick={this.toggleReadMore}>
-          {this.state.reviews.length} reviews ({this.state.rating.toFixed(2)}/5)
+        <div>{currentItem.name}</div>
+        <div
+          style={toggleStyle}
+          role="link"
+          tabIndex="0"
+          onClick={this.toggleReadMore}
+          onKeyDown={this.handleSpacebar}
+        >
+          <span>
+            Seller Reviews:
+            {rating.toFixed(2)}
+            /5 (
+            {reviews.length}
+            )
+          </span>
         </div>
         <div>
-          {this.getRenderedReviews().map((review, i) => {
-            return (
+          {this.getRenderedReviews().map((review) => (
+            <div>
               <div>
-                {review.rating}/5
-                <div>{review.date}</div>
-                <p>{review.description}</p>
+                <span>
+                  {review.rating}
+                  /5
+                </span>
               </div>
-            );
-          })}
+              <div>{review.listingName}</div>
+              <div>
+                <span>
+                  {review.author}
+                  {' '}
+                  -
+                  {review.date.slice(0, 10)}
+                </span>
+              </div>
+              <p>{review.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     );
