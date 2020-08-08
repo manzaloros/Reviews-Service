@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const listingSchema = new mongoose.Schema({
+const listingSchema = new Schema({
   seller: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Seller'
   },
   name: String,
@@ -15,16 +15,16 @@ const listingSchema = new mongoose.Schema({
   description: String
 });
 
-const sellerSchema = new mongoose.Schema({
+const sellerSchema = new Schema({
   name: String,
   listings: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Listing'
   }],
   reviews: [{
     rating: Number,
     listing_id: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Listing'
     },
     author: String,
@@ -33,8 +33,8 @@ const sellerSchema = new mongoose.Schema({
   }]
 });
 
-const Listing = mongoose.model('Listing', listingSchema);
-const Seller = mongoose.model('Seller', sellerSchema);
+const Listing = model('Listing', listingSchema);
+const Seller = model('Seller', sellerSchema);
 module.exports = [
   Listing, Seller
 ];

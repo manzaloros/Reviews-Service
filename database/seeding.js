@@ -1,5 +1,5 @@
 const faker = require('faker');
-const mongodb = require('mongodb');
+const { MongoClient } = require('mongodb');
 const [Listing, Seller] = require('./schema.js');
 
 const url = 'mongodb://localhost:27017/';
@@ -75,7 +75,7 @@ const sellers = generateSellers();
 linkListingsAndSellers(listings, sellers);
 linkReviewsAndListings(listings, sellers);
 
-mongodb.MongoClient.connect(url, (err, db) => {
+MongoClient.connect(url, (err, db) => {
   if (err) throw err;
   const dbo = db.db('reviewsdb');
   dbo.createCollection('listings', (err) => {

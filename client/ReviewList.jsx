@@ -8,8 +8,7 @@ class ReviewList extends React.Component {
       currentItem: {},
       reviews: [],
       rating: 0,
-      isShowingReviews: false,
-      readMoreButtonText: 'Show Reviews'
+      isShowingReviews: false
     };
     this.toggleReadMore = this.toggleReadMore.bind(this);
     this.getRenderedReviews = this.getRenderedReviews.bind(this);
@@ -64,8 +63,8 @@ class ReviewList extends React.Component {
   }
 
   toggleReadMore() {
-    const { items } = this.state;
-    if (items.isShowingReviews === true) {
+    const { isShowingReviews } = this.state;
+    if (isShowingReviews === true) {
       this.setState({
         isShowingReviews: false
       });
@@ -77,7 +76,7 @@ class ReviewList extends React.Component {
   }
 
   render() {
-    const { items } = this.state;
+    const { currentItem, reviews, rating } = this.state;
     const divStyle = {
       fontFamily: 'sans-serif',
       fontStyle: 'oblique'
@@ -88,13 +87,13 @@ class ReviewList extends React.Component {
     };
     return (
       <div style={divStyle}>
-        <div>{items.currentItem.name}</div>
+        <div>{currentItem.name}</div>
         <div style={toggleStyle} role="link" tabIndex="0" onClick={this.toggleReadMore} onKeyDown={this.toggleReadMore}>
           <span>
             Seller Reviews:
-            {items.rating.toFixed(2)}
+            {rating.toFixed(2)}
             /5 (
-            {items.reviews.length}
+            {reviews.length}
             )
           </span>
         </div>
