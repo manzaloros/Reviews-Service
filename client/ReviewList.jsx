@@ -17,12 +17,12 @@ class ReviewList extends React.Component {
   }
 
   componentDidMount() {
-    $.get('/item', (data) => {
+    $.get('/api/item', (data) => {
       const currentItem = data[Math.floor(Math.random() * data.length)];
       this.setState({
         currentItem
       });
-      $.get(`/item/${currentItem._id}/reviews`, (data) => {
+      $.get(`/api/item/${currentItem._id}/reviews`, (data) => {
         let averageRating = 0;
         if (data.length !== 0) {
           for (let i = 0; i < data.length; i += 1) {
@@ -50,13 +50,13 @@ class ReviewList extends React.Component {
   }
 
   assignReviewNames(input, index = 0) {
-    if (index === input.length) {
+    if (index === input.length || index === 5) {
       this.setState({
         reviews: input
       });
     } else {
       const currentId = input[index].listing_id;
-      $.get(`/item/${currentId}`, (data) => {
+      $.get(`/api/item/${currentId}`, (data) => {
         const temp = input;
         temp[index].listingName = data.name;
         this.assignReviewNames(temp, index + 1);
