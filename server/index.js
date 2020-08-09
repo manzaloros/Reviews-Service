@@ -16,31 +16,31 @@ app.get('/', (req, res) => {
   res.sendStatus(200);
 });
 
-app.get('/seller', (req, res) => {
+app.get('/api/seller', (req, res) => {
   db.getAllSellers((data) => {
     res.send(data);
   });
 });
 
-app.get('/seller/:id', (req, res) => {
+app.get('/api/seller/:id', (req, res) => {
   db.getOneSeller(req.params.id, (data) => {
     res.send(data);
   });
 });
 
-app.get('/item', (req, res) => {
+app.get('/api/item', (req, res) => {
   db.getAllListings((data) => {
     res.send(data);
   });
 });
 
-app.get('/item/:listingId', (req, res) => {
+app.get('/api/item/:listingId', (req, res) => {
   db.getOneListing(req.params.listingId, (data) => {
     res.send(data);
   });
 });
 
-app.get('/item/:listingId/reviews', (req, res) => {
+app.get('/api/item/:listingId/reviews', (req, res) => {
   db.getSellerReviewsForListing(req.params.listingId, (data) => {
     res.send(data);
   });
