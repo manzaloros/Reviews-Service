@@ -6,21 +6,21 @@ const StyledDiv = styled.div`
   && {
     position: relative;
     border: 1px solid #ddd;
-    border-radius: 0.25em;
     box-shadow: 2px 2px 1px #f9f9f9;
     width: 800px;
     float: left;
     margin-right: 1em;
     margin-bottom: 1em;
     font-family: "Arial", "Verdana", sans-serif;
+    font-size: 14px;
   }
 `;
 
 const StyledToggle = styled.div`
-  text-decoration: underline;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 10px;
+  font-size: 18px;
 `;
 
 const StyledArrow = styled.div`
@@ -33,6 +33,22 @@ const StyledReview = styled.div`
   padding-top: 20px;
   margin-left: 10px;
   margin-right: 10px;
+`;
+
+const ReviewAuthor = styled.div`
+  font-size: 11px;
+  color: silver;
+`;
+
+const NameListing = styled.div`
+  color: blue;
+  font-weight: bold;
+  font-size: 15px;
+`;
+
+const ReviewCount = styled.span`
+  color: silver;
+  font-size: 14px;
 `;
 
 class ReviewList extends React.Component {
@@ -133,9 +149,13 @@ class ReviewList extends React.Component {
             Seller Reviews
             {' '}
             {rating.toFixed(2)}
-            /5 (
-            {reviews.length}
-            )
+            /5
+            {' '}
+            <ReviewCount>
+              (
+              {reviews.length}
+              )
+            </ReviewCount>
             <StyledArrow>^</StyledArrow>
           </span>
         </StyledToggle>
@@ -148,14 +168,16 @@ class ReviewList extends React.Component {
                   /5
                 </span>
               </div>
-              <div>{review.listingName}</div>
+              <NameListing>{review.listingName}</NameListing>
               <div>
                 <span>
-                  {review.author}
-                  {' '}
-                  -
-                  {' '}
-                  {review.date.slice(0, 10)}
+                  <ReviewAuthor>
+                    {review.author}
+                    {' '}
+                    -
+                    {' '}
+                    {review.date.slice(0, 10)}
+                  </ReviewAuthor>
                 </span>
               </div>
               <p>{review.description}</p>
