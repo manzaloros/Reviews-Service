@@ -136,7 +136,6 @@ class ReviewList extends React.Component {
 
   render() {
     const { currentItem, reviews, rating } = this.state;
-    console.log('Current item:', currentItem.name);
     return (
       <StyledDiv>
         <StyledToggle
