@@ -36,7 +36,8 @@ module.exports.getOneSeller = function (input, callback) {
   MongoClient.connect(url, (err, db) => {
     if (err) throw err;
     const dbo = db.db('reviewsdb');
-    dbo.collection('seller').find({}).toArray((err, result) => {
+    const query = { _id: ObjectId(input) };
+    dbo.collection('sellers').findOne(query, (err, result) => {
       if (err) throw err;
       callback(result);
       db.close();
