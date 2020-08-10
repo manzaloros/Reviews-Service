@@ -17,8 +17,9 @@ class ReviewList extends React.Component {
   }
 
   componentDidMount() {
-    $.get('/api/item', (data) => {
-      const currentItem = data[Math.floor(Math.random() * data.length)];
+    const endpoint = window.location.href.split('/')[4];
+    $.get(`/api/item/${endpoint}`, (data) => {
+      const currentItem = data;
       this.setState({
         currentItem
       });
