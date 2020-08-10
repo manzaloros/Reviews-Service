@@ -1,5 +1,55 @@
 import React from 'react';
 import $ from 'jquery';
+import styled from 'styled-components';
+
+const StyledDiv = styled.div`
+  && {
+    position: relative;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 1px #f9f9f9;
+    width: 800px;
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    font-family: "Arial", "Verdana", sans-serif;
+    font-size: 14px;
+  }
+`;
+
+const StyledToggle = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  font-size: 18px;
+`;
+
+const StyledArrow = styled.div`
+  float: right;
+  margin-right: 1em;
+`;
+
+const StyledReview = styled.div`
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+
+const ReviewAuthor = styled.div`
+  font-size: 11px;
+  color: silver;
+`;
+
+const NameListing = styled.div`
+  color: blue;
+  font-weight: bold;
+  font-size: 15px;
+`;
+
+const ReviewCount = styled.span`
+  color: silver;
+  font-size: 14px;
+`;
 
 class ReviewList extends React.Component {
   constructor(props) {
@@ -86,55 +136,54 @@ class ReviewList extends React.Component {
 
   render() {
     const { currentItem, reviews, rating } = this.state;
-    const divStyle = {
-      fontFamily: 'sans-serif',
-      fontStyle: 'oblique'
-    };
-    const toggleStyle = {
-      fontFamily: 'sans-serif',
-      color: 'blue'
-    };
     return (
-      <div style={divStyle}>
-        <div>{currentItem.name}</div>
-        <div
-          style={toggleStyle}
+      <StyledDiv>
+        <StyledToggle
           role="link"
           tabIndex="0"
           onClick={this.toggleReadMore}
           onKeyDown={this.handleSpacebar}
         >
           <span>
-            Seller Reviews:
+            Seller Reviews
+            {' '}
             {rating.toFixed(2)}
-            /5 (
-            {reviews.length}
-            )
+            /5
+            {' '}
+            <ReviewCount>
+              (
+              {reviews.length}
+              )
+            </ReviewCount>
+            <StyledArrow>^</StyledArrow>
           </span>
-        </div>
+        </StyledToggle>
         <div>
           {this.getRenderedReviews().map((review) => (
-            <div>
+            <StyledReview>
               <div>
                 <span>
                   {review.rating}
                   /5
                 </span>
               </div>
-              <div>{review.listingName}</div>
+              <NameListing>{review.listingName}</NameListing>
               <div>
                 <span>
-                  {review.author}
-                  {' '}
-                  -
-                  {review.date.slice(0, 10)}
+                  <ReviewAuthor>
+                    {review.author}
+                    {' '}
+                    -
+                    {' '}
+                    {review.date.slice(0, 10)}
+                  </ReviewAuthor>
                 </span>
               </div>
               <p>{review.description}</p>
-            </div>
+            </StyledReview>
           ))}
         </div>
-      </div>
+      </StyledDiv>
     );
   }
 }
