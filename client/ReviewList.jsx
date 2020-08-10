@@ -1,5 +1,18 @@
 import React from 'react';
 import $ from 'jquery';
+import styled from 'styled-components';
+
+const StyledDiv = styled.div`
+  && {
+    font-family: sans-serif;
+    font-style: oblique;
+  }
+`;
+
+const StyledToggle = styled.div`
+  text-decoration: underline;
+  color: blue;
+`;
 
 class ReviewList extends React.Component {
   constructor(props) {
@@ -86,19 +99,10 @@ class ReviewList extends React.Component {
 
   render() {
     const { currentItem, reviews, rating } = this.state;
-    const divStyle = {
-      fontFamily: 'sans-serif',
-      fontStyle: 'oblique'
-    };
-    const toggleStyle = {
-      fontFamily: 'sans-serif',
-      color: 'blue'
-    };
     return (
-      <div style={divStyle}>
+      <StyledDiv>
         <div>{currentItem.name}</div>
-        <div
-          style={toggleStyle}
+        <StyledToggle
           role="link"
           tabIndex="0"
           onClick={this.toggleReadMore}
@@ -111,7 +115,7 @@ class ReviewList extends React.Component {
             {reviews.length}
             )
           </span>
-        </div>
+        </StyledToggle>
         <div>
           {this.getRenderedReviews().map((review) => (
             <div>
@@ -134,7 +138,7 @@ class ReviewList extends React.Component {
             </div>
           ))}
         </div>
-      </div>
+      </StyledDiv>
     );
   }
 }
