@@ -1,6 +1,5 @@
 import React from 'react';
 import $ from 'jquery';
-import path from 'path';
 
 class ReviewList extends React.Component {
   constructor(props) {
