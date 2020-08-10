@@ -4,14 +4,35 @@ import styled from 'styled-components';
 
 const StyledDiv = styled.div`
   && {
-    font-family: sans-serif;
-    font-style: oblique;
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 0.25em;
+    box-shadow: 2px 2px 1px #f9f9f9;
+    width: 800px;
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    font-family: "Arial", "Verdana", sans-serif;
   }
 `;
 
 const StyledToggle = styled.div`
   text-decoration: underline;
-  color: blue;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+`;
+
+const StyledArrow = styled.div`
+  float: right;
+  margin-right: 1em;
+`;
+
+const StyledReview = styled.div`
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 `;
 
 class ReviewList extends React.Component {
@@ -99,9 +120,9 @@ class ReviewList extends React.Component {
 
   render() {
     const { currentItem, reviews, rating } = this.state;
+    console.log('Current item:', currentItem.name);
     return (
       <StyledDiv>
-        <div>{currentItem.name}</div>
         <StyledToggle
           role="link"
           tabIndex="0"
@@ -109,16 +130,18 @@ class ReviewList extends React.Component {
           onKeyDown={this.handleSpacebar}
         >
           <span>
-            Seller Reviews:
+            Seller Reviews
+            {' '}
             {rating.toFixed(2)}
             /5 (
             {reviews.length}
             )
+            <StyledArrow>^</StyledArrow>
           </span>
         </StyledToggle>
         <div>
           {this.getRenderedReviews().map((review) => (
-            <div>
+            <StyledReview>
               <div>
                 <span>
                   {review.rating}
@@ -131,11 +154,12 @@ class ReviewList extends React.Component {
                   {review.author}
                   {' '}
                   -
+                  {' '}
                   {review.date.slice(0, 10)}
                 </span>
               </div>
               <p>{review.description}</p>
-            </div>
+            </StyledReview>
           ))}
         </div>
       </StyledDiv>
