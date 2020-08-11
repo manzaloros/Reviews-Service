@@ -14,6 +14,8 @@ const StyledDiv = styled.div`
     margin-left: 80px;
     margin-right: 1em;
     margin-bottom: 1em;
+    padding-top: 5px;
+    padding-bottom: 6px;
     font-family: "Arial", "Verdana", sans-serif;
     font-size: 14px;
   }
@@ -26,10 +28,9 @@ const StyledToggle = styled.div`
   font-size: 18px;
 `;
 
-// const StyledArrow = styled.div`
-//   float: right;
-//   margin-right: 1em;
-// `;
+const SellerReviewsText = styled.span`
+  margin-right: 15px;
+`;
 
 const StyledReview = styled.div`
   border-top: 1px solid #ddd;
@@ -151,7 +152,9 @@ class ReviewList extends React.Component {
           onKeyDown={this.handleSpacebar}
         >
           <span>
-            Seller Reviews
+            <SellerReviewsText>
+              Seller Reviews
+            </SellerReviewsText>
             {' '}
             <RatingDisplay rating={rating.toFixed(2)} />
             {' '}

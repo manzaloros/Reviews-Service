@@ -15,7 +15,9 @@ const EmptyStar = styled.span`
 const starRating = (rating) => {
   const output = [0, 0, 0, 0, 0];
   for (let i = 0; i < rating; i += 1) {
-    output[i] = 1;
+    if (i + 1 <= rating || rating > Math.floor(rating) + 0.5) {
+      output[i] = 1;
+    }
   }
   return output;
 };
