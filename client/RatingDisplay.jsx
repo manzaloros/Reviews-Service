@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const FullStar = styled.span`
-  color: gold;
+  font-size: 14px;
+  color: orange;
 `;
 
 const EmptyStar = styled.span`
+  font-size: 14px;
   color: silver;
 `;
 

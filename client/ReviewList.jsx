@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import styled from 'styled-components';
 import RatingDisplay from './RatingDisplay.jsx';
+import StyledArrow from './StyledArrow.jsx';
 
 const StyledDiv = styled.div`
   && {
@@ -25,14 +26,15 @@ const StyledToggle = styled.div`
   font-size: 18px;
 `;
 
-const StyledArrow = styled.div`
-  float: right;
-  margin-right: 1em;
-`;
+// const StyledArrow = styled.div`
+//   float: right;
+//   margin-right: 1em;
+// `;
 
 const StyledReview = styled.div`
   border-top: 1px solid #ddd;
-  padding-top: 20px;
+  padding-top: 10px;
+  margin-top: 20px;
   margin-left: 10px;
   margin-right: 10px;
 `;
@@ -57,7 +59,6 @@ class ReviewList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // currentItem: {},
       reviews: [],
       rating: 0,
       isShowingReviews: false
@@ -143,7 +144,7 @@ class ReviewList extends React.Component {
   }
 
   render() {
-    const { reviews, rating } = this.state;
+    const { reviews, rating, isShowingReviews } = this.state;
     return (
       <StyledDiv>
         <StyledToggle
@@ -162,7 +163,7 @@ class ReviewList extends React.Component {
               {reviews.length}
               )
             </ReviewCount>
-            <StyledArrow>^</StyledArrow>
+            <StyledArrow isShowingReviews={isShowingReviews} />
           </span>
         </StyledToggle>
         <div>
