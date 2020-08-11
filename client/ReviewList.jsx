@@ -1,14 +1,17 @@
 import React from 'react';
 import $ from 'jquery';
 import styled from 'styled-components';
+import RatingDisplay from './RatingDisplay.jsx';
+import StyledArrow from './StyledArrow.jsx';
 
 const StyledDiv = styled.div`
   && {
     position: relative;
     border: 1px solid #ddd;
     box-shadow: 2px 2px 1px #f9f9f9;
-    width: 800px;
+    width: 700px;
     float: left;
+    margin-left: 80px;
     margin-right: 1em;
     margin-bottom: 1em;
     font-family: "Arial", "Verdana", sans-serif;
@@ -23,14 +26,15 @@ const StyledToggle = styled.div`
   font-size: 18px;
 `;
 
-const StyledArrow = styled.div`
-  float: right;
-  margin-right: 1em;
-`;
+// const StyledArrow = styled.div`
+//   float: right;
+//   margin-right: 1em;
+// `;
 
 const StyledReview = styled.div`
   border-top: 1px solid #ddd;
-  padding-top: 20px;
+  padding-top: 10px;
+  margin-top: 20px;
   margin-left: 10px;
   margin-right: 10px;
 `;
@@ -55,13 +59,13 @@ class ReviewList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentItem: {},
       reviews: [],
       rating: 0,
       isShowingReviews: false
     };
     this.toggleReadMore = this.toggleReadMore.bind(this);
     this.handleSpacebar = this.handleSpacebar.bind(this);
+    this.handleStateFetch = this.handleStateFetch.bind(this);
     this.getRenderedReviews = this.getRenderedReviews.bind(this);
     this.assignReviewNames = this.assignReviewNames.bind(this);
   }
@@ -70,9 +74,6 @@ class ReviewList extends React.Component {
     const endpoint = window.location.href.split('/')[4];
     $.get(`/api/item/${endpoint}`, (data) => {
       const currentItem = data;
-      this.setState({
-        currentItem
-      });
       $.get(`/api/item/${currentItem._id}/reviews`, (data) => {
         let averageRating = 0;
         if (data.length !== 0) {
@@ -115,6 +116,11 @@ class ReviewList extends React.Component {
     }
   }
 
+  handleStateFetch(callback) {
+    const { rating } = this.state;
+    callback(rating);
+  }
+
   handleSpacebar(e) {
     if (e.keyCode === 32) {
       this.toggleReadMore();
@@ -135,7 +141,7 @@ class ReviewList extends React.Component {
   }
 
   render() {
-    const { currentItem, reviews, rating } = this.state;
+    const { reviews, rating, isShowingReviews } = this.state;
     return (
       <StyledDiv>
         <StyledToggle
@@ -147,15 +153,14 @@ class ReviewList extends React.Component {
           <span>
             Seller Reviews
             {' '}
-            {rating.toFixed(2)}
-            /5
+            <RatingDisplay rating={rating.toFixed(2)} />
             {' '}
             <ReviewCount>
               (
               {reviews.length}
               )
             </ReviewCount>
-            <StyledArrow>^</StyledArrow>
+            <StyledArrow isShowingReviews={isShowingReviews} />
           </span>
         </StyledToggle>
         <div>
@@ -163,8 +168,7 @@ class ReviewList extends React.Component {
             <StyledReview>
               <div>
                 <span>
-                  {review.rating}
-                  /5
+                  <RatingDisplay rating={review.rating} />
                 </span>
               </div>
               <NameListing>{review.listingName}</NameListing>
