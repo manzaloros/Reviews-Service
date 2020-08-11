@@ -74,9 +74,6 @@ class ReviewList extends React.Component {
     const endpoint = window.location.href.split('/')[4];
     $.get(`/api/item/${endpoint}`, (data) => {
       const currentItem = data;
-      // this.setState({
-      //   currentItem
-      // });
       $.get(`/api/item/${currentItem._id}/reviews`, (data) => {
         let averageRating = 0;
         if (data.length !== 0) {

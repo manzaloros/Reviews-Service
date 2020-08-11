@@ -10,9 +10,7 @@ const UpArrow = styled.img`
   border-radius: 8px;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
-
   border-bottom: 20px solid silver;
-
   &:hover {
     border-bottom: 20px solid orange;
   }
@@ -26,9 +24,7 @@ const DownArrow = styled.img`
   border-radius: 8px;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
-
   border-top: 20px solid silver;
-
   &:hover {
     border-top: 20px solid orange;
   }
