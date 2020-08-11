@@ -18,7 +18,7 @@ describe('ReviewList', () => {
     expect(wrapper.instance().state.isShowingReviews).toEqual(false);
   });
 
-  it('changes isShowingReviews state when toggleReadMore is called', () => {
+  it('sets the isShowingReviews state when toggleReadMore is called', () => {
     const wrapper = shallow(<ReviewList />);
     const instance = wrapper.instance();
     expect(instance.state.isShowingReviews).toEqual(false);
