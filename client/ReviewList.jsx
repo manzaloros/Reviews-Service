@@ -30,6 +30,7 @@ const StyledToggle = styled.div`
 
 const SellerReviewsText = styled.span`
   margin-right: 15px;
+  color: #414141;
 `;
 
 const StyledReview = styled.div`
@@ -38,6 +39,7 @@ const StyledReview = styled.div`
   margin-top: 20px;
   margin-left: 10px;
   margin-right: 10px;
+  color: #414141;
 `;
 
 const ReviewAuthor = styled.div`
@@ -49,6 +51,7 @@ const NameListing = styled.a`
   color: blue;
   font-weight: bold;
   font-size: 15px;
+  text-decoration: none;
   &:hover {
     color: orange;
   }
@@ -177,7 +180,11 @@ class ReviewList extends React.Component {
                   <RatingDisplay rating={review.rating} />
                 </span>
               </div>
-              <NameListing href={`http://localhost:2625/item/${review.listing_id}/`}>{review.listingName}</NameListing>
+              <NameListing
+                href={`http://localhost:2625/item/${review.listing_id}/`}
+              >
+                {review.listingName}
+              </NameListing>
               <div>
                 <span>
                   <ReviewAuthor>
