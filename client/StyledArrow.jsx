@@ -4,29 +4,28 @@ import styled from 'styled-components';
 
 const UpArrow = styled.img`
   float: right;
-  width: 0;
-  height: 0;
-  margin-right: 10px;
-  border-radius: 8px;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-bottom: 20px solid silver;
+  border: solid silver;
+  border-width: 0 2px 2px 0;
+  padding: 6px;
+  margin-right: 20px;
+  margin-top: 7px;
+  transform: rotate(-135deg);
   &:hover {
-    border-bottom: 20px solid orange;
+    border-right: 2px solid orange;
+    border-bottom: 2px solid orange;
   }
 `;
 
 const DownArrow = styled.img`
   float: right;
-  width: 0;
-  height: 0;
-  margin-right: 10px;
-  border-radius: 8px;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-top: 20px solid silver;
+  border: solid silver;
+  border-width: 0 2px 2px 0;
+  padding: 6px;
+  margin-right: 20px;
+  transform: rotate(45deg);
   &:hover {
-    border-top: 20px solid orange;
+    border-right: 2px solid orange;
+    border-bottom: 2px solid orange;
   }
 `;
 
@@ -34,13 +33,13 @@ const StyledArrow = ({ isShowingReviews }) => {
   if (isShowingReviews) {
     return (
       <span>
-        <DownArrow />
+        <UpArrow />
       </span>
     );
   }
   return (
     <span>
-      <UpArrow />
+      <DownArrow />
     </span>
   );
 };

@@ -14,6 +14,8 @@ const StyledDiv = styled.div`
     margin-left: 80px;
     margin-right: 1em;
     margin-bottom: 1em;
+    padding-top: 5px;
+    padding-bottom: 6px;
     font-family: "Arial", "Verdana", sans-serif;
     font-size: 14px;
   }
@@ -26,10 +28,9 @@ const StyledToggle = styled.div`
   font-size: 18px;
 `;
 
-// const StyledArrow = styled.div`
-//   float: right;
-//   margin-right: 1em;
-// `;
+const SellerReviewsText = styled.span`
+  margin-right: 15px;
+`;
 
 const StyledReview = styled.div`
   border-top: 1px solid #ddd;
@@ -44,10 +45,13 @@ const ReviewAuthor = styled.div`
   color: silver;
 `;
 
-const NameListing = styled.div`
+const NameListing = styled.a`
   color: blue;
   font-weight: bold;
   font-size: 15px;
+  &:hover {
+    color: orange;
+  }
 `;
 
 const ReviewCount = styled.span`
@@ -151,7 +155,9 @@ class ReviewList extends React.Component {
           onKeyDown={this.handleSpacebar}
         >
           <span>
-            Seller Reviews
+            <SellerReviewsText>
+              Seller Reviews
+            </SellerReviewsText>
             {' '}
             <RatingDisplay rating={rating.toFixed(2)} />
             {' '}
@@ -171,7 +177,7 @@ class ReviewList extends React.Component {
                   <RatingDisplay rating={review.rating} />
                 </span>
               </div>
-              <NameListing>{review.listingName}</NameListing>
+              <NameListing href={`http://localhost:2625/item/${review.listing_id}/`}>{review.listingName}</NameListing>
               <div>
                 <span>
                   <ReviewAuthor>
