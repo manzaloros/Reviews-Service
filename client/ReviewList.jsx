@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import RatingDisplay from './RatingDisplay.jsx';
 import StyledArrow from './StyledArrow.jsx';
 
-const Styled = {
+export const Styled = {
   Div: styled.div`
     && {
       position: relative;
@@ -74,7 +74,6 @@ class ReviewList extends React.Component {
     };
     this.toggleReadMore = this.toggleReadMore.bind(this);
     this.handleSpacebar = this.handleSpacebar.bind(this);
-    this.handleStateFetch = this.handleStateFetch.bind(this);
     this.getRenderedReviews = this.getRenderedReviews.bind(this);
     this.assignReviewNames = this.assignReviewNames.bind(this);
   }
@@ -125,11 +124,6 @@ class ReviewList extends React.Component {
     }
   }
 
-  handleStateFetch(callback) {
-    const { rating } = this.state;
-    callback(rating);
-  }
-
   handleSpacebar(e) {
     if (e.keyCode === 32) {
       this.toggleReadMore();
@@ -176,7 +170,7 @@ class ReviewList extends React.Component {
         </Styled.Toggle>
         <div>
           {this.getRenderedReviews().map((review) => (
-            <Styled.Review>
+            <Styled.Review key={review.id}>
               <div>
                 <span>
                   <RatingDisplay rating={review.rating} />

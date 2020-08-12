@@ -26,11 +26,11 @@ const RatingDisplay = ({ rating }) => {
   const ratingArray = starRating(rating);
   return (
     <span>
-      {ratingArray.map((index) => {
-        if (index === 1) {
-          return (<FullStar>&#9733;</FullStar>);
+      {ratingArray.map((toggle, i) => {
+        if (toggle === 1) {
+          return (<FullStar key={i}>&#9733;</FullStar>);
         }
-        return (<EmptyStar>&#9733;</EmptyStar>);
+        return (<EmptyStar key={i}>&#9733;</EmptyStar>);
       })}
     </span>
   );
