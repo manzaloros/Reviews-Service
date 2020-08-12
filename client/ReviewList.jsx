@@ -4,63 +4,65 @@ import styled from 'styled-components';
 import RatingDisplay from './RatingDisplay.jsx';
 import StyledArrow from './StyledArrow.jsx';
 
-const StyledDiv = styled.div`
-  && {
-    position: relative;
-    border: 1px solid #ddd;
-    box-shadow: 2px 2px 1px #f9f9f9;
-    width: 700px;
-    float: left;
-    margin-left: 80px;
-    margin-right: 1em;
-    margin-bottom: 1em;
-    padding-top: 5px;
-    padding-bottom: 6px;
-    font-family: "Arial", "Verdana", sans-serif;
+const Styled = {
+  Div: styled.div`
+    && {
+      position: relative;
+      border: 1px solid #ddd;
+      box-shadow: 2px 2px 1px #f9f9f9;
+      width: 700px;
+      float: left;
+      margin-left: 80px;
+      margin-right: 1em;
+      margin-bottom: 1em;
+      padding-top: 5px;
+      padding-bottom: 6px;
+      font-family: "Arial", "Verdana", sans-serif;
+      font-size: 14px;
+    }
+  `,
+
+  Toggle: styled.div`
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    font-size: 18px;
+  `,
+
+  SellerReviewsText: styled.span`
+    margin-right: 15px;
+    color: #414141;
+  `,
+
+  Review: styled.div`
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #414141;
+  `,
+
+  ReviewAuthor: styled.div`
+    font-size: 11px;
+    color: silver;
+  `,
+
+  NameListing: styled.a`
+    color: blue;
+    font-weight: bold;
+    font-size: 15px;
+    text-decoration: none;
+    &:hover {
+      color: orange;
+    }
+  `,
+
+  ReviewCount: styled.span`
+    color: silver;
     font-size: 14px;
-  }
-`;
-
-const StyledToggle = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 10px;
-  font-size: 18px;
-`;
-
-const SellerReviewsText = styled.span`
-  margin-right: 15px;
-  color: #414141;
-`;
-
-const StyledReview = styled.div`
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
-  margin-top: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
-  color: #414141;
-`;
-
-const ReviewAuthor = styled.div`
-  font-size: 11px;
-  color: silver;
-`;
-
-const NameListing = styled.a`
-  color: blue;
-  font-weight: bold;
-  font-size: 15px;
-  text-decoration: none;
-  &:hover {
-    color: orange;
-  }
-`;
-
-const ReviewCount = styled.span`
-  color: silver;
-  font-size: 14px;
-`;
+  `
+};
 
 class ReviewList extends React.Component {
   constructor(props) {
@@ -150,57 +152,57 @@ class ReviewList extends React.Component {
   render() {
     const { reviews, rating, isShowingReviews } = this.state;
     return (
-      <StyledDiv>
-        <StyledToggle
+      <Styled.Div>
+        <Styled.Toggle
           role="link"
           tabIndex="0"
           onClick={this.toggleReadMore}
           onKeyDown={this.handleSpacebar}
         >
           <span>
-            <SellerReviewsText>
+            <Styled.SellerReviewsText>
               Seller Reviews
-            </SellerReviewsText>
+            </Styled.SellerReviewsText>
             {' '}
             <RatingDisplay rating={rating.toFixed(2)} />
             {' '}
-            <ReviewCount>
+            <Styled.ReviewCount>
               (
               {reviews.length}
               )
-            </ReviewCount>
+            </Styled.ReviewCount>
             <StyledArrow isShowingReviews={isShowingReviews} />
           </span>
-        </StyledToggle>
+        </Styled.Toggle>
         <div>
           {this.getRenderedReviews().map((review) => (
-            <StyledReview>
+            <Styled.Review>
               <div>
                 <span>
                   <RatingDisplay rating={review.rating} />
                 </span>
               </div>
-              <NameListing
+              <Styled.NameListing
                 href={`http://localhost:2625/item/${review.listing_id}/`}
               >
                 {review.listingName}
-              </NameListing>
+              </Styled.NameListing>
               <div>
                 <span>
-                  <ReviewAuthor>
+                  <Styled.ReviewAuthor>
                     {review.author}
                     {' '}
                     -
                     {' '}
                     {review.date.slice(0, 10)}
-                  </ReviewAuthor>
+                  </Styled.ReviewAuthor>
                 </span>
               </div>
               <p>{review.description}</p>
-            </StyledReview>
+            </Styled.Review>
           ))}
         </div>
-      </StyledDiv>
+      </Styled.Div>
     );
   }
 }
