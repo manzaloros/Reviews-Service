@@ -173,7 +173,7 @@ class ReviewList extends React.Component {
             <Styled.Review key={review.id}>
               <div>
                 <span>
-                  <RatingDisplay rating={review.rating} />
+                  <RatingDisplay rating={review.rating.toString()} />
                 </span>
               </div>
               <Styled.NameListing

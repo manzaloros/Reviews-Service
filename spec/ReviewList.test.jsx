@@ -35,6 +35,15 @@ describe('ReviewList - State', () => {
     expect(wrapper.find(Styled.Review)).toHaveLength(4);
   });
 
+  it('keeps an average rating of all of the seller\'s reviews', () => {
+    let averageRating = 0;
+    for (let i = 0; i < wrapper.state('reviews').length; i += 1) {
+      averageRating += wrapper.state('reviews')[i].rating;
+    }
+    averageRating /= wrapper.state('reviews').length;
+    expect(wrapper.state('rating')).toBe(averageRating);
+  });
+
   it('only displays reviews when the Style.Toggle component is clicked', () => {
     expect(wrapper.find(Styled.Review)).toHaveLength(0);
     wrapper.find(Styled.Toggle).simulate('click');

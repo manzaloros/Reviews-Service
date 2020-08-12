@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const UpArrow = styled.img`
+export const UpArrow = styled.img`
   float: right;
   border: solid silver;
   border-width: 0 2px 2px 0;
@@ -16,7 +16,7 @@ const UpArrow = styled.img`
   }
 `;
 
-const DownArrow = styled.img`
+export const DownArrow = styled.img`
   float: right;
   border: solid silver;
   border-width: 0 2px 2px 0;
@@ -45,7 +45,11 @@ const StyledArrow = ({ isShowingReviews }) => {
 };
 
 StyledArrow.propTypes = {
-  isShowingReviews: PropTypes.bool.isRequired
+  isShowingReviews: PropTypes.bool
+};
+
+StyledArrow.defaultProps = {
+  isShowingReviews: false
 };
 
 export default StyledArrow;

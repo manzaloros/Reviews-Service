@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const FullStar = styled.span`
+export const FullStar = styled.span`
   font-size: 14px;
   color: orange;
 `;
 
-const EmptyStar = styled.span`
+export const EmptyStar = styled.span`
   font-size: 14px;
   color: silver;
 `;
@@ -27,17 +27,22 @@ const RatingDisplay = ({ rating }) => {
   return (
     <span>
       {ratingArray.map((toggle, i) => {
+        const key = 'star'.concat(i);
         if (toggle === 1) {
-          return (<FullStar key={i}>&#9733;</FullStar>);
+          return (<FullStar key={key}>&#9733;</FullStar>);
         }
-        return (<EmptyStar key={i}>&#9733;</EmptyStar>);
+        return (<EmptyStar key={key}>&#9733;</EmptyStar>);
       })}
     </span>
   );
 };
 
 RatingDisplay.propTypes = {
-  rating: PropTypes.number.isRequired
+  rating: PropTypes.string
+};
+
+RatingDisplay.defaultProps = {
+  rating: '0'
 };
 
 export default RatingDisplay;
