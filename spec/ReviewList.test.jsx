@@ -9,10 +9,6 @@ import dummyData from './dummyData.js';
 configure({ adapter: new Adapter() });
 
 describe('ReviewList - Basics', () => {
-  it('renders correctly', () => {
-    shallow(<ReviewList />);
-  });
-
   it('has a properly formatted state component', () => {
     const wrapper = shallow(<ReviewList />);
     const instance = wrapper.instance();
