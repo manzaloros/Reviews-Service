@@ -180,7 +180,11 @@ class ReviewList extends React.Component {
                   <RatingDisplay rating={review.rating} />
                 </span>
               </div>
-              <NameListing href={`http://localhost:2625/item/${review.listing_id}/`}>{review.listingName}</NameListing>
+              <NameListing
+                href={`http://localhost:2625/item/${review.listing_id}/`}
+              >
+                {review.listingName}
+              </NameListing>
               <div>
                 <span>
                   <ReviewAuthor>
