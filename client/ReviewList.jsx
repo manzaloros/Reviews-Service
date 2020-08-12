@@ -45,10 +45,13 @@ const ReviewAuthor = styled.div`
   color: silver;
 `;
 
-const NameListing = styled.div`
+const NameListing = styled.a`
   color: blue;
   font-weight: bold;
   font-size: 15px;
+  &:hover {
+    color: orange;
+  }
 `;
 
 const ReviewCount = styled.span`
@@ -174,7 +177,7 @@ class ReviewList extends React.Component {
                   <RatingDisplay rating={review.rating} />
                 </span>
               </div>
-              <NameListing>{review.listingName}</NameListing>
+              <NameListing href={`http://localhost:2625/item/${review.listing_id}/`}>{review.listingName}</NameListing>
               <div>
                 <span>
                   <ReviewAuthor>
