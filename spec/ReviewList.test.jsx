@@ -3,7 +3,7 @@
 import { mount, shallow, configure } from 'enzyme';
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
-import ReviewList, { Styled } from '../client/ReviewList.jsx';
+import ReviewList, { Styled, Arrow } from '../client/ReviewList.jsx';
 import dummyData from './dummyData.js';
 
 configure({ adapter: new Adapter() });
@@ -48,6 +48,12 @@ describe('ReviewList - State', () => {
     expect(wrapper.find(Styled.Review)).toHaveLength(0);
     wrapper.find(Styled.Toggle).simulate('click');
     expect(wrapper.find(Styled.Review)).toHaveLength(4);
+  });
+
+  it('does not display reviews when the Style.Toggle component is clicked twice', () => {
+    expect(wrapper.find(Styled.Review)).toHaveLength(0);
+    wrapper.find(Styled.Toggle).simulate('click');
+    expect(wrapper.find(Styled.Review)).toHaveLength(4);
     wrapper.find(Styled.Toggle).simulate('click');
     expect(wrapper.find(Styled.Review)).toHaveLength(0);
   });
@@ -60,5 +66,29 @@ describe('ReviewList - State', () => {
     expect(dummyData.sample2).toHaveLength(8);
     wrapper.find(Styled.Toggle).simulate('click');
     expect(wrapper.find(Styled.Review)).toHaveLength(5);
+  });
+});
+
+describe('ReviewList - Styled Arrow', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = mount(<ReviewList />);
+    wrapper.setState({
+      reviews: dummyData.sample1,
+      rating: dummyData.sample1AverageRating
+    });
+  });
+
+  it('should display DownArrow when isShowingReviews is false', () => {
+    expect(wrapper.state('isShowingReviews')).toEqual(false);
+    expect(wrapper.find(Arrow.DownArrow)).toHaveLength(1);
+    expect(wrapper.find(Arrow.UpArrow)).toHaveLength(0);
+  });
+
+  it('should display UpArrow when isShowingReviews is true', () => {
+    wrapper.find(Styled.Toggle).simulate('click');
+    expect(wrapper.state('isShowingReviews')).toEqual(true);
+    expect(wrapper.find(Arrow.UpArrow)).toHaveLength(1);
+    expect(wrapper.find(Arrow.DownArrow)).toHaveLength(0);
   });
 });

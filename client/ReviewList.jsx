@@ -2,7 +2,27 @@ import React from 'react';
 import $ from 'jquery';
 import styled from 'styled-components';
 import RatingDisplay from './RatingDisplay.jsx';
-import StyledArrow from './StyledArrow.jsx';
+
+export const Arrow = {
+  UpArrow: styled.img`
+    float: right;
+    border: solid silver;
+    border-width: 0 2px 2px 0;
+    padding: 6px;
+    margin-right: 20px;
+    margin-top: 7px;
+    transform: rotate(-135deg);
+  `,
+
+  DownArrow: styled.img`
+    float: right;
+    border: solid silver;
+    border-width: 0 2px 2px 0;
+    padding: 6px;
+    margin-right: 20px;
+    transform: rotate(45deg);
+  `
+};
 
 export const Styled = {
   Div: styled.div`
@@ -31,6 +51,14 @@ export const Styled = {
     margin-bottom: 10px;
     margin-left: 10px;
     font-size: 18px;
+    &:hover ${Arrow.DownArrow} {
+      border-right: 2px solid orange;
+      border-bottom: 2px solid orange;
+    }
+    &:hover ${Arrow.UpArrow} {
+      border-right: 2px solid orange;
+      border-bottom: 2px solid orange;
+    }
   `,
 
   SellerReviewsText: styled.span`
@@ -173,7 +201,8 @@ class ReviewList extends React.Component {
               {reviews.length}
               )
             </Styled.ReviewCount>
-            <StyledArrow isShowingReviews={isShowingReviews} />
+            {(isShowingReviews) ? <Arrow.UpArrow /> : <Arrow.DownArrow />}
+            {/* <StyledArrow isShowingReviews={isShowingReviews} /> */}
           </span>
         </Styled.Toggle>
         <div>
