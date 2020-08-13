@@ -14,8 +14,8 @@ export const Styled = {
       margin-left: 80px;
       margin-right: 1em;
       margin-bottom: 1em;
-      padding-top: 4px;
-      padding-bottom: 4px;
+      padding-top: 3px;
+      padding-bottom: 3px;
       font-family:
         Lato, system-ui, -apple-system,
         BlinkMacSystemFont, Segoe UI, Roboto,
@@ -34,7 +34,7 @@ export const Styled = {
   `,
 
   SellerReviewsText: styled.span`
-    margin-left: 10px;
+    margin-left: 8px;
     margin-right: 15px;
     color: #414141;
   `,
