@@ -26,7 +26,7 @@ export const Styled = {
   `,
 
   Toggle: styled.div`
-    outline: none !important;
+    outline: none;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 10px;
