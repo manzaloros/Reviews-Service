@@ -48,7 +48,8 @@ const generateListings = () => {
       style: faker.hacker.adjective(),
       brand: faker.company.companyName(),
       asDescribed: !!(Math.floor(Math.random() * 2)),
-      description: faker.lorem.paragraph()
+      description: faker.lorem.paragraph(),
+      id_count: i
     });
     listingsArray.push(listing);
   }
@@ -62,18 +63,20 @@ const linkListingsAndSellers = (listings, sellers) => {
     randomSellerIndex = Math.floor(Math.random() * sellers.length);
     updatedListings[i].seller = sellers[randomSellerIndex]._id;
     sellers[randomSellerIndex].listings.push(listings[i]._id);
+    sellers[randomSellerIndex].listing_counts.push(listings[i].id_count);
   }
   return updatedListings;
 };
 
 const linkReviewsAndListings = (listings, sellers) => {
   const updatedSellers = sellers;
-  let randomListingIndex;
+  let randomIndex;
   for (let i = 0; i < sellers.length; i += 1) {
     for (let j = 0; j < sellers[i].reviews.length; j += 1) {
       if (sellers[i].listings.length > 0) {
-        randomListingIndex = Math.floor(Math.random() * sellers[i].listings.length);
-        updatedSellers[i].reviews[j].listing_id = sellers[i].listings[randomListingIndex]._id;
+        randomIndex = Math.floor(Math.random() * sellers[i].listings.length);
+        updatedSellers[i].reviews[j].listing_id = sellers[i].listings[randomIndex];
+        updatedSellers[i].reviews[j].listing_id_count = sellers[i].listing_counts[randomIndex];
       }
     }
   }

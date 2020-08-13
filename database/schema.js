@@ -5,6 +5,7 @@ const listingSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Seller'
   },
+  id_count: String,
   name: String,
   condition: String,
   category: String,
@@ -21,12 +22,16 @@ const sellerSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Listing'
   }],
+  listing_counts: [{
+    type: String
+  }],
   reviews: [{
     rating: Number,
     listing_id: {
       type: Schema.Types.ObjectId,
       ref: 'Listing'
     },
+    listing_id_count: String,
     author: String,
     date: Date,
     description: String

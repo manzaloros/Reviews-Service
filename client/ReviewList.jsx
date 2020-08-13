@@ -106,7 +106,8 @@ class ReviewList extends React.Component {
     this.state = {
       reviews: [],
       rating: 0,
-      isShowingReviews: false
+      isShowingReviews: false,
+      url: ''
     };
     this.toggleReadMore = this.toggleReadMore.bind(this);
     this.handleSpacebar = this.handleSpacebar.bind(this);
@@ -115,8 +116,12 @@ class ReviewList extends React.Component {
   }
 
   componentDidMount() {
-    const endpoint = window.location.href.split('/')[4];
-    $.get(`/api/item/${endpoint}`, (data) => {
+    const url = window.location.href.split('/');
+    const endpoint = url[url.length - 2];
+    this.setState({
+      url: url.slice(0, url.length - 2).join('/')
+    });
+    $.get(`/api/item/endpoint/${endpoint}`, (data) => {
       const currentItem = data;
       $.get(`/api/item/${currentItem._id}/reviews`, (data) => {
         let averageRating = 0;
@@ -180,7 +185,9 @@ class ReviewList extends React.Component {
   }
 
   render() {
-    const { reviews, rating, isShowingReviews } = this.state;
+    const {
+      reviews, rating, isShowingReviews, url
+    } = this.state;
     return (
       <Styled.Div>
         <Styled.Toggle
@@ -202,7 +209,6 @@ class ReviewList extends React.Component {
               )
             </Styled.ReviewCount>
             {(isShowingReviews) ? <Arrow.UpArrow /> : <Arrow.DownArrow />}
-            {/* <StyledArrow isShowingReviews={isShowingReviews} /> */}
           </span>
         </Styled.Toggle>
         <div>
@@ -213,9 +219,7 @@ class ReviewList extends React.Component {
                   <RatingDisplay rating={review.rating.toString()} />
                 </span>
               </div>
-              <Styled.NameListing
-                href={`http://localhost:2625/item/${review.listing_id}/`}
-              >
+              <Styled.NameListing href={`${url}/${review.listing_id_count}`}>
                 {review.listingName}
               </Styled.NameListing>
               <div>
