@@ -116,7 +116,7 @@ class ReviewList extends React.Component {
 
   componentDidMount() {
     const endpoint = window.location.href.split('/')[4];
-    $.get(`/api/item/${endpoint}`, (data) => {
+    $.get(`/api/item/endpoint/${endpoint}`, (data) => {
       const currentItem = data;
       $.get(`/api/item/${currentItem._id}/reviews`, (data) => {
         let averageRating = 0;
@@ -214,7 +214,7 @@ class ReviewList extends React.Component {
                 </span>
               </div>
               <Styled.NameListing
-                href={`http://localhost:2625/item/${review.listing_id}/`}
+                href={`http://localhost:2625/item/${review.listing_id_count}/`}
               >
                 {review.listingName}
               </Styled.NameListing>

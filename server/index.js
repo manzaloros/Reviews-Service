@@ -30,6 +30,12 @@ app.get('/api/item', (req, res) => {
   });
 });
 
+app.get('/api/item/endpoint/:listingId', (req, res) => {
+  db.getOneListingByEndpoint(req.params.listingId, (data) => {
+    res.send(data);
+  });
+});
+
 app.get('/api/item/:listingId', (req, res) => {
   db.getOneListing(req.params.listingId, (data) => {
     res.send(data);
