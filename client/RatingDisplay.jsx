@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 export const FullStar = styled.span`
-  font-size: 14px;
+  font-size: 16px;
   color: orange;
+  margin-right: 1px;
 `;
 
 export const EmptyStar = styled.span`
-  font-size: 14px;
+  font-size: 16px;
   color: silver;
+  margin-right: 1px;
 `;
 
 const starRating = (rating) => {

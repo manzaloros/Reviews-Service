@@ -9,20 +9,24 @@ export const Styled = {
     && {
       position: relative;
       border: 1px solid #ddd;
-      box-shadow: 2px 2px 1px #f9f9f9;
       width: 700px;
       float: left;
       margin-left: 80px;
       margin-right: 1em;
       margin-bottom: 1em;
-      padding-top: 5px;
-      padding-bottom: 6px;
-      font-family: "Arial", "Verdana", sans-serif;
-      font-size: 14px;
+      padding-top: 3px;
+      padding-bottom: 3px;
+      font-family:
+        Lato, system-ui, -apple-system,
+        BlinkMacSystemFont, Segoe UI, Roboto,
+        Helvetica, Arial, sans-serif;
+      font-size: 1.6em;
+      line-height: 1.4;
     }
   `,
 
   Toggle: styled.div`
+    outline: none;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 10px;
@@ -30,6 +34,7 @@ export const Styled = {
   `,
 
   SellerReviewsText: styled.span`
+    margin-left: 8px;
     margin-right: 15px;
     color: #414141;
   `,
@@ -37,10 +42,13 @@ export const Styled = {
   Review: styled.div`
     border-top: 1px solid #ddd;
     padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
     margin-top: 20px;
     margin-left: 10px;
     margin-right: 10px;
     color: #414141;
+    font-size: 12px;
   `,
 
   ReviewAuthor: styled.div`
@@ -50,7 +58,7 @@ export const Styled = {
 
   NameListing: styled.a`
     color: blue;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 15px;
     text-decoration: none;
     &:hover {
