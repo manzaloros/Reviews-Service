@@ -11,6 +11,10 @@ const port = 2625;
 
 app.use('/dist', express.static(path.join(__dirname, './../dist')));
 app.use('/item/:user', express.static(path.join(__dirname, './../public')));
+app.use('/', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 app.get('/api/seller', (req, res) => {
   db.getAllSellers((data) => {

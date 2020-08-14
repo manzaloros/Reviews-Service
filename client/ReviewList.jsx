@@ -121,9 +121,9 @@ class ReviewList extends React.Component {
     this.setState({
       url: url.slice(0, url.length - 2).join('/')
     });
-    $.get(`/api/item/endpoint/${endpoint}`, (data) => {
+    $.get(`http://localhost:2625/api/item/endpoint/${endpoint}`, (data) => {
       const currentItem = data;
-      $.get(`/api/item/${currentItem._id}/reviews`, (data) => {
+      $.get(`http://localhost:2625/api/item/${currentItem._id}/reviews`, (data) => {
         let averageRating = 0;
         if (data.length !== 0) {
           for (let i = 0; i < data.length; i += 1) {
@@ -157,7 +157,7 @@ class ReviewList extends React.Component {
       });
     } else {
       const currentId = input[index].listing_id;
-      $.get(`/api/item/${currentId}`, (data) => {
+      $.get(`http://localhost:2625/api/item/${currentId}`, (data) => {
         const temp = input;
         temp[index].listingName = data.name;
         this.assignReviewNames(temp, index + 1);
