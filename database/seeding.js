@@ -8,11 +8,8 @@ const conditions = ['Mint', 'Near Mint', 'Damaged'];
 const generateSellers = () => {
   const sellersArray = [];
   let seller;
-  let review;
-  let reviewCount;
   let name;
   for (let i = 0; i < 50; i += 1) {
-    reviewCount = Math.floor(Math.random() * 10);
     if (i === 0) {
       name = 'Willie Dustice';
     } else {
@@ -24,15 +21,6 @@ const generateSellers = () => {
       reviews: []
     });
     sellersArray.push(seller);
-    for (let j = 0; j < reviewCount; j += 1) {
-      review = {
-        rating: Math.floor(Math.random() * 5) + 1,
-        author: faker.name.findName(),
-        date: faker.date.past(),
-        description: faker.lorem.paragraph()
-      };
-      seller.reviews.push(review);
-    }
   }
   return sellersArray;
 };
@@ -70,14 +58,18 @@ const linkListingsAndSellers = (listings, sellers) => {
 
 const linkReviewsAndListings = (listings, sellers) => {
   const updatedSellers = sellers;
-  let randomIndex;
+  let review;
   for (let i = 0; i < sellers.length; i += 1) {
-    for (let j = 0; j < sellers[i].reviews.length; j += 1) {
-      if (sellers[i].listings.length > 0) {
-        randomIndex = Math.floor(Math.random() * sellers[i].listings.length);
-        updatedSellers[i].reviews[j].listing_id = sellers[i].listings[randomIndex];
-        updatedSellers[i].reviews[j].listing_id_count = sellers[i].listing_counts[randomIndex];
-      }
+    for (let j = 0; j < sellers[i].listings.length; j += 1) {
+      review = {
+        rating: Math.floor(Math.random() * 5) + 1,
+        author: faker.name.findName(),
+        date: faker.date.past(),
+        description: faker.lorem.paragraph(),
+        listing_id: sellers[i].listings[j],
+        listing_id_count: sellers[i].listing_counts[j]
+      };
+      updatedSellers[i].reviews.push(review);
     }
   }
   return updatedSellers;
