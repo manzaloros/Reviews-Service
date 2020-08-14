@@ -31,7 +31,8 @@ export const Styled = {
       border: 1px solid #ddd;
       width: 700px;
       float: left;
-      margin-left: 80px;
+      margin-top: 10px;
+      margin-left: 107px;
       margin-right: 1em;
       margin-bottom: 1em;
       padding-top: 3px;
@@ -46,6 +47,7 @@ export const Styled = {
   `,
 
   Toggle: styled.div`
+    cursor: pointer;
     outline: none;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -85,8 +87,8 @@ export const Styled = {
   `,
 
   NameListing: styled.a`
-    color: blue;
-    font-weight: 600;
+    color: #057bc4;
+    font-weight: 700;
     font-size: 15px;
     text-decoration: none;
     &:hover {
