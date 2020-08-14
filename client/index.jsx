@@ -8,4 +8,4 @@ const App = () => (
   </div>
 );
 
-ReactDOM.render(<App />, document.getElementById('body'));
+ReactDOM.render(<App />, document.getElementById('reviews'));
