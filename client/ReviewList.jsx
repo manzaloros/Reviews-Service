@@ -32,7 +32,7 @@ export const Styled = {
       width: 700px;
       float: left;
       margin-top: 10px;
-      margin-left: 107px;
+      margin-left: 2.7rem;
       margin-right: 1em;
       margin-bottom: 1em;
       padding-top: 3px;
