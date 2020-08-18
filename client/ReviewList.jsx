@@ -29,10 +29,9 @@ export const Styled = {
     && {
       position: relative;
       border: 1px solid #ddd;
-      width: 700px;
+      width: 27.25em;
       float: left;
-      margin-top: 10px;
-      margin-left: 2.7rem;
+      margin-top: 0.625em;
       margin-right: 1em;
       margin-bottom: 1em;
       padding-top: 3px;
