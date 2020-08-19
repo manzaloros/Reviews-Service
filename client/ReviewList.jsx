@@ -117,14 +117,18 @@ class ReviewList extends React.Component {
   }
 
   componentDidMount() {
-    const url = window.location.href.split('/');
-    const endpoint = url[url.length - 2];
+    let url = window.location.href;
+    if (url[url.length - 1] !== '/') {
+      url += '/';
+    }
+    const urlArray = url.split('/');
+    const endpoint = urlArray[urlArray.length - 2];
     this.setState({
-      url: url.slice(0, url.length - 2).join('/')
+      url: urlArray.slice(0, urlArray.length - 2).join('/')
     });
-    $.get(`reviews/api/item/endpoint/${endpoint}`, (data) => {
+    $.get(`/reviews/api/item/endpoint/${endpoint}`, (data) => {
       const currentItem = data;
-      $.get(`reviews/api/item/${currentItem._id}/reviews`, (data) => {
+      $.get(`/reviews/api/item/${currentItem._id}/reviews`, (data) => {
         let averageRating = 0;
         if (data.length !== 0) {
           for (let i = 0; i < data.length; i += 1) {
@@ -152,14 +156,13 @@ class ReviewList extends React.Component {
   }
 
   assignReviewNames(input, index = 0) {
-    const { url } = this.state;
     if (index === input.length || index === 5) {
       this.setState({
         reviews: input
       });
     } else {
       const currentId = input[index].listing_id;
-      $.get(`reviews/api/item/${currentId}`, (data) => {
+      $.get(`/reviews/api/item/${currentId}`, (data) => {
         const temp = input;
         temp[index].listingName = data.name;
         this.assignReviewNames(temp, index + 1);
