@@ -16,13 +16,13 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-app.get('/api/seller', (req, res) => {
+app.get('*/reviews/api/seller', (req, res) => {
   db.getAllSellers((data) => {
     res.send(data);
   });
 });
 
-app.get('/api/seller/:id', (req, res) => {
+app.get('*/reviews/api/seller/:id', (req, res) => {
   db.getOneSeller(req.params.id, (data) => {
     if (data === '404') {
       res.sendStatus(404);
@@ -32,7 +32,7 @@ app.get('/api/seller/:id', (req, res) => {
   });
 });
 
-app.get('/api/item', (req, res) => {
+app.get('*/reviews/api/item', (req, res) => {
   db.getAllListings((data) => {
     if (data === '404') {
       res.sendStatus(404);
@@ -42,7 +42,7 @@ app.get('/api/item', (req, res) => {
   });
 });
 
-app.get('/api/item/endpoint/:listingId', (req, res) => {
+app.get('*/reviews/api/item/endpoint/:listingId', (req, res) => {
   db.getOneListingByEndpoint(req.params.listingId, (data) => {
     if (data === '404') {
       res.sendStatus(404);
@@ -52,7 +52,7 @@ app.get('/api/item/endpoint/:listingId', (req, res) => {
   });
 });
 
-app.get('/api/item/:listingId', (req, res) => {
+app.get('*/reviews/api/item/:listingId', (req, res) => {
   db.getOneListing(req.params.listingId, (data) => {
     if (data === '404') {
       res.sendStatus(404);
@@ -62,7 +62,7 @@ app.get('/api/item/:listingId', (req, res) => {
   });
 });
 
-app.get('/api/item/:listingId/reviews', (req, res) => {
+app.get('*/reviews/api/item/:listingId/reviews', (req, res) => {
   db.getSellerReviewsForListing(req.params.listingId, (data) => {
     if (data === '404') {
       res.sendStatus(404);
