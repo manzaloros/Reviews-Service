@@ -37,7 +37,7 @@ const generateListings = () => {
       brand: faker.company.companyName(),
       asDescribed: !!(Math.floor(Math.random() * 2)),
       description: faker.lorem.paragraph(),
-      id_count: i
+      id_count: i + 1
     });
     listingsArray.push(listing);
   }
@@ -83,6 +83,7 @@ sellers = linkReviewsAndListings(listings, sellers);
 MongoClient.connect(url, (err, db) => {
   if (err) throw err;
   const dbo = db.db('reviewsdb');
+  dbo.dropDatabase();
   dbo.createCollection('listings', (err) => {
     if (err) throw err;
     console.log('listings created');
