@@ -159,7 +159,6 @@ class ReviewList extends React.Component {
       });
     } else {
       const currentId = input[index].listing_id;
-      // $.get(`${url.slice(0, 3)}/reviews/api/item/${currentId}`, (data) => {
       $.get(`reviews/api/item/${currentId}`, (data) => {
         const temp = input;
         temp[index].listingName = data.name;
