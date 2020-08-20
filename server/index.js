@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const port = 2625;
+const port = process.env.PORT || 2625;
 
 app.use('/dist', express.static(path.join(__dirname, './../dist')));
 app.use('/item/:user', express.static(path.join(__dirname, './../public')));
