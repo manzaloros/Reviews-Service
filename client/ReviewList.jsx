@@ -29,9 +29,9 @@ export const Styled = {
     && {
       position: relative;
       border: 1px solid #ddd;
-      width: 700px;
+      width: 27.25em;
       float: left;
-      margin-left: 80px;
+      margin-top: 0.625em;
       margin-right: 1em;
       margin-bottom: 1em;
       padding-top: 3px;
@@ -46,6 +46,7 @@ export const Styled = {
   `,
 
   Toggle: styled.div`
+    cursor: pointer;
     outline: none;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -85,8 +86,8 @@ export const Styled = {
   `,
 
   NameListing: styled.a`
-    color: blue;
-    font-weight: 600;
+    color: #057bc4;
+    font-weight: 700;
     font-size: 15px;
     text-decoration: none;
     &:hover {
@@ -106,7 +107,8 @@ class ReviewList extends React.Component {
     this.state = {
       reviews: [],
       rating: 0,
-      isShowingReviews: false
+      isShowingReviews: false,
+      url: ''
     };
     this.toggleReadMore = this.toggleReadMore.bind(this);
     this.handleSpacebar = this.handleSpacebar.bind(this);
@@ -115,10 +117,18 @@ class ReviewList extends React.Component {
   }
 
   componentDidMount() {
-    const endpoint = window.location.href.split('/')[4];
-    $.get(`/api/item/${endpoint}`, (data) => {
+    let url = window.location.href;
+    if (url[url.length - 1] !== '/') {
+      url += '/';
+    }
+    const urlArray = url.split('/');
+    const endpoint = urlArray[urlArray.length - 2];
+    this.setState({
+      url: urlArray.slice(0, urlArray.length - 2).join('/')
+    });
+    $.get(`/reviews/api/item/endpoint/${endpoint}`, (data) => {
       const currentItem = data;
-      $.get(`/api/item/${currentItem._id}/reviews`, (data) => {
+      $.get(`/reviews/api/item/${currentItem._id}/reviews`, (data) => {
         let averageRating = 0;
         if (data.length !== 0) {
           for (let i = 0; i < data.length; i += 1) {
@@ -152,7 +162,7 @@ class ReviewList extends React.Component {
       });
     } else {
       const currentId = input[index].listing_id;
-      $.get(`/api/item/${currentId}`, (data) => {
+      $.get(`/reviews/api/item/${currentId}`, (data) => {
         const temp = input;
         temp[index].listingName = data.name;
         this.assignReviewNames(temp, index + 1);
@@ -180,7 +190,9 @@ class ReviewList extends React.Component {
   }
 
   render() {
-    const { reviews, rating, isShowingReviews } = this.state;
+    const {
+      reviews, rating, isShowingReviews, url
+    } = this.state;
     return (
       <Styled.Div>
         <Styled.Toggle
@@ -202,7 +214,6 @@ class ReviewList extends React.Component {
               )
             </Styled.ReviewCount>
             {(isShowingReviews) ? <Arrow.UpArrow /> : <Arrow.DownArrow />}
-            {/* <StyledArrow isShowingReviews={isShowingReviews} /> */}
           </span>
         </Styled.Toggle>
         <div>
@@ -213,9 +224,7 @@ class ReviewList extends React.Component {
                   <RatingDisplay rating={review.rating.toString()} />
                 </span>
               </div>
-              <Styled.NameListing
-                href={`http://localhost:2625/item/${review.listing_id}/`}
-              >
+              <Styled.NameListing href={`${url}/${review.listing_id_count}`}>
                 {review.listingName}
               </Styled.NameListing>
               <div>

@@ -8,11 +8,8 @@ const conditions = ['Mint', 'Near Mint', 'Damaged'];
 const generateSellers = () => {
   const sellersArray = [];
   let seller;
-  let review;
-  let reviewCount;
   let name;
   for (let i = 0; i < 50; i += 1) {
-    reviewCount = Math.floor(Math.random() * 10);
     if (i === 0) {
       name = 'Willie Dustice';
     } else {
@@ -24,15 +21,6 @@ const generateSellers = () => {
       reviews: []
     });
     sellersArray.push(seller);
-    for (let j = 0; j < reviewCount; j += 1) {
-      review = {
-        rating: Math.floor(Math.random() * 5) + 1,
-        author: faker.name.findName(),
-        date: faker.date.past(),
-        description: faker.lorem.paragraph()
-      };
-      seller.reviews.push(review);
-    }
   }
   return sellersArray;
 };
@@ -48,7 +36,8 @@ const generateListings = () => {
       style: faker.hacker.adjective(),
       brand: faker.company.companyName(),
       asDescribed: !!(Math.floor(Math.random() * 2)),
-      description: faker.lorem.paragraph()
+      description: faker.lorem.paragraph(),
+      id_count: i + 1
     });
     listingsArray.push(listing);
   }
@@ -62,19 +51,25 @@ const linkListingsAndSellers = (listings, sellers) => {
     randomSellerIndex = Math.floor(Math.random() * sellers.length);
     updatedListings[i].seller = sellers[randomSellerIndex]._id;
     sellers[randomSellerIndex].listings.push(listings[i]._id);
+    sellers[randomSellerIndex].listing_counts.push(listings[i].id_count);
   }
   return updatedListings;
 };
 
 const linkReviewsAndListings = (listings, sellers) => {
   const updatedSellers = sellers;
-  let randomListingIndex;
+  let review;
   for (let i = 0; i < sellers.length; i += 1) {
-    for (let j = 0; j < sellers[i].reviews.length; j += 1) {
-      if (sellers[i].listings.length > 0) {
-        randomListingIndex = Math.floor(Math.random() * sellers[i].listings.length);
-        updatedSellers[i].reviews[j].listing_id = sellers[i].listings[randomListingIndex]._id;
-      }
+    for (let j = 0; j < sellers[i].listings.length; j += 1) {
+      review = {
+        rating: Math.floor(Math.random() * 5) + 1,
+        author: faker.name.findName(),
+        date: faker.date.past(),
+        description: faker.lorem.paragraph(),
+        listing_id: sellers[i].listings[j],
+        listing_id_count: sellers[i].listing_counts[j]
+      };
+      updatedSellers[i].reviews.push(review);
     }
   }
   return updatedSellers;
@@ -88,6 +83,7 @@ sellers = linkReviewsAndListings(listings, sellers);
 MongoClient.connect(url, (err, db) => {
   if (err) throw err;
   const dbo = db.db('reviewsdb');
+  dbo.dropDatabase();
   dbo.createCollection('listings', (err) => {
     if (err) throw err;
     console.log('listings created');
