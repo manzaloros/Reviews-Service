@@ -1,6 +1,6 @@
 const { MongoClient, ObjectId } = require('mongodb');
 
-const url = 'mongodb://localhost:27017/reviewsdb';
+const url = 'mongodb://mongo:27017/reviewsdb';
 
 MongoClient.connect(url, (err, db) => {
   if (err) throw err;
