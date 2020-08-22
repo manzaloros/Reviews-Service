@@ -6,7 +6,7 @@
   - https://github.com/HRR47-FEC-Burke/main-photo
   - https://github.com/HRR47-FEC-Burke/similar-listings-and-news
   - https://github.com/HRR47-FEC-Burke/sidebar
-  
+
 ## Table of Contents
 
 1. [Usage](#Usage)
@@ -22,10 +22,10 @@
 
 - Node.js v12.x
   - https://nodejs.org/
-  
+
 - MongoDB v4.2.7
   - https://www.mongodb.com/
-  
+
 ## Development
 
 Execute all these commands from the repository's root directory.
@@ -43,6 +43,9 @@ npm run seed
 ```
 
 Database will always be seeded with 100 item listings and 50 sellers.
+
+> NOTE: Before seeding, go to ```database/index.js``` and uncomment out
+> the mongoDB URL depending on if your service is local or deployed.
 
 ### Testing
 
