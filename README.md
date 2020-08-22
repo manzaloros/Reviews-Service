@@ -10,6 +10,10 @@
 ## Table of Contents
 
 1. [Usage](#Usage)
+2. [Requirements](#Requirements)
+3. [Development](#Development)
+4. [Production](#Production)
+5. [Deployment](#Deployment)
 
 ## Usage
 > Example URL: http://localhost:2625/item/24
@@ -75,3 +79,19 @@ npm start
 ```
 
 - Run ```grunt deploy``` on the terminal
+
+### Hosting Service On Docker
+> Requirements:
+> [Docker v19.03.12] (https://docs.docker.com/engine/install/)
+> [Docker Compose v1.26.2] (https://docs.docker.com/compose/install/)
+
+- Run ```docker-compose build``` to build a Docker image
+- Run ```docker-compose up -d``` to start running the service on port 80
+- Run ```docker-compose down``` to stop the service
+
+> Running ```docker-compose up -d``` the first time will automatically build an image.
+> However, if you want to make any changes afterwards, you need to run ```build```,
+> take down the image with ```down```, and then put up the new image with ```up -d```.
+
+> If you host the service in a shell, Docker and Nodejs will not work out of the box.
+> You need to install them on your shell before you can make use of the Dockerfile and ```package.json```.
