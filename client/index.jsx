@@ -4,7 +4,9 @@ import ReviewList from './ReviewList.jsx';
 
 const App = () => (
   <div>
-    <ReviewList />
+    <div>
+      <ReviewList />
+    </div>
   </div>
 );
 

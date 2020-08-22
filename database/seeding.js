@@ -2,7 +2,7 @@ const faker = require('faker');
 const { MongoClient } = require('mongodb');
 const [Listing, Seller] = require('./schema.js');
 
-const url = 'mongodb://localhost:27017/';
+const url = 'mongodb://mongo:27017/reviewsdb';
 const conditions = ['Mint', 'Near Mint', 'Damaged'];
 
 const generateSellers = () => {
@@ -81,20 +81,34 @@ listings = linkListingsAndSellers(listings, sellers);
 sellers = linkReviewsAndListings(listings, sellers);
 
 MongoClient.connect(url, (err, db) => {
-  if (err) throw err;
+  if (err) {
+    throw err;
+  }
   const dbo = db.db('reviewsdb');
   dbo.dropDatabase();
   dbo.createCollection('listings', (err) => {
-    if (err) throw err;
+    if (err) {
+      db.close();
+      throw err;
+    }
     console.log('listings created');
     dbo.createCollection('sellers', (err) => {
-      if (err) throw err;
+      if (err) {
+        db.close();
+        throw err;
+      }
       console.log('sellers created');
       dbo.collection('listings').insertMany(listings, (err, res) => {
-        if (err) throw err;
+        if (err) {
+          db.close();
+          throw err;
+        }
         console.log('Number of listings inserted:', res.insertedCount);
         dbo.collection('sellers').insertMany(sellers, (err, res) => {
-          if (err) throw err;
+          if (err) {
+            db.close();
+            throw err;
+          }
           console.log('Number of sellers inserted:', res.insertedCount);
           db.close();
         });
