@@ -1,6 +1,10 @@
 const { MongoClient, ObjectId } = require('mongodb');
 
-const url = 'mongodb://mongo:27017/reviewsdb';
+// UNCOMMENT FOR LOCAL DEPLOYMENT
+// const url = 'mongodb://localhost:27017/reviewsdb';
+
+// UNCOMMENT FOR DOCKER DEPLOYMENT
+// const url = 'mongodb://mongo:27017/reviewsdb';
 
 MongoClient.connect(url, (err, db) => {
   if (err) throw err;
