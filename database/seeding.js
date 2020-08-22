@@ -85,6 +85,7 @@ MongoClient.connect(url, (err, db) => {
     throw err;
   }
   const dbo = db.db('reviewsdb');
+  dbo.dropDatabase();
   dbo.createCollection('listings', (err) => {
     if (err) {
       db.close();

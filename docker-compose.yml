@@ -6,7 +6,7 @@ services:
     image: node:12-alpine
     command: sh -c "npm install && npm run build"
     ports:
-      - "2625:2625"
+      - "80:2625"
     working_dir: /seller-reviews
     volumes:
       - ./:/seller-reviews
