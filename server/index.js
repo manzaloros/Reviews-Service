@@ -57,6 +57,11 @@ app.get('*/reviews/api/item', (req, res) => {
   });
 });
 
+/*
+USED IN CLIENT:
+listingID will be 1-100?
+Needs to return a guitar object with an ._id property corresponding to
+*/
 app.get('*/reviews/api/item/endpoint/:listingId', (req, res) => {
   db.getOneListingByEndpoint(req.params.listingId, (data) => {
     if (data === '404') {
@@ -77,6 +82,11 @@ app.get('*/reviews/api/item/:listingId', (req, res) => {
   });
 });
 
+/*
+USED IN CLIENT:
+listingID will be 1-100?
+Needs to return a guitar object with an ._id property corresponding to
+*/
 app.get('*/reviews/api/item/:listingId/reviews', (req, res) => {
   db.getSellerReviewsForListing(req.params.listingId, (err, data) => {
     if (err) {
