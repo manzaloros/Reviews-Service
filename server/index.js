@@ -20,11 +20,11 @@ app.use('/', (req, res, next) => {
   DELETE all reviews for an item
 */
 app.delete('*/reviews/api/item/:listingId/reviews', (req, res) => {
-  db.deleteReviews(req.params.listingId, (err, reviewsData) => {
+  db.deleteReviews(req.params.listingId, (err, result) => {
     if (err) {
       return res.sendStatus(404);
     }
-    return res.send(reviewsData);
+    return res.send(result);
   });
 });
 
@@ -78,8 +78,8 @@ app.get('*/reviews/api/item/:listingId', (req, res) => {
 });
 
 app.get('*/reviews/api/item/:listingId/reviews', (req, res) => {
-  db.getSellerReviewsForListing(req.params.listingId, (data) => {
-    if (data === '404') {
+  db.getSellerReviewsForListing(req.params.listingId, (err, data) => {
+    if (err) {
       res.sendStatus(404);
     } else {
       res.send(data);

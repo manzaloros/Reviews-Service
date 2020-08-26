@@ -12,7 +12,7 @@ MongoClient.connect(url, (err, db) => {
 });
 
 /*
-  DELETE all seller reviews for one item
+  DELETE all reviews for one item
 */
 module.exports.deleteReviews = async (listingId, nextInstructions) => {
   let client;
@@ -20,7 +20,7 @@ module.exports.deleteReviews = async (listingId, nextInstructions) => {
     client = await MongoClient.connect(url);
     const db = client.db('reviewsdb');
     const query = { listings: { $in: [ObjectId(listingId)] } };
-    db.collection('sellers').findOne(query, (err, result) => {
+    db.collection('sellers').deleteOne(query, (err, result) => {
       if (err) {
         return nextInstructions(err);
       }
@@ -33,6 +33,10 @@ module.exports.deleteReviews = async (listingId, nextInstructions) => {
     client.close();
   }
 };
+
+/*
+  FIND Queries
+*/
 
 module.exports.getAllSellers = function (callback) {
   MongoClient.connect(url, (err, db) => {
@@ -136,10 +140,15 @@ module.exports.getSellerReviewsForListing = function (input, callback) {
       const query = { listings: { $in: [ObjectId(input)] } };
       dbo.collection('sellers').findOne(query, (err, result) => {
         if (err) {
-          callback('404');
-        } else {
+          callback(err);
+        } else if (result) {
           const sortedReviews = result.reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
           callback(sortedReviews);
+        } else {
+          /*
+          HAVE TO SEND NON ERROR FIRST CALLBACK FOR LEGACY CODE COMPATIBILITY
+          */
+          callback(null, 'Seller reviews not found');
         }
         db.close();
       });
