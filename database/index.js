@@ -128,6 +128,9 @@ module.exports.getOneListingByEndpoint = function (input, callback) {
   });
 };
 
+/*
+USED BY SERVER:
+*/
 module.exports.getSellerReviewsForListing = function (input, callback) {
   MongoClient.connect(url, (err, db) => {
     if (err || input === 'undefined') {
@@ -140,11 +143,8 @@ module.exports.getSellerReviewsForListing = function (input, callback) {
           callback(err);
         } else if (result) {
           const sortedReviews = result.reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
-          callback(sortedReviews);
+          callback(null, sortedReviews);
         } else {
-          /*
-          HAVE TO SEND NON ERROR FIRST CALLBACK FOR LEGACY CODE COMPATIBILITY
-          */
           callback(null, 'Seller reviews not found');
         }
         db.close();
