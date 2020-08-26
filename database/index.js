@@ -1,7 +1,7 @@
 const { MongoClient, ObjectId } = require('mongodb');
 
 // UNCOMMENT FOR LOCAL DEPLOYMENT
-// const url = 'mongodb://localhost:27017/reviewsdb';
+const url = 'mongodb://localhost:27017/reviewsdb';
 
 // UNCOMMENT FOR DOCKER DEPLOYMENT
 // const url = 'mongodb://mongo:27017/reviewsdb';
