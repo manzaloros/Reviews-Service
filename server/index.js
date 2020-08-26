@@ -31,8 +31,8 @@ app.delete('*/reviews/api/item/:listingId/reviews', (req, res) => {
 /*
 UPDATE all reviews for an item
 */
-app.delete('*/reviews/api/item/:listingId/reviews', (req, res) => {
-  db.deleteReviews(req.params.listingId, (err, result) => {
+app.put('*/reviews/api/item/:listingId/reviews', (req, res) => {
+  db.updateReviews(req.params.listingId, (err, result) => {
     if (err) {
       return res.sendStatus(404);
     }

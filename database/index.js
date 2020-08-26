@@ -90,6 +90,9 @@ module.exports.getOneSeller = function (input, callback) {
   });
 };
 
+/*
+USED BY SERVER:
+*/
 module.exports.getOneListing = function (input, callback) {
   MongoClient.connect(url, (err, db) => {
     if (err || input === 'undefined') {
