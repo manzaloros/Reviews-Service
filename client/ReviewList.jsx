@@ -128,6 +128,8 @@ class ReviewList extends React.Component {
     });
     $.get(`/reviews/api/item/endpoint/${endpoint}`, (data) => {
       const currentItem = data;
+      // GETs reviews for current item id
+      // Calculates average rating
       $.get(`/reviews/api/item/${currentItem._id}/reviews`, (data) => {
         let averageRating = 0;
         if (data.length !== 0) {
@@ -155,6 +157,7 @@ class ReviewList extends React.Component {
     return [];
   }
 
+  // Takes current item's review objects and adds them to state array
   assignReviewNames(input, index = 0) {
     if (index === input.length || index === 5) {
       this.setState({
@@ -218,6 +221,8 @@ class ReviewList extends React.Component {
         </Styled.Toggle>
         <div>
           {this.getRenderedReviews().map((review) => (
+            /* Uses reviews rating, listing_id, name of guitar, author of review, review date,
+            review description */
             <Styled.Review key={review.id}>
               <div>
                 <span>
