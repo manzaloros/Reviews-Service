@@ -16,16 +16,13 @@ MongoClient.connect(url, (err, db) => {
 */
 module.exports.deleteReviews = async (listingId, nextInstructions) => {
   let client;
+  let deleteItem;
   try {
     client = await MongoClient.connect(url);
     const db = client.db('reviewsdb');
     const query = { listings: { $in: [ObjectId(listingId)] } };
-    db.collection('sellers').deleteOne(query, (err, result) => {
-      if (err) {
-        return nextInstructions(err);
-      }
-      return nextInstructions(null, result);
-    });
+    deleteItem = await db.collection('sellers').deleteOne(query);
+    return nextInstructions(null, deleteItem);
   } catch (err) {
     nextInstructions(err);
   }
