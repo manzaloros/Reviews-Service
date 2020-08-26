@@ -16,6 +16,10 @@ app.use('/', (req, res, next) => {
   next();
 });
 
+// DELETE all reviews for an item
+app.delete('*/reviews/api/item/:listingId/reviews')
+
+// GET routes
 app.get('*/reviews/api/seller', (req, res) => {
   db.getAllSellers((data) => {
     res.send(data);
