@@ -29,6 +29,18 @@ app.delete('*/reviews/api/item/:listingId/reviews', (req, res) => {
 });
 
 /*
+UPDATE all reviews for an item
+*/
+app.delete('*/reviews/api/item/:listingId/reviews', (req, res) => {
+  db.deleteReviews(req.params.listingId, (err, result) => {
+    if (err) {
+      return res.sendStatus(404);
+    }
+    return res.send(result);
+  });
+});
+
+/*
   GET routes
 */
 app.get('*/reviews/api/seller', (req, res) => {
@@ -72,6 +84,10 @@ app.get('*/reviews/api/item/endpoint/:listingId', (req, res) => {
   });
 });
 
+/*
+USED IN CLIENT:
+Returns a guitar object.
+*/
 app.get('*/reviews/api/item/:listingId', (req, res) => {
   db.getOneListing(req.params.listingId, (data) => {
     if (data === '404') {
@@ -84,8 +100,8 @@ app.get('*/reviews/api/item/:listingId', (req, res) => {
 
 /*
 USED IN CLIENT:
-listingID will be 1-100?
-Needs to return a guitar object with an ._id property corresponding to
+Needs to return array of review objects (need all properties)
+Client sets state with
 */
 app.get('*/reviews/api/item/:listingId/reviews', (req, res) => {
   db.getSellerReviewsForListing(req.params.listingId, (err, data) => {

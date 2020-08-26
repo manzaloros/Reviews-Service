@@ -126,6 +126,9 @@ class ReviewList extends React.Component {
     this.setState({
       url: urlArray.slice(0, urlArray.length - 2).join('/')
     });
+    /* Data is a guitar object
+    Endpoint is 1-100
+    */
     $.get(`/reviews/api/item/endpoint/${endpoint}`, (data) => {
       const currentItem = data;
       // GETs reviews for current item id
@@ -144,6 +147,7 @@ class ReviewList extends React.Component {
             rating: 0
           });
         }
+        // Data is an array of review objects.
         this.assignReviewNames(data);
       });
     });
@@ -157,13 +161,21 @@ class ReviewList extends React.Component {
     return [];
   }
 
-  // Takes current item's review objects and adds them to state array
+  /* Takes current item's review objects and adds them to state array.
+  Recursively calls itself
+  */
   assignReviewNames(input, index = 0) {
+    /* Once function has been recursed index times,
+    add the reviews array to the state
+    */
     if (index === input.length || index === 5) {
       this.setState({
         reviews: input
       });
     } else {
+      /* Data here is a guitar object.
+      Input is an array of review objects, need the guitar name property.
+       */
       const currentId = input[index].listing_id;
       $.get(`/reviews/api/item/${currentId}`, (data) => {
         const temp = input;
