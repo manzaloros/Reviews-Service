@@ -11,14 +11,26 @@ MongoClient.connect(url, (err, db) => {
   db.close();
 });
 
-// Delete a seller's reviews
-module.exports.deleteReviews = async (nextInstructions) => {
+/*
+  DELETE all seller reviews for one item
+*/
+module.exports.deleteReviews = async (listingId, nextInstructions) => {
+  let client;
   try {
-    let client = await MongoClient.connect();
+    client = await MongoClient.connect(url);
     const db = client.db('reviewsdb');
-    console.log("from delete, db:", db);
-  } catch {
-    nextInstructions('404');
+    const query = { listings: { $in: [ObjectId(listingId)] } };
+    db.collection('sellers').findOne(query, (err, result) => {
+      if (err) {
+        return nextInstructions(err);
+      }
+      return nextInstructions(null, result);
+    });
+  } catch (err) {
+    nextInstructions(err);
+  }
+  if (client) {
+    client.close();
   }
 };
 

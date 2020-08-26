@@ -16,10 +16,21 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-// DELETE all reviews for an item
-app.delete('*/reviews/api/item/:listingId/reviews')
+/*
+  DELETE all reviews for an item
+*/
+app.delete('*/reviews/api/item/:listingId/reviews', (req, res) => {
+  db.deleteReviews(req.params.listingId, (err, reviewsData) => {
+    if (err) {
+      return res.sendStatus(404);
+    }
+    return res.send(reviewsData);
+  });
+});
 
-// GET routes
+/*
+  GET routes
+*/
 app.get('*/reviews/api/seller', (req, res) => {
   db.getAllSellers((data) => {
     res.send(data);
