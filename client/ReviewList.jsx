@@ -133,7 +133,7 @@ class ReviewList extends React.Component {
     /*
       REFACTORED GET REQUEST UNCOMMENT WHEN NEEDED /
       COMMENT OUT ALL OTHER GET REQUESTS 154, 158, 207
-      guitar: [
+      guitar: {
         name: '',
         reviews: [
           {
@@ -144,13 +144,16 @@ class ReviewList extends React.Component {
             description: string,
           },
         ]
-      ]
+      }
 
     */
     // $.get(`/reviews/api/item/endpoint/${endpoint}`, (guitar) => {
     //   // Need to setState on reviews [] and rating number
     //   // Get average rating from sum of review ratings
     //   const reviews = guitar.reviews;
+    //   // Add guitar name to each review
+    //   reviews.forEach((review) => review.listingName = guitar.name)
+    //   // Calculate average rating for guitar
     //   const rating = reviews.reduce((sum, currentReview) => sum + currentReview.rating, 0)
     //     / reviews.length;
     //   this.setState((previousState) => ({
