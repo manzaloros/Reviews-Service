@@ -134,6 +134,7 @@ class ReviewList extends React.Component {
       REFACTORED GET REQUEST UNCOMMENT WHEN NEEDED /
       COMMENT OUT ALL OTHER GET REQUESTS 154, 158, 207
       guitar: {
+        productId: 1 - 10M,
         name: '',
         reviews: [
           {
@@ -146,6 +147,7 @@ class ReviewList extends React.Component {
         ]
       }
 
+      // Endpoint will be productId
     */
     // $.get(`/reviews/api/item/endpoint/${endpoint}`, (guitar) => {
     //   // Need to setState on reviews [] and rating number
