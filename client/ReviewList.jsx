@@ -131,10 +131,18 @@ class ReviewList extends React.Component {
     });
 
     /*
-      REFACTORED GET REQUEST
+      REFACTORED GET REQUEST UNCOMMENT WHEN NEEDED /
+      COMMENT OUT ALL OTHER GET REQUESTS 154, 158, 207
     */
     $.get(`/reviews/api/item/endpoint/${endpoint}`, (reviews) => {
-
+      // Need to setState on reviews [] and rating number
+      // Get average rating from sum of review ratings
+      const rating = reviews.reduce((sum, currentReview) => sum + currentReview.rating, 0)
+        / reviews.length;
+      this.setState((previousState) => ({
+        reviews: [...previousState.reviews, reviews],
+        rating: previousState.rating + rating
+      }));
     });
     /*
       REFACTORED GET REQUEST
