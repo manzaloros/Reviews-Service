@@ -153,6 +153,9 @@ class ReviewList extends React.Component {
     });
   }
 
+  /*
+    If reviews are being show, return the reviews array (?)
+  */
   getRenderedReviews() {
     const { reviews, isShowingReviews } = this.state;
     if (isShowingReviews && reviews.length > 0) {
@@ -161,11 +164,13 @@ class ReviewList extends React.Component {
     return [];
   }
 
-  /* Takes current item's review objects and adds them to state array.
+  /*
+  Adds the guitar guitar name to review objects and add them to state array.
   Recursively calls itself
   */
   assignReviewNames(input, index = 0) {
-    /* Once function has been recursed index times,
+    /* input === array of review objects
+    Once function has been recursed index times,
     add the reviews array to the state
     */
     if (index === input.length || index === 5) {
@@ -173,12 +178,15 @@ class ReviewList extends React.Component {
         reviews: input
       });
     } else {
-      /* Data here is a guitar object.
-      Input is an array of review objects, need the guitar name property.
+      /* Data === guitar object.
+      Input === array of review objects, need the guitar name property.
        */
       const currentId = input[index].listing_id;
       $.get(`/reviews/api/item/${currentId}`, (data) => {
         const temp = input;
+        /*
+          listingName is the current guitar name
+        */
         temp[index].listingName = data.name;
         this.assignReviewNames(temp, index + 1);
       });
@@ -234,13 +242,19 @@ class ReviewList extends React.Component {
         <div>
           {this.getRenderedReviews().map((review) => (
             /* Uses reviews rating, listing_id, name of guitar, author of review, review date,
-            review description */
+            review description
+            What is the .id key in review? I thought each review had a ._id key?
+            */
             <Styled.Review key={review.id}>
               <div>
                 <span>
                   <RatingDisplay rating={review.rating.toString()} />
                 </span>
               </div>
+              {/*
+                What does this link do?
+                listing_id_count will be 1-100
+              */}
               <Styled.NameListing href={`${url}/${review.listing_id_count}`}>
                 {review.listingName}
               </Styled.NameListing>

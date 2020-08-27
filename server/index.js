@@ -92,7 +92,7 @@ app.get('*/reviews/api/item', (req, res) => {
 /*
 USED IN CLIENT:
 listingID will be 1-100?
-Needs to return a guitar object with an ._id property corresponding to
+Needs to return a guitar object with an ._id property corresponding to ...
 */
 app.get('*/reviews/api/item/endpoint/:listingId', (req, res) => {
   db.getOneListingByEndpoint(req.params.listingId, (data) => {
