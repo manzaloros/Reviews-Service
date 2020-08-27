@@ -2,7 +2,8 @@ const faker = require('faker');
 const { MongoClient } = require('mongodb');
 const [Listing, Seller] = require('./schema.js');
 
-const url = 'mongodb://mongo:27017/reviewsdb';
+// Change to localhost for local:
+const url = 'mongodb://localhost:27017/reviewsdb';
 const conditions = ['Mint', 'Near Mint', 'Damaged'];
 
 const generateSellers = () => {

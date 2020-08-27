@@ -123,11 +123,47 @@ class ReviewList extends React.Component {
     }
     const urlArray = url.split('/');
     const endpoint = urlArray[urlArray.length - 2];
+    /*
+      URL array === http://localhost:2625/item
+    */
     this.setState({
       url: urlArray.slice(0, urlArray.length - 2).join('/')
     });
+
+    /*
+      REFACTORED GET REQUEST UNCOMMENT WHEN NEEDED /
+      COMMENT OUT ALL OTHER GET REQUESTS 154, 158, 207
+      Reviews: [
+        {
+          rating: int,
+          listingName: string (guitar name),
+          date: date,
+          author: string,
+          description: string,
+        }
+      ]
+    */
+    // $.get(`/reviews/api/item/endpoint/${endpoint}`, (reviews) => {
+    //   // Need to setState on reviews [] and rating number
+    //   // Get average rating from sum of review ratings
+    //   const rating = reviews.reduce((sum, currentReview) => sum + currentReview.rating, 0)
+    //     / reviews.length;
+    //   this.setState((previousState) => ({
+    //     reviews: [...previousState.reviews, reviews],
+    //     rating: previousState.rating + rating
+    //   }));
+    // });
+    /*
+      REFACTORED GET REQUEST
+    */
+
+    /* Data is a guitar object
+    Endpoint is 1-100
+    */
     $.get(`/reviews/api/item/endpoint/${endpoint}`, (data) => {
       const currentItem = data;
+      // GETs reviews for current item id
+      // Calculates average rating
       $.get(`/reviews/api/item/${currentItem._id}/reviews`, (data) => {
         let averageRating = 0;
         if (data.length !== 0) {
@@ -142,11 +178,15 @@ class ReviewList extends React.Component {
             rating: 0
           });
         }
+        // Data is an array of review objects.
         this.assignReviewNames(data);
       });
     });
   }
 
+  /*
+    If reviews are being show, return the reviews array (?)
+  */
   getRenderedReviews() {
     const { reviews, isShowingReviews } = this.state;
     if (isShowingReviews && reviews.length > 0) {
@@ -155,15 +195,29 @@ class ReviewList extends React.Component {
     return [];
   }
 
+  /*
+  Adds the guitar guitar name to review objects and add them to state array.
+  Recursively calls itself
+  */
   assignReviewNames(input, index = 0) {
+    /* input === array of review objects
+    Once function has been recursed index times,
+    add the reviews array to the state
+    */
     if (index === input.length || index === 5) {
       this.setState({
         reviews: input
       });
     } else {
+      /* Data === guitar object.
+      Input === array of review objects, need the guitar name property.
+       */
       const currentId = input[index].listing_id;
       $.get(`/reviews/api/item/${currentId}`, (data) => {
         const temp = input;
+        /*
+          listingName is the current guitar name
+        */
         temp[index].listingName = data.name;
         this.assignReviewNames(temp, index + 1);
       });
@@ -218,12 +272,21 @@ class ReviewList extends React.Component {
         </Styled.Toggle>
         <div>
           {this.getRenderedReviews().map((review) => (
+            /* Uses reviews rating, listing_id, name of guitar, author of review, review date,
+            review description
+            What is the .id key in review? I thought each review had a ._id key?
+            Doesn't matter because .id is only used for key prop, maybe delete later?
+            */
             <Styled.Review key={review.id}>
               <div>
                 <span>
                   <RatingDisplay rating={review.rating.toString()} />
                 </span>
               </div>
+              {/*
+                What does this link do?
+                listing_id_count will be 1-100
+              */}
               <Styled.NameListing href={`${url}/${review.listing_id_count}`}>
                 {review.listingName}
               </Styled.NameListing>
