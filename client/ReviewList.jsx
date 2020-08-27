@@ -123,9 +123,23 @@ class ReviewList extends React.Component {
     }
     const urlArray = url.split('/');
     const endpoint = urlArray[urlArray.length - 2];
+    /*
+      URL array === http://localhost:2625/item
+    */
     this.setState({
       url: urlArray.slice(0, urlArray.length - 2).join('/')
     });
+
+    /*
+      REFACTORED GET REQUEST
+    */
+    $.get(`/reviews/api/item/endpoint/${endpoint}`, (reviews) => {
+
+    });
+    /*
+      REFACTORED GET REQUEST
+    */
+
     /* Data is a guitar object
     Endpoint is 1-100
     */
@@ -244,6 +258,7 @@ class ReviewList extends React.Component {
             /* Uses reviews rating, listing_id, name of guitar, author of review, review date,
             review description
             What is the .id key in review? I thought each review had a ._id key?
+            Doesn't matter because .id is only used for key prop, maybe delete later?
             */
             <Styled.Review key={review.id}>
               <div>
