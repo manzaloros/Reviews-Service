@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -17,10 +18,16 @@ app.use('/', (req, res, next) => {
 });
 
 /*
-  DELETE all reviews for an item
+UPDATE all reviews for an item
 */
-app.delete('*/reviews/api/item/:listingId/reviews', (req, res) => {
-  db.deleteReviews(req.params.listingId, (err, result) => {
+app.put('*/reviews/api/item/:listingId/reviews', (req, res) => {
+  const {
+    _id, rating, author, date, listing_id, listing_id_count
+  } = req.body;
+  const review = {
+    _id, rating, author, date, listing_id, listing_id_count
+  };
+  db.updateReviews(req.params.listingId, review, (err, result) => {
     if (err) {
       return res.sendStatus(404);
     }
@@ -29,10 +36,10 @@ app.delete('*/reviews/api/item/:listingId/reviews', (req, res) => {
 });
 
 /*
-UPDATE all reviews for an item
+  DELETE all reviews for an item
 */
-app.put('*/reviews/api/item/:listingId/reviews', (req, res) => {
-  db.updateReviews(req.params.listingId, (err, result) => {
+app.delete('*/reviews/api/item/:listingId/reviews', (req, res) => {
+  db.deleteReviews(req.params.listingId, (err, result) => {
     if (err) {
       return res.sendStatus(404);
     }

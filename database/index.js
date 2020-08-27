@@ -12,6 +12,25 @@ MongoClient.connect(url, (err, db) => {
 });
 
 /*
+  Update all reviews for one item, accepts review object
+*/
+module.exports.updateReviews = async (listingId, review, nextInstructions) => {
+  let client;
+  let updateItem;
+  try {
+    client = await MongoClient.connect(url);
+    const db = client.db('reviewsdb');
+    const query = { listings: { $in: [ObjectId(listingId)] } };
+    updateItem = await db.collection('sellers').update(query, review);
+    return nextInstructions(null, updateItem);
+  } catch (err) {
+    nextInstructions(err);
+  }
+  // Check if this works:
+  return client.close();
+};
+
+/*
   DELETE all reviews for one item
 */
 module.exports.deleteReviews = async (listingId, nextInstructions) => {
