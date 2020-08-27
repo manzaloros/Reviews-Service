@@ -1,6 +1,6 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
-const [Listing, Seller] = require('./schema.js');
+const [Seller] = require('./schema.js');
 
 // UNCOMMENT FOR LOCAL DEPLOYMENT
 const url = 'mongodb://localhost:27017/reviewsdb';
@@ -15,7 +15,7 @@ MongoClient.connect(url, (err, db) => {
 });
 
 /*
-  Update all reviews for one item, accepts review object
+  Update a seller, given a seller name and a seller object
 */
 module.exports.updateSeller = async (sellerNameToUpdate, newSeller, nextInstructions) => {
   const options = {
@@ -23,34 +23,14 @@ module.exports.updateSeller = async (sellerNameToUpdate, newSeller, nextInstruct
     overwrite: true
   };
   try {
-    mongoose.connect(url, { useNewUrlParser: true });
-    const db = mongoose.connection;
-    db.once('open', () => {
-      Seller.findOneAndUpdate({ name: sellerNameToUpdate }, newSeller, options)
-        .then((results) => {
-          nextInstructions(null, results);
-        });
-    });
+    const updateResults = await Seller.findOneAndUpdate({
+      name: sellerNameToUpdate
+    }, newSeller, options);
+    nextInstructions(null, updateResults);
   } catch (err) {
     nextInstructions(err);
   }
 };
-// module.exports.updateReviews = async (listingId, review, nextInstructions) => {
-//   let client;
-//   let updateItem;
-//   try {
-//     client = await MongoClient.connect(url);
-//     const db = client.db('reviewsdb');
-//     const query = { _id: [ObjectId(listingId)] };
-//     updateItem = await db.collection('sellers').replaceOne(query, review);
-//     return nextInstructions(null, updateItem);
-//   } catch (err) {
-//     console.log(err);
-//     nextInstructions(err);
-//   }
-//   // Check if this works:
-//   return client.close();
-// };
 
 /*
   DELETE all reviews for one item
