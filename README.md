@@ -28,6 +28,18 @@
 
 Execute all these commands from the repository's root directory.
 
+### API Endpoints
+POST a new product at a new product id
+*/reviews/api/item/endpoint/:listingId
+input: {string name, string condition, string category, string style, string brand, boolean asDescribed, string description, string seller}
+
+PUT (update) an existing seller with a provided object
+*/reviews/api/seller/
+input: name to update, updates {[] listings, [] listings_counts, [] reviews}
+
+DELETE all reviews for a product
+*/reviews/api/item/:listingId/reviews
+
 ### Installing Dependencies
 
 ```sh
@@ -52,18 +64,6 @@ npm run test
 ```
 
 ## Production
-
-### API Endpoints
-> POST a new product at a new product id
-> */reviews/api/item/endpoint/:listingId
-> input: {string name, string condition, string category, string style, string brand, boolean asDescribed, string description, string seller}
-
-> PUT (update) an existing seller with a provided object
-> */reviews/api/seller/
-> input: name to update, updates {[] listings, [] listings_counts, [] reviews}
-
-> DELETE all reviews for a product
-> */reviews/api/item/:listingId/reviews
 
 ### Webpack
 
