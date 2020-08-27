@@ -18,9 +18,22 @@ app.use('/', (req, res, next) => {
 });
 
 /*
-UPDATE all reviews for an item
+CREATE a seller, given a seller name and a seller object
+*/
+app.post('*/reviews/api/item/endpoint/:listingId', (req, res) => {
+  db.postToEndpoint(req.params.listingId, req.body, (err, result) => {
+    if (err) {
+      return res.sendStatus(404);
+    }
+    return res.send(result);
+  });
+});
+
+/*
+PUT (update) a seller, given a seller name and a seller object
 */
 app.put('*/reviews/api/seller/', (req, res) => {
+  // Each field is an array, except for the name
   const {
     name, listings, listing_counts, reviews
   } = req.body;

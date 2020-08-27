@@ -15,6 +15,28 @@ MongoClient.connect(url, (err, db) => {
 });
 
 /*
+Create a listing given an endpoint and a new product listing
+*/
+module.exports.postToEndpoint = function (idCount, newListing, callback) {
+  MongoClient.connect(url, (err, db) => {
+    if (err) {
+      callback('404');
+    } else {
+      const dbo = db.db('reviewsdb');
+      const query = { id_count: idCount, newListing };
+      dbo.collection('listings').insertOne(query, (err, result) => {
+        if (err) {
+          callback('404');
+        } else {
+          callback(null, result);
+        }
+        db.close();
+      });
+    }
+  });
+};
+
+/*
   Update a seller, given a seller name and a seller object
 */
 module.exports.updateSeller = async (sellerNameToUpdate, newSeller, nextInstructions) => {
