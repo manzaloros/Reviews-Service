@@ -22,11 +22,11 @@ module.exports = {
   plugins: [
     'react',
   ],
-  rules: {
-    'linebreak-style': 0,
-    'comma-dangle': ['error', 'never'],
-    'no-underscore-dangle': 0,
-    'no-shadow': 0,
-    'import/extensions': 0
-  },
+  // rules: {
+  //   'linebreak-style': 0,
+  //   'comma-dangle': ['error', 'never'],
+  //   'no-underscore-dangle': 0,
+  //   'no-shadow': 0,
+  //   'import/extensions': 0
+  // },
 };
