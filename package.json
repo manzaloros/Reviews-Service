@@ -8,7 +8,7 @@
     "start": "nodemon server/index.js",
     "build": "webpack -p",
     "build:watch": "webpack -d --watch",
-    "seed": "node database/seeding.js"
+    "seed": "node database/dataGenerationScript.js"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
 const faker = require('faker');
+const performance = require('performance');
 
 const generateData = () => {
   let data = '';
@@ -12,9 +13,9 @@ const generateData = () => {
     date: faker.date.past(),
     // id property might not be used on front end:
     id: faker.random.number({ min: 0, max: 100 }),
-    description: faker.lorem('paragraphs', 2),
+    description: faker.lorem.paragraphs(2),
   };
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 1000000; i += 1) {
     // Reassign _id so that guitar and review are linked
     _id = i;
     if (i % 5 === 0) {
@@ -25,7 +26,7 @@ const generateData = () => {
         date: faker.date.past(),
         // id property may not be used on front end:
         id: faker.random.number({ min: 0, max: 100 }),
-        description: faker.lorem('paragraphs', 2),
+        description: faker.lorem.paragraphs(2),
       };
     }
     const guitar = {
@@ -36,12 +37,18 @@ const generateData = () => {
     data += JSON.stringify(review) + JSON.stringify(guitar);
   }
 
-  fs.writeFile('test.txt', data, (err) => {
-    if (err) {
+  // Clear file first
+  fs.writeFile('database/seedFiles/test.txt', '')
+    .then(() => {
+      console.log('File Cleared');
+      fs.writeFile('database/seedFiles/test.txt', data);
+    })
+    .then(() => {
+      console.log('The file has been saved!');
+    })
+    .catch((err) => {
       throw err;
-    }
-    console.log('The file has been saved!');
-  });
+    });
 };
 
 generateData();
