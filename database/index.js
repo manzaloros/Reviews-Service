@@ -1,7 +1,10 @@
 const { MongoClient, ObjectId } = require('mongodb');
+const mongoose = require('mongoose');
+const [Listing, Seller] = require('./schema.js');
 
 // UNCOMMENT FOR LOCAL DEPLOYMENT
 const url = 'mongodb://localhost:27017/reviewsdb';
+mongoose.connect(url, { useNewUrlParser: true });
 
 // UNCOMMENT FOR DOCKER DEPLOYMENT
 // const url = 'mongodb://mongo:27017/reviewsdb';
@@ -14,21 +17,40 @@ MongoClient.connect(url, (err, db) => {
 /*
   Update all reviews for one item, accepts review object
 */
-module.exports.updateReviews = async (listingId, review, nextInstructions) => {
-  let client;
-  let updateItem;
+module.exports.updateSeller = async (sellerNameToUpdate, newSeller, nextInstructions) => {
+  const options = {
+    new: true,
+    overwrite: true
+  };
   try {
-    client = await MongoClient.connect(url);
-    const db = client.db('reviewsdb');
-    const query = { listings: { $in: [ObjectId(listingId)] } };
-    updateItem = await db.collection('sellers').update(query, review);
-    return nextInstructions(null, updateItem);
+    mongoose.connect(url, { useNewUrlParser: true });
+    const db = mongoose.connection;
+    db.once('open', () => {
+      Seller.findOneAndUpdate({ name: sellerNameToUpdate }, newSeller, options)
+        .then((results) => {
+          nextInstructions(null, results);
+        });
+    });
   } catch (err) {
     nextInstructions(err);
   }
-  // Check if this works:
-  return client.close();
 };
+// module.exports.updateReviews = async (listingId, review, nextInstructions) => {
+//   let client;
+//   let updateItem;
+//   try {
+//     client = await MongoClient.connect(url);
+//     const db = client.db('reviewsdb');
+//     const query = { _id: [ObjectId(listingId)] };
+//     updateItem = await db.collection('sellers').replaceOne(query, review);
+//     return nextInstructions(null, updateItem);
+//   } catch (err) {
+//     console.log(err);
+//     nextInstructions(err);
+//   }
+//   // Check if this works:
+//   return client.close();
+// };
 
 /*
   DELETE all reviews for one item

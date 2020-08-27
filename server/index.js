@@ -20,14 +20,14 @@ app.use('/', (req, res, next) => {
 /*
 UPDATE all reviews for an item
 */
-app.put('*/reviews/api/item/:listingId/reviews', (req, res) => {
+app.put('*/reviews/api/seller/', (req, res) => {
   const {
-    _id, rating, author, date, listing_id, listing_id_count
+    name, listings, listing_counts, reviews
   } = req.body;
-  const review = {
-    _id, rating, author, date, listing_id, listing_id_count
+  const newSeller = {
+    name, listings, listing_counts, reviews
   };
-  db.updateReviews(req.params.listingId, review, (err, result) => {
+  db.updateSeller(name, newSeller, (err, result) => {
     if (err) {
       return res.sendStatus(404);
     }
