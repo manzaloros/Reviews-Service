@@ -9,7 +9,43 @@ const csvWriter = require('csv-write-stream');
 // Data Size:
 const limit = 10000000;
 
-const writer = csvWriter({ headers: ['name', 'productId', '_id'] });
+class Writer {
+  constructor(file) {
+    this.writer = csvWriter();
+    this.writer.pipe(fs.createWriteStream(file, { flags: 'a' }));
+  }
+
+  write(obj) {
+    if (!this.writer.write(obj)) {
+      return new Promise((resolve) => this.writer.once('drain', resolve));
+    }
+    return true;
+  }
+
+  end() {
+    this.writer.end();
+  }
+}
+
+const start = now();
+(async () => {
+  const writer = new Writer(path.resolve('database', 'seedFiles', 'test.csv'));
+  for (let i = 0; i < 1e7; i += 1) {
+    const name = faker.commerce.productName();
+    const guitar = {
+      name,
+      productId: i,
+      _id: i,
+    };
+    const res = writer.write(guitar);
+    if (res instanceof Promise) {
+      await res;
+    }
+  }
+})();
+const end = now();
+
+/* const writer = csvWriter({ headers: ['name', 'productId', '_id'] });
 writer.pipe(fs.createWriteStream(path.resolve('database', 'seedFiles', 'test.csv')), { flags: 'a' });
 const generateGuitarData = async (max) => {
   for (let i = 0; i < max; i += 1) {
@@ -27,7 +63,7 @@ const generateGuitarData = async (max) => {
 // Track performance:
 const start = now();
 generateGuitarData(limit);
-const end = now();
+const end = now(); */
 
 const generateData = (dataSize) => {
   let data = '';
