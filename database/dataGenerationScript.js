@@ -4,8 +4,30 @@ const faker = require('faker');
 const now = require('performance-now');
 const colors = require('colors');
 const path = require('path');
+const csvWriter = require('csv-write-stream');
+
 // Data Size:
 const limit = 10000000;
+
+const writer = csvWriter({ headers: ['name', 'productId', '_id'] });
+writer.pipe(fs.createWriteStream(path.resolve('database', 'seedFiles', 'test.csv')), { flags: 'a' });
+const generateGuitarData = async (max) => {
+  for (let i = 0; i < max; i += 1) {
+    const name = faker.commerce.productName();
+    const guitar = {
+      name,
+      productId: i,
+      _id: i,
+    };
+
+    writer.write(guitar);
+  }
+  writer.end();
+};
+// Track performance:
+const start = now();
+generateGuitarData(limit);
+const end = now();
 
 const generateData = (dataSize) => {
   let data = '';
@@ -94,10 +116,6 @@ for (let i = 0; i < 100; i += 1) {
   fileWriteStream.write(`${JSON.stringify(review)}, `);
 } */
 
-
-
-// Track performance:
-// const start = now();
 // generateData(limit);
-// const end = now();
-// console.log(`generateData() took ${end - start} milliseconds`.green);
+
+console.log(`generateData() took ${end - start} milliseconds`.green);
