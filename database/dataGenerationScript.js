@@ -65,6 +65,7 @@ const generateGuitarData = async (l) => {
 const generateReviewsData = async (l) => {
   const start = now();
   const reviewWriter = new Writer(path.resolve('database', 'seedFiles', 'reviews.csv'));
+  // Outer loop mirrors guitar list size:
   for (let i = 0; i < l; i += 1) {
     const randomIndex = faker.random.number({ min: 0, max: 10 });
     for (let j = 0; j < randomIndex; j += 1) {
