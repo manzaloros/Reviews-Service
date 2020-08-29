@@ -16,12 +16,12 @@ const sequelize = new Sequelize({
 class Guitar extends Model { }
 
 Guitar.init({
+  name: {
+    type: DataTypes.STRING,
+  },
   productId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-  },
-  name: {
-    type: DataTypes.STRING,
   },
 }, {
   sequelize,
