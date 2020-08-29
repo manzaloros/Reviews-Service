@@ -8,7 +8,7 @@
     "start": "nodemon server/index.js",
     "build": "webpack -p",
     "build:watch": "webpack -d --watch",
-    "seed": "node database/seeding.js"
+    "seed": "node database/dataGenerationScript.js"
   },
   "repository": {
     "type": "git",
@@ -29,15 +29,21 @@
     "babel": "^6.23.0",
     "babel-loader": "^8.1.0",
     "body-parser": "^1.19.0",
+    "colors": "^1.4.0",
+    "csv-write-stream": "^2.0.0",
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "jquery": "^3.5.1",
     "mongodb": "^3.6.0",
     "mongoose": "^5.9.27",
     "nodemon": "^2.0.4",
+    "performance-now": "^2.1.0",
+    "pg": "^8.3.3",
+    "pg-hstore": "^2.3.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "sequelize": "^6.3.4",
     "styled-components": "^5.1.1"
   },
   "devDependencies": {
