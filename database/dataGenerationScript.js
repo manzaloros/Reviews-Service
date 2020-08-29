@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-await-in-loop */
 const fs = require('fs');
 const faker = require('faker');
 const now = require('performance-now');
@@ -7,7 +7,7 @@ const path = require('path');
 const csvWriter = require('csv-write-stream');
 
 // Data Size:
-const limit = 10000000;
+const limit = 1e7;
 
 class Writer {
   constructor(file) {
@@ -28,12 +28,33 @@ class Writer {
 }
 
 const generateData = async (l) => {
+  // Record start time for function
   const start = now();
   let _id;
-  const guitarWriter = new Writer(path.resolve('database', 'seedFiles', 'guitars.csv'));
-  const reviewWriter = new Writer(path.resolve('database', 'seedFiles', 'reviews.csv'));
 
-  for (let i = 0; i < l; i += 1) {
+  const generateReviewsData = async (id) => {
+    const reviewWriter = new Writer(path.resolve('database', 'seedFiles', 'reviews.csv'));
+    const randomIndex = faker.random.number({ min: 0, max: 10 });
+    for (let i = 0; i < randomIndex; i += 1) {
+      const review = {
+        guitarId: id,
+        rating: faker.random.number({ min: 1, max: 5 }),
+        author: faker.name.findName(),
+        date: faker.date.past(),
+        // id property might not be used on front end:
+        id: faker.random.number({ min: 0, max: 100 }),
+        description: faker.lorem.paragraphs(2),
+      };
+      const reviewResult = reviewWriter.write(review);
+      if (reviewResult instanceof Promise) {
+        await reviewResult;
+      }
+    }
+    reviewWriter.end();
+  };
+
+  const guitarWriter = new Writer(path.resolve('database', 'seedFiles', 'guitars.csv'));
+  for (let i = 1; i <= l; i += 1) {
     _id = i;
     const name = faker.commerce.productName();
     const guitar = {
@@ -41,39 +62,17 @@ const generateData = async (l) => {
       productId: i,
       _id,
     };
-    const review = {
-      _id,
-      rating: faker.random.number({ min: 1, max: 5 }),
-      author: faker.name.findName(),
-      date: faker.date.past(),
-      // id property might not be used on front end:
-      id: faker.random.number({ min: 0, max: 100 }),
-      description: faker.lorem.paragraphs(2),
-    };
+    generateReviewsData(i);
     const res = guitarWriter.write(guitar);
     if (res instanceof Promise) {
       await res;
     }
-    const reviewResult = reviewWriter.write(review);
-    if (reviewResult instanceof Promise) {
-      await reviewResult;
+    if (i === (l * 0.01)) {
+      console.log(`Script ${i}% done.`.blue);
     }
   }
+
   guitarWriter.end();
-  reviewWriter.end();
-
-  // for (let i = 0; i < l; i += 1) {
-  //   const review = {
-  //     _id,
-  //     rating: faker.random.number({ min: 1, max: 5 }),
-  //     author: faker.name.findName(),
-  //     date: faker.date.past(),
-  //     // id property might not be used on front end:
-  //     id: faker.random.number({ min: 0, max: 100 }),
-  //     description: faker.lorem.paragraphs(2),
-  //   };
-  // }
-
   const end = now();
   console.log(`generateData() took ${end - start} milliseconds`.green);
 };
