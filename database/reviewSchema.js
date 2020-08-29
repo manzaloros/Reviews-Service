@@ -28,7 +28,7 @@ Review.init({
     type: DataTypes.STRING,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1234),
   },
 }, {
   sequelize,

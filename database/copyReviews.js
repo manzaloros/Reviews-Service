@@ -22,7 +22,7 @@ const copyGuitars = () => new Promise((resolve, reject) => {
   });
 });
 
-copyGuitars();
+// copyGuitars();
 
 const copyReviews = () => new Promise((resolve, reject) => {
   const stmt = `COPY "Reviews"("guitarId", rating, author, date, description)
@@ -41,5 +41,10 @@ const copyReviews = () => new Promise((resolve, reject) => {
       // returns promise
       resolve(db.sequelize.connectionManager.disconnect(client));
     });
-  });
+  })
+    .catch((err) => {
+      console.log(err);
+    });
 });
+
+copyReviews();
