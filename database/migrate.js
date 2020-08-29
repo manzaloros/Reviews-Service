@@ -1,3 +1,5 @@
-const db = require('./schema.js');
+const guitarSchema = require('./guitarSchema.js');
+const reviewSchema = require('./reviewSchema.js');
 
-db.sequelize.sync();
+guitarSchema.sequelize.sync({ force: true });
+reviewSchema.sequelize.sync();

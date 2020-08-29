@@ -12,6 +12,8 @@ Review.init({
   guitarId: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    model: 'Guitars',
+    key: 'id',
   },
   rating: {
     type: DataTypes.INTEGER,
