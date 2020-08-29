@@ -40,6 +40,7 @@
     "nodemon": "^2.0.4",
     "performance-now": "^2.1.0",
     "pg": "^8.3.3",
+    "pg-copy-streams": "^5.1.1",
     "pg-hstore": "^2.3.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
