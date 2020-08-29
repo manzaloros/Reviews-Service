@@ -4,6 +4,9 @@ const sequelize = new Sequelize({
   host: 'localhost',
   dialect: 'postgres',
   database: 'reviews',
+  define: {
+    timestamps: false,
+  },
 });
 
 class Review extends Model { }

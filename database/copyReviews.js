@@ -17,9 +17,29 @@ const copyGuitars = () => new Promise((resolve, reject) => {
     fileStream.pipe(stream);
     stream.on('finish', () => {
       // returns promise
-      db.sequelize.connectionManager.disconnect(client);
+      resolve(db.sequelize.connectionManager.disconnect(client));
     });
   });
 });
 
 copyGuitars();
+
+const copyReviews = () => new Promise((resolve, reject) => {
+  const stmt = `COPY "Reviews"("guitarId", rating, author, date, description)
+                FROM STDIN
+                DELIMITER ','
+                CSV HEADER`;
+  db.sequelize.connectionManager.getConnection().then((client) => {
+    const stream = client.query(copyFrom(stmt));
+    const fileStream = fs.createReadStream('./seedFiles/reviews.csv');
+    fileStream.on('error', (err) => {
+      client.end();
+      reject(err);
+    });
+    fileStream.pipe(stream);
+    stream.on('finish', () => {
+      // returns promise
+      resolve(db.sequelize.connectionManager.disconnect(client));
+    });
+  });
+});

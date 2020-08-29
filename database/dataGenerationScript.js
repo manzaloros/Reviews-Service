@@ -43,6 +43,7 @@ const generateGuitarData = async (l) => {
   const guitarWriter = new Writer(path.resolve('database', 'seedFiles', 'guitars.csv'));
   for (let i = 1; i <= l; i += 1) {
     _id = i;
+    // TODO: Could be changed to a guitar or musical instrument name:
     const name = faker.commerce.productName();
     const guitar = {
       name,
