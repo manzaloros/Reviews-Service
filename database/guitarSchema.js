@@ -21,10 +21,10 @@ Guitar.init({
   modelName: 'Guitar',
 });
 
-(async () => {
-  await Guitar.sync();
-  console.log("Table for the Guitar model was just created!");
-})();
+// (async () => {
+//   await Guitar.sync();
+//   console.log("Table for the Guitar model was just created!");
+// })();
 
 // (async () => {
 //   try {
@@ -34,3 +34,8 @@ Guitar.init({
 //     console.error('Unable to connect to the database:', error);
 //   }
 // })();
+
+module.exports = {
+  sequelize,
+  Guitar,
+};

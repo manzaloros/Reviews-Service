@@ -29,3 +29,6 @@ aws-keys.json
 
 # Seed Files #
 database/seedFiles/*
+
+# ENV Files #
+*.env
