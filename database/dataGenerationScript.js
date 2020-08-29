@@ -6,9 +6,14 @@ const colors = require('colors');
 const path = require('path');
 const csvWriter = require('csv-write-stream');
 
-// Data Size:
-const limit = 1e7;
+/*
+  Number of Primary Records
+*/
+const limit = 1e2;
 
+/*
+  CSV Writer Class
+ */
 class Writer {
   constructor(file) {
     this.writer = csvWriter();
@@ -27,13 +32,17 @@ class Writer {
   }
 }
 
+/*
+  Data Generation:
+  Records time elapsed, total time, and percentage completed.
+  Generate between 0-10 reviews per guitar
+*/
 const generateData = async (l) => {
-  // Record start time for function
   const start = now();
   let _id;
 
   const generateReviewsData = async (id) => {
-    const reviewWriter = new Writer(path.resolve('database', 'seedFiles', 'reviews.csv'));
+    const reviewWriter = new Writer(path.resolve('database', 'seedFiles', 'reviews.csv'), { flags: 'a' });
     const randomIndex = faker.random.number({ min: 0, max: 10 });
     for (let i = 0; i < randomIndex; i += 1) {
       const review = {
@@ -67,147 +76,15 @@ const generateData = async (l) => {
     if (res instanceof Promise) {
       await res;
     }
-    if (i === (l * 0.01)) {
-      console.log(`Script ${i}% done.`.blue);
+    if (Number.isInteger((i / l) * 100)) {
+      const timeElapsedInMinutes = Math.floor((now() - start) / 60000);
+      console.log(`Seeding script progress: ${(i / l) * 100}%. Time Elapsed:${timeElapsedInMinutes} minutes.`.blue);
     }
   }
 
   guitarWriter.end();
   const end = now();
-  console.log(`generateData() took ${end - start} milliseconds`.green);
+  console.log(`generateData() took ${Math.floor((end - start) / 60000)} minutes`.green);
 };
 
-generateData(1e7);
-
-// Generate between 0-10 reviews per guitar
-/* const generateReviewsData = async () => {
-  const start = now();
-  const writer = new Writer(path.resolve('database', 'seedFiles', 'guitars.csv'));
-  for (let i = 0; i < 1e7; i += 1) {
-    const review = {
-      _id,
-      rating: faker.random.number({ min: 1, max: 5 }),
-      author: faker.name.findName(),
-      date: faker.date.past(),
-      // id property might not be used on front end:
-      id: faker.random.number({ min: 0, max: 100 }),
-      description: faker.lorem.paragraphs(2),
-    };
-    const res = writer.write(review);
-    if (res instanceof Promise) {
-      await res;
-    }
-  }
-  writer.end();
-  const end = now();
-  console.log(`generateData() took ${end - start} milliseconds`.green);
-}; */
-
-/* const writer = csvWriter({ headers: ['name', 'productId', '_id'] });
-writer.pipe(fs.createWriteStream(path.resolve('database', 'seedFiles', 'test.csv')), { flags: 'a' });
-const generateGuitarData = async (max) => {
-  for (let i = 0; i < max; i += 1) {
-    const name = faker.commerce.productName();
-    const guitar = {
-      name,
-      productId: i,
-      _id: i,
-    };
-
-    writer.write(guitar);
-  }
-  writer.end();
-};
-// Track performance:
-const start = now();
-generateGuitarData(limit);
-const end = now(); */
-
-/* const generateData = (dataSize) => {
-  let data = '';
-  let _id = 0;
-  let review = {
-    _id,
-    rating: faker.random.number({ min: 1, max: 5 }),
-    author: faker.name.findName(),
-    date: faker.date.past(),
-    // id property might not be used on front end:
-    id: faker.random.number({ min: 0, max: 100 }),
-    description: faker.lorem.paragraphs(2),
-  };
-  for (let i = 0; i < dataSize; i += 1) {
-    // Reassign _id so that guitar and review are linked
-    _id = i;
-    if (i % 5 === 0) {
-      review = {
-        _id,
-        rating: faker.random.number({ min: 1, max: 5 }),
-        author: faker.name.findName(),
-        date: faker.date.past(),
-        // id property may not be used on front end:
-        id: faker.random.number({ min: 0, max: 100 }),
-        description: faker.lorem.paragraphs(2),
-      };
-    }
-    const guitar = {
-      name: faker.commerce.productName,
-      productId: i,
-      _id: i,
-    };
-    // Commas for easy parsing
-    data += `${JSON.stringify(review)}, ${JSON.stringify(guitar)}, `;
-  }
-
-  // Clear file first
-  fs.writeFile('database/seedFiles/test.txt', '', (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log('File Cleared!'.blue);
-    fs.writeFile('database/seedFiles/test.txt', data, (error) => {
-      if (error) {
-        throw error;
-      }
-      const stats = fs.statSync('database/seedFiles/test.txt');
-      const fileSizeInBytes = stats.size;
-      console.log(`The file has been saved! File size is ${fileSizeInBytes / 1000000.0} MBs`.red);
-    });
-  });
-}; */
-
-/* let data = '';
-let _id = 0;
-let review = {
-  _id,
-  rating: faker.random.number({ min: 1, max: 5 }),
-  author: faker.name.findName(),
-  date: faker.date.past(),
-  // id property might not be used on front end:
-  id: faker.random.number({ min: 0, max: 100 }),
-  description: faker.lorem.paragraphs(2),
-};
-const fileWriteStream = fs.createWriteStream(path.resolve('database', 'seedFiles', 'test.txt'));
-for (let i = 0; i < 100; i += 1) {
-  // Reassign _id so that guitar and review are linked
-  _id = i;
-  if (i % 5 === 0) {
-    review = {
-      _id,
-      rating: faker.random.number({ min: 1, max: 5 }),
-      author: faker.name.findName(),
-      date: faker.date.past(),
-      // id property may not be used on front end:
-      id: faker.random.number({ min: 0, max: 100 }),
-      description: faker.lorem.paragraphs(2),
-    };
-  }
-  const guitar = {
-    name: faker.commerce.productName,
-    productId: i,
-    _id: i,
-  };
-  // Commas for easy parsing
-  fileWriteStream.write(`${JSON.stringify(review)}, `);
-} */
-
-// generateData(limit);
+generateData(limit);
