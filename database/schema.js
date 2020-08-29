@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
+
 const sequelize = new Sequelize({
   host: 'localhost',
   dialect: 'postgres',
@@ -23,7 +24,7 @@ Guitar.init({
 (async () => {
   await Guitar.sync();
   console.log("Table for the Guitar model was just created!");
-})()
+})();
 
 // (async () => {
 //   try {
