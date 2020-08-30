@@ -2,6 +2,9 @@ const copyFrom = require('pg-copy-streams').from;
 const fs = require('fs');
 const db = require('./guitarSchema.js');
 
+/*
+ * Copy guitars from CSV to database
+ */
 const copyGuitars = () => new Promise((resolve, reject) => {
   const stmt = `COPY "Guitars"(name, "productId", id)
                  FROM STDIN
@@ -22,8 +25,11 @@ const copyGuitars = () => new Promise((resolve, reject) => {
   });
 });
 
-// copyGuitars();
+copyGuitars();
 
+/*
+ * Copy reviews from CSV to database
+ */
 const copyReviews = () => new Promise((resolve, reject) => {
   const stmt = `COPY "Reviews"("guitarId", rating, author, date, description)
                 FROM STDIN
@@ -41,10 +47,7 @@ const copyReviews = () => new Promise((resolve, reject) => {
       // returns promise
       resolve(db.sequelize.connectionManager.disconnect(client));
     });
-  })
-    .catch((err) => {
-      console.log(err);
-    });
+  });
 });
 
-copyReviews();
+// copyReviews();
