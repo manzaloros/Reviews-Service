@@ -9,9 +9,13 @@ const db = require('../database/db');
  *  Response needs to return an guitar object with an _id property
  *  linked to the following GET request listingId
  */
-app.get('*/reviews/api/item/endpoint/:listingId', (req, res) => {
-  db.
-    res.send(req.params.listingId);
+app.get('*/reviews/api/item/endpoint/:listingId', async (req, res) => {
+  try {
+    const guitar = await db.findGuitar(req.params.listingId);
+    res.send(guitar);
+  } catch (err) {
+    res.status(500);
+  }
 });
 
 /*
