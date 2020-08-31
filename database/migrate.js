@@ -1,4 +1,4 @@
-const guitarSchema = require('./guitarSchema.js');
+const { guitarSchema, sequelize } = require('./guitarSchema.js');
 const reviewSchema = require('./reviewSchema.js');
 
 /*
@@ -7,4 +7,7 @@ const reviewSchema = require('./reviewSchema.js');
 guitarSchema.sequelize.sync(({ force: true }))
   .then(() => {
     reviewSchema.sequelize.sync({ force: true });
+  })
+  .finally(() => {
+    sequelize.close();
   });
