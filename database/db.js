@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const { Guitar } = require('./guitarSchema');
+const { Review } = require('./reviewSchema');
 
 const sequelize = new Sequelize({
   host: process.env.DB_HOST || 'localhost',
@@ -25,6 +26,20 @@ const findGuitar = async (id) => {
       },
     });
     return guitar;
+  } catch (err) {
+    return err;
+  }
+};
+
+/*
+ *  Find reviews that match guitar id
+ *  TODO: This, and rest of DB methods
+ */
+const findMatchingReviews = async (id) => {
+  try {
+    const reviews = await Review.findAll({
+
+    });
   } catch (err) {
     return err;
   }
