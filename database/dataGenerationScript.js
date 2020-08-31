@@ -43,6 +43,7 @@ const generateGuitarData = async (l) => {
   const guitarWriter = new Writer(path.resolve('database', 'seedFiles', 'guitars.csv'));
   for (let i = 1; i <= l; i += 1) {
     _id = i;
+    // TODO: Could be changed to a guitar or musical instrument name:
     const name = faker.commerce.productName();
     const guitar = {
       name,
@@ -65,6 +66,7 @@ const generateGuitarData = async (l) => {
 const generateReviewsData = async (l) => {
   const start = now();
   const reviewWriter = new Writer(path.resolve('database', 'seedFiles', 'reviews.csv'));
+  // Outer loop mirrors guitar list size:
   for (let i = 0; i < l; i += 1) {
     const randomIndex = faker.random.number({ min: 0, max: 10 });
     for (let j = 0; j < randomIndex; j += 1) {
@@ -76,7 +78,7 @@ const generateReviewsData = async (l) => {
         author: faker.name.findName(),
         date: faker.date.past(),
         // id property might not be used on front end:
-        id: faker.random.number({ min: 0, max: 100 }),
+        // id: faker.random.number({ min: 0, max: 100 }),
         description: faker.lorem.paragraphs(2),
       };
       const reviewResult = reviewWriter.write(review);

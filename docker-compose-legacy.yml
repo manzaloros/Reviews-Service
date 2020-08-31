@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  reviews:
+    build: .
+    image: node:12-alpine
+    command: sh -c "npm install && npm run build"
+    ports:
+      - "80:2625"
+    working_dir: /seller-reviews
+    volumes:
+      - ./:/seller-reviews
+    restart: always
+    environment:
+      MONGODB_URL: mongodb://reburke-reviews:reviews@mongo:27017/reviewsdb?authSource=admin
+    networks:
+      - reviews-network
+    command: sh -c "npm prune --production"
+    command: sh -c "npm run seed && npm start"
+  mongo:
+    image: mongo:4.2.7
+    volumes:
+      - reviews-mongo-data:/data/db
+    restart: always
+    networks:
+      - reviews-network
+
+volumes:
+  reviews-mongo-data:
+
+networks:
+  reviews-network:
+    driver: bridge
