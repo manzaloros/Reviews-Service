@@ -18,11 +18,11 @@ models.setDirectory(__dirname).bind(
       },
       migration: 'safe',
       udts: {
-        reviews: {
+        review: {
           rating: 'int',
-          author: 'string',
-          date: 'string',
-          description: 'string',
+          author: 'text',
+          date: 'text',
+          description: 'text',
         },
       },
     },
@@ -55,7 +55,11 @@ models.setDirectory(__dirname).bind(
         return;
       }
       console.log('Guitar loaded!');
+      models.close((e) => {
+        if (e) {
+          console.log(e);
+        }
+      });
     });
-    return;
   },
 );

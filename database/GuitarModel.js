@@ -6,7 +6,10 @@ module.exports = {
   fields: {
     name: 'text',
     productId: 'int',
-    reviews: 'list<FROZEN <review>>',
+    reviews: {
+      type: 'frozen',
+      typeDef: '<list<review>>',
+    },
   },
   key: ['productId'],
 };
