@@ -1,5 +1,8 @@
 const models = require('express-cassandra');
 
+/*
+ *  Creates tables based on models found in this directory:
+ */
 models.setDirectory(__dirname).bind(
   {
     clientOptions: {
@@ -26,7 +29,6 @@ models.setDirectory(__dirname).bind(
     });
     guitar.save((error) => {
       if (error) {
-        console.log("From error save!")
         console.log(error);
         return;
       }
