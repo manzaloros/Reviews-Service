@@ -6,12 +6,7 @@ module.exports = {
   fields: {
     name: 'text',
     productId: 'int',
-    reviews: {
-      rating: 'int',
-      author: 'string',
-      date: 'string',
-      description: 'string',
-    },
+    reviews: 'list<FROZEN <review>>',
   },
   key: ['productId'],
 };
