@@ -32,16 +32,11 @@ models.setDirectory(__dirname).bind(
     if (err) {
       return console.log(err);
     }
-    const query = `COPY guitar (name, productId, _id) FROM
-                  '~/Documents/projects/hrr47-sdc-omalley.nosync/Reviews-Service/database/seedFiles/guitars.csv' WITH
-                  DELIMITER=',' AND
-                  HEADER=TRUE`;
-    models.instance.Guitar.execute_query(query, {}, (error, result) => {
-      if (error) {
-        console.log("Hello from if Error!")
-        return console.log(error);
+    // Close all ORM connections
+    models.close((e) => {
+      if (e) {
+        return console.log(e);
       }
-      return console.log(result);
     });
   },
 );
@@ -79,5 +74,3 @@ models.setDirectory(__dirname).bind(
 //     description: 'Hello Willie Dustice',
 //   },
 // ],
-
-// COPY guitar (name, productId, _id) FROM '~/Documents/projects/hrr47-sdc-omalley.nosync/Reviews-Service/database/seedFiles/guitars.csv' WITH DELIMITER=',' AND HEADER=TRUE;

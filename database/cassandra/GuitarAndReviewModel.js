@@ -16,13 +16,17 @@
 // };
 
 /*
- *  Guitar Model for separate CSVs and no nested reviews:
+ *  Guitar and Review model:
  */
 module.exports = {
   fields: {
-    name: 'text',
+    id: 'int',
     productId: 'int',
-    _id: 'int',
+    author: 'text',
+    date: 'text',
+    description: 'text',
+    name: 'text',
+    rating: 'int',
   },
-  key: ['productId'],
+  key: ['id'],
 };
