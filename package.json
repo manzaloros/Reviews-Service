@@ -9,6 +9,8 @@
     "build": "webpack -p",
     "build:watch": "webpack -d --watch",
     "seed": "node database/dataGenerationScript.js",
+    "copyPgToCsv": "node database/postgres/copyToCSV.js",
+    "copyFromCsv": "node database/copyToDatabase.js",
     "migrate": "node ./database/migrate.js"
   },
   "repository": {

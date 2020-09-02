@@ -21,8 +21,12 @@
 - Node.js v12.x
   - https://nodejs.org/
 
-- MongoDB v4.2.7
-  - https://www.mongodb.com/
+- Postgres
+
+- Cassandra
+
+<!-- - MongoDB v4.2.7
+  - https://www.mongodb.com/ -->
 
 ## Development
 
@@ -44,6 +48,15 @@ DELETE all reviews for a product
 
 ```sh
 npm install
+```
+### Database Setup
+
+Postgres join table copy from tables to single CSV:
+node database/postgres/copyToCSV.js
+
+Cassandra copy from CSV file:
+```sh
+COPY guitarandreview(id,"productId",author,date,description,name,rating) FROM '~/Documents/projects/hrr47-sdc-omalley.nosync/Reviews-Service/database/seedFiles/guitarsAndReviews.csv' WITH DELIMITER=',' AND HEADER=TRUE;
 ```
 
 ### Seeding Database

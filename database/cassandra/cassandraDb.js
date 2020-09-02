@@ -33,10 +33,11 @@ models.setDirectory(__dirname).bind(
       return console.log(err);
     }
     // Close all ORM connections
-    models.close((e) => {
+    return models.close((e) => {
       if (e) {
         return console.log(e);
       }
+      return console.log('Cassandra tables created.');
     });
   },
 );
