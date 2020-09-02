@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const { Guitar } = require('./guitarSchema');
-const { Review } = require('./reviewSchema');
+const { Guitar } = require('./postgres/guitarSchema');
+const { Review } = require('./postgres/reviewSchema');
 
 const sequelize = new Sequelize({
   host: process.env.DB_HOST || 'localhost',
