@@ -23,8 +23,13 @@ app.get('*/reviews/api/item/endpoint/:listingId', async (req, res) => {
  *  Response needs to return an array of review objects with all properties
  *  Client sets its state with this array
  */
-app.get('*/reviews/api/item/:listingId/reviews', (req, res) => {
-
+app.get('*/reviews/api/item/:guitarId/reviews', async (req, res) => {
+  try {
+    const reviews = await db.findMatchingReviews(req.params.guitarId);
+    res.send(reviews);
+  } catch (err) {
+    res.status(500);
+  }
 });
 
 /*

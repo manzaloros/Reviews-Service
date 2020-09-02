@@ -16,7 +16,13 @@ const sequelize = new Sequelize({
 });
 
 /*
- *  Find guitar
+ *  Relations
+ */
+// Review.belongsTo(Guitar);
+// Guitar.hasMany(Review);
+
+/*
+ *  Find a single guitar given an id
  */
 const findGuitar = async (id) => {
   try {
@@ -35,16 +41,19 @@ const findGuitar = async (id) => {
  *  Find reviews that match guitar id
  *  TODO: This, and rest of DB methods
  */
-const findMatchingReviews = async (id) => {
+const findMatchingReviews = async (guitarId) => {
   try {
     const reviews = await Review.findAll({
-
+      where: {
+        guitarId,
+      },
     });
+    return reviews;
   } catch (err) {
     return err;
   }
 };
 
 module.exports = {
-  sequelize, DataTypes, Model, findGuitar,
+  sequelize, DataTypes, Model, findGuitar, findMatchingReviews,
 };
