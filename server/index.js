@@ -15,6 +15,7 @@ app.use('/dist', express.static(path.join(__dirname, './../dist')));
  */
 app.get('*/reviews/api/item/endpoint/:id', async (req, res) => {
   try {
+    console.log("GET request recieved");
     // Client API expects an object, return first object in array:
     const [guitar] = await db.findGuitar(req.params.id);
     res.send(guitar);

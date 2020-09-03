@@ -58,7 +58,7 @@ npm run seed
 
 CSV will be seeded with x item listings.
 
-<!--> NOTE: Before seeding, go to ```database/index.js``` and uncomment out
+<!-- NOTE: Before seeding, go to ```database/index.js``` and uncomment out
 > the mongoDB URL depending on if your service is local or deployed. -->
 
 ### Database Setup

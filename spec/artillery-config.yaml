@@ -1,0 +1,28 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+      name: Ramp up load
+    - duration: 600
+      arrivalRate: 50
+      name: Sustained load
+  payload:
+    # Load search ids from an external CSV file and make them available
+    # to virtual user scenarios as variable "id":
+    path: "artilleryIds.csv"
+    fields:
+      - "id"
+scenarios:
+  # We define one scenario:
+  - name: "Search"
+    flow:
+      # Get the details of the product:
+      - get:
+          url: "/reviews/api/item/{{ id }}/reviews"
+      # Pause for 3 seconds:
+      - think: 3
