@@ -18,7 +18,7 @@ app.get('*/reviews/api/item/endpoint/:id', async (req, res) => {
     // Client API expects an object, return first object in array:
     const [guitar] = await db.findGuitar(req.params.id);
     res.send(guitar);
-  } catch (err) {
+  } catch {
     res.status(500);
   }
 });
@@ -31,7 +31,7 @@ app.get('*/reviews/api/item/:guitarId/reviews', async (req, res) => {
   try {
     const reviews = await db.findMatchingReviews(req.params.guitarId);
     res.send(reviews);
-  } catch (err) {
+  } catch {
     res.status(500);
   }
 });
