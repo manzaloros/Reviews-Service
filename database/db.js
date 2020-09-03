@@ -16,12 +16,6 @@ const sequelize = new Sequelize({
 });
 
 /*
- *  Relations
- */
-// Review.belongsTo(Guitar);
-// Guitar.hasMany(Review);
-
-/*
  *  Find a single guitar given an id
  */
 const findGuitar = async (id) => {
@@ -39,7 +33,6 @@ const findGuitar = async (id) => {
 
 /*
  *  Find reviews that match guitar id
- *  TODO: This, and rest of DB methods
  */
 const findMatchingReviews = async (guitarId) => {
   try {

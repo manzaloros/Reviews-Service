@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 require('newrelic');
 
 const app = express();
@@ -6,13 +7,16 @@ const port = process.env.PORT || 3000;
 // Do not need to specify index.js in database?
 const db = require('../database/db');
 
+app.use('/item/:user', express.static(path.join(__dirname, './../public')));
+app.use('/dist', express.static(path.join(__dirname, './../dist')));
 /*
  *  Response needs to return an guitar object with an _id property
  *  linked to the following GET request listingId
  */
-app.get('*/reviews/api/item/endpoint/:listingId', async (req, res) => {
+app.get('*/reviews/api/item/endpoint/:id', async (req, res) => {
   try {
-    const guitar = await db.findGuitar(req.params.listingId);
+    // Client API expects an object, return first object in array:
+    const [guitar] = await db.findGuitar(req.params.id);
     res.send(guitar);
   } catch (err) {
     res.status(500);
@@ -35,8 +39,13 @@ app.get('*/reviews/api/item/:guitarId/reviews', async (req, res) => {
 /*
  *  Needs to return an {name: <guitar name>} object.
  */
-app.get('*/reviews/api/item/:listingId', (req, res) => {
-
+app.get('*/reviews/api/item/:id', async (req, res) => {
+  try {
+    const guitar = await db.findGuitar(req.params.id);
+    res.send(guitar);
+  } catch {
+    res.status(500);
+  }
 });
 
 app.listen(port, () => {

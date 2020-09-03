@@ -3,7 +3,8 @@
 
 ## Related Projects
 
-> To Do
+> Sidebar Service: https://github.com/HRR47-SDC-OMalley/sidebar-service
+> Main Photo Service: https://github.com/HRR47-SDC-OMalley/main-photo
 
 ## Table of Contents
 
@@ -14,16 +15,17 @@
 5. [Deployment](#Deployment)
 
 ## Usage
-> Example URL: http://localhost:2625/item/24
+<!-- Legacy port: 2625 -->
+> Example URL: http://localhost:3000/item/24
 
 ## Requirements
 
 - Node.js v12.x
   - https://nodejs.org/
 
-- Postgres
+- Postgres v12.4
 
-- Cassandra
+- Cassandra v3.11.8
 
 <!-- - MongoDB v4.2.7
   - https://www.mongodb.com/ -->
@@ -49,27 +51,28 @@ DELETE all reviews for a product
 ```sh
 npm install
 ```
-### Database Setup
-
-Postgres join table copy from tables to single CSV:
-node database/postgres/copyToCSV.js
-
-Cassandra copy from CSV file:
-```sh
-COPY guitarandreview(id,"productId",author,date,description,name,rating) FROM '~/Documents/projects/hrr47-sdc-omalley.nosync/Reviews-Service/database/seedFiles/guitarsAndReviews.csv' WITH DELIMITER=',' AND HEADER=TRUE;
-```
-
-### Seeding Database
+### Seeding CSV File
 
 ```sh
 npm run seed
 ```
 
-Database will always be seeded with 100 item listings and 50 sellers.
-
+CSV will be seeded with x item listings.
+<!--
 > NOTE: Before seeding, go to ```database/index.js``` and uncomment out
-> the mongoDB URL depending on if your service is local or deployed.
+> the mongoDB URL depending on if your service is local or deployed. -->
 
+### Database Setup
+
+Postgres join table copy from tables to single CSV:
+```sh
+node database/postgres/copyToCSV.js
+```
+
+Cassandra copy from CSV file:
+```sh
+COPY guitarandreview(id,"productId",author,date,description,name,rating) FROM '~/Documents/projects/hrr47-sdc-omalley.nosync/Reviews-Service/database/seedFiles/guitarsAndReviews.csv' WITH DELIMITER=',' AND HEADER=TRUE;
+```
 ### Testing
 
 ```sh
