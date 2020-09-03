@@ -32,3 +32,6 @@ database/seedFiles/*
 
 # ENV Files #
 *.env
+
+# New Relic API key #
+newrelic.js
