@@ -31,6 +31,12 @@ Review.init({
     type: DataTypes.STRING(1234),
   },
 }, {
+  indexes: [{
+    name: 'guitarId_index',
+    using: 'BTREE',
+    fields: ['guitarId'],
+  },
+  ],
   sequelize,
   modelName: 'Review',
 });

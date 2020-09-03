@@ -2,7 +2,7 @@
 const fs = require('fs');
 const faker = require('faker');
 const now = require('performance-now');
-const colors = require('colors');
+require('colors');
 const path = require('path');
 const csvWriter = require('csv-write-stream');
 

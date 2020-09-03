@@ -173,8 +173,8 @@ class ReviewList extends React.Component {
     $.get(`/reviews/api/item/endpoint/${endpoint}`, (data) => {
       const currentItem = data;
       // GETs reviews for current item id
-      // Calculates average rating
-      $.get(`/reviews/api/item/${currentItem._id}/reviews`, (data) => {
+      // Calculates average rating. Changed _id to id:
+      $.get(`/reviews/api/item/${currentItem.id}/reviews`, (data) => {
         let averageRating = 0;
         if (data.length !== 0) {
           for (let i = 0; i < data.length; i += 1) {
@@ -220,9 +220,10 @@ class ReviewList extends React.Component {
       });
     } else {
       /* Data === guitar object.
-      Input === array of review objects, need the guitar name property.
+       * Input === array of review objects, need the guitar name property.
+       * Changed .listing_id to .id
        */
-      const currentId = input[index].listing_id;
+      const currentId = input[index].id;
       $.get(`/reviews/api/item/${currentId}`, (data) => {
         const temp = input;
         /*

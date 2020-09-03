@@ -1,9 +1,10 @@
 # seller-reviews
-> For displaying a seller's reviews. Instead of displaying an individual item's reviews, this module displays the reviews that the item's seller has received.
+> Displays reviews that an item's seller has received.
 
 ## Related Projects
 
-> To Do
+> Sidebar Service: https://github.com/HRR47-SDC-OMalley/sidebar-service
+> Main Photo Service: https://github.com/HRR47-SDC-OMalley/main-photo
 
 ## Table of Contents
 
@@ -14,48 +15,63 @@
 5. [Deployment](#Deployment)
 
 ## Usage
-> Example URL: http://localhost:2625/item/24
+<!-- Legacy port: 2625 -->
+> READ: http://localhost:3000/item/24
+
+> POST a new product at a new product id: http://localhost:3000/reviews/api/item/endpoint/:listingId
+>input: {string name, string condition, string category, string style, string brand, boolean asDescribed, string description, string seller}
+
+>PUT (update) an existing seller with a provided object: http://localhost:3000/reviews/api/seller/
+>input: name to update, updates {[] listings, [] listings_counts, [] reviews}
+
+>DELETE all reviews for a product: http://localhost:3000/reviews/api/item/:listingId/reviews
+
 
 ## Requirements
 
 - Node.js v12.x
   - https://nodejs.org/
 
-- MongoDB v4.2.7
-  - https://www.mongodb.com/
+- Postgres v12.4
+  - https://www.postgresql.org/download/
+
+- Cassandra v3.11.8
+  - https://cassandra.apache.org/
+
+<!-- - MongoDB v4.2.7
+  - https://www.mongodb.com/ -->
 
 ## Development
 
 Execute all these commands from the repository's root directory.
-
-### API Endpoints
-POST a new product at a new product id
-*/reviews/api/item/endpoint/:listingId
-input: {string name, string condition, string category, string style, string brand, boolean asDescribed, string description, string seller}
-
-PUT (update) an existing seller with a provided object
-*/reviews/api/seller/
-input: name to update, updates {[] listings, [] listings_counts, [] reviews}
-
-DELETE all reviews for a product
-*/reviews/api/item/:listingId/reviews
 
 ### Installing Dependencies
 
 ```sh
 npm install
 ```
-
-### Seeding Database
+### Seeding CSV File
 
 ```sh
 npm run seed
 ```
 
-Database will always be seeded with 100 item listings and 50 sellers.
+CSV will be seeded with x item listings.
 
-> NOTE: Before seeding, go to ```database/index.js``` and uncomment out
-> the mongoDB URL depending on if your service is local or deployed.
+<!--> NOTE: Before seeding, go to ```database/index.js``` and uncomment out
+> the mongoDB URL depending on if your service is local or deployed. -->
+
+### Database Setup
+
+Postgres join table copy from tables to single CSV:
+```sh
+node database/postgres/copyToCSV.js
+```
+
+Cassandra copy from CSV file:
+```sh
+COPY guitarandreview(id,"productId",author,date,description,name,rating) FROM '~/Documents/projects/hrr47-sdc-omalley.nosync/Reviews-Service/database/seedFiles/guitarsAndReviews.csv' WITH DELIMITER=',' AND HEADER=TRUE;
+```
 
 ### Testing
 
