@@ -1,10 +1,10 @@
 {
   "name": "seller-reviews",
   "version": "1.0.0",
-  "description": "For seller reviews (and item specs if we have time).",
+  "description": "Seller Reviews Module.",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "$(npm bin)/artillery run spec/artillery-config.yaml",
     "start": "nodemon server/index.js",
     "build": "webpack -p",
     "build:watch": "webpack -d --watch",
@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/HRR47-FEC-Burke/seller-reviews.git"
   },
-  "author": "",
+  "author": "Zach Mansell",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/HRR47-FEC-Burke/seller-reviews/issues"
@@ -76,6 +76,7 @@
     "jest": "^26.3.0",
     "jest-enzyme": "^7.1.2",
     "sinon": "^9.0.2",
+    "tweed-random": "^1.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   }

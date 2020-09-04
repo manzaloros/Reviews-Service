@@ -8,7 +8,7 @@ config:
       arrivalRate: 5
       rampTo: 1000
       name: Ramp up load
-    - duration: 600
+    - duration: 300
       arrivalRate: 1000
       name: Sustained load
   processor:

@@ -1,8 +1,14 @@
-const faker = require('faker');
+/*
+ *  Generate random numbers from 1 to 1e7 weighted towards higher numbers:
+ */
+const RNG = require('tweed-random');
+
+const generator = new RNG('willie dustice');
 
 const generateRandomId = (userContext, events, done) => {
-  const randomId = String(faker.random.number({ min: 1, max: 1e7 }));
-  userContext.vars.id = randomId;
+  const highNumberProbability = generator.clone().weightBack();
+  const randomHighId = highNumberProbability.randomInt(1, 1e7);
+  userContext.vars.id = randomHighId;
   return done();
 };
 
