@@ -7,7 +7,7 @@ require('newrelic');
 
 const app = express();
 // Do I not need to specify index.js in database?
-const db = require('../database/db');
+const db = require('../database');
 
 app.use('/item/:user', express.static(path.join(__dirname, './../public')));
 app.use('/dist', express.static(path.join(__dirname, './../dist')));
@@ -20,8 +20,9 @@ app.get('*/reviews/api/item/endpoint/:id', async (req, res) => {
     // Client API expects an object, return first object in array:
     const [guitar] = await db.findGuitar(req.params.id);
     res.send(guitar);
-  } catch {
-    res.status(500);
+  } catch (error) {
+    // What to do with error?
+    res.status(500).end(error);
   }
 });
 
@@ -33,8 +34,9 @@ app.get('*/reviews/api/item/:guitarId/reviews', async (req, res) => {
   try {
     const reviews = await db.findMatchingReviews(req.params.guitarId);
     res.send(reviews);
-  } catch {
-    res.status(500);
+  } catch (error) {
+    // What to do with error?
+    res.status(500).end(error);
   }
 });
 
@@ -45,8 +47,9 @@ app.get('*/reviews/api/item/:id', async (req, res) => {
   try {
     const guitar = await db.findGuitar(req.params.id);
     res.send(guitar);
-  } catch {
-    res.status(500);
+  } catch (error) {
+    // What to do with error?
+    res.status(500).end(error);
   }
 });
 
