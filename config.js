@@ -1,8 +1,11 @@
-const dotenv = require('dotenv');
-
-dotenv.config();
+/*
+ * Module to gather environment variables
+ */
 module.exports = {
-  endpoint: process.env.API_URL,
-  masterKey: process.env.API_KEY,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  pgHost: process.env.POSTGRES_HOST,
+  pgPort: process.env.POSTGRES_PORT,
+  numberOfRecords: process.env.NUMBER_OF_RANDOM_RECORDS,
   port: process.env.PORT,
 };

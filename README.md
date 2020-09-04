@@ -88,7 +88,7 @@ npm run build:watch
 ```
 
 ### Node Express Server
-
+> Starts nodemon and loads environment variables
 ```sh
 npm start
 ```

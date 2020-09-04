@@ -1,10 +1,11 @@
 const express = require('express');
 const path = require('path');
+const { port } = require('../config');
+// Metrics:
 require('newrelic');
 
 const app = express();
-const port = process.env.PORT || 3000;
-// Do not need to specify index.js in database?
+// Do I not need to specify index.js in database?
 const db = require('../database/db');
 
 app.use('/item/:user', express.static(path.join(__dirname, './../public')));

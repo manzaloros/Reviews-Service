@@ -1,12 +1,13 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const { Guitar } = require('./postgres/guitarSchema');
 const { Review } = require('./postgres/reviewSchema');
+const { pgHost, pgPort } = require('../config');
 
 const sequelize = new Sequelize({
-  host: process.env.DB_HOST || 'localhost',
+  host: pgHost,
   dialect: 'postgres',
   database: 'reviews',
-  port: process.env.DB_PORT || 5432,
+  port: pgPort,
   dialectOptions: {
     ssl: process.env.DB_SSL === 'true',
   },

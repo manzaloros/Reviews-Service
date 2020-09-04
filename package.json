@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "$(npm bin)/artillery run spec/artillery-config.yaml",
-    "start": "nodemon server/index.js",
+    "start": "nodemon -r dotenv/config server/index.js",
     "build": "webpack -p",
     "build:watch": "webpack -d --watch",
     "seed": "node database/dataGenerationScript.js",
-    "copyPgToCsv": "node database/postgres/copyToCSV.js",
-    "copyFromCsv": "node database/copyToDatabase.js",
-    "migrate": "node ./database/migrate.js"
+    "copypgtocsv": "node database/postgres/copyToCSV.js",
+    "copyfromcsv": "node database/copyToDatabase.js",
+    "createpgtables": "node ./database/postgres/createPgTables.js"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,6 @@
     "cassandra-driver": "^4.6.0",
     "colors": "^1.4.0",
     "csv-write-stream": "^2.0.0",
-    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-cassandra": "^2.4.0",
     "faker": "^4.1.0",
@@ -60,6 +59,7 @@
     "@babel/preset-react": "^7.10.4",
     "artillery": "^1.6.1",
     "babel-plugin-styled-components": "^1.11.1",
+    "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.3",
     "eslint": "^7.6.0",
