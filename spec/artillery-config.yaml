@@ -17,10 +17,12 @@ scenarios:
   # We define one scenario:
   - name: "Search"
     flow:
-      # Get the details of the product:
+      # Generate a back-weighted random number
       - function: "generateRandomId"
+      # Get a product at an id
+      # Change for testing service / proxy
       - get:
-          url: "/reviews/api/item/{{ id }}/reviews"
+          url: "/item/ {{ id }}"
       # Pause for 3 seconds:
       - think: 3
       # - log: "Sent a request to /reviews/api/item/{{ id }}/reviews"
