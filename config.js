@@ -8,4 +8,5 @@ module.exports = {
   pgPort: process.env.POSTGRES_PORT,
   numberOfRecords: process.env.NUMBER_OF_RANDOM_RECORDS,
   port: process.env.PORT,
+  url: process.env.URL,
 };

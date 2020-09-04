@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
-const { port } = require('../config');
+const { port, url } = require('../config.js');
+
 // Metrics:
 require('newrelic');
 
@@ -50,5 +51,5 @@ app.get('*/reviews/api/item/:id', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Reviews Service listening at http://localhost:${port}`);
+  console.log(`Reviews Service listening at http://${url}:${port}`);
 });
