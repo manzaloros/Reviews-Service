@@ -6,23 +6,21 @@ config:
       name: Warm up
     - duration: 120
       arrivalRate: 5
-      rampTo: 50
+      rampTo: 1000
       name: Ramp up load
     - duration: 600
-      arrivalRate: 50
+      arrivalRate: 1000
       name: Sustained load
-  payload:
-    # Load search ids from an external CSV file and make them available
-    # to virtual user scenarios as variable "id":
-    path: "artilleryIds.csv"
-    fields:
-      - "id"
+  processor:
+    "./artilleryIdGeneration.js"
 scenarios:
   # We define one scenario:
   - name: "Search"
     flow:
       # Get the details of the product:
+      - function: "generateRandomId"
       - get:
           url: "/reviews/api/item/{{ id }}/reviews"
       # Pause for 3 seconds:
       - think: 3
+      # - log: "Sent a request to /reviews/api/item/{{ id }}/reviews"
