@@ -1,6 +1,6 @@
 const copyFrom = require('pg-copy-streams').from;
 const fs = require('fs');
-const db = require('./guitarSchema.js');
+const db = require('../index');
 
 /*
  * Copy guitars from CSV to database
