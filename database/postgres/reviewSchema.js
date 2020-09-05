@@ -1,9 +1,11 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
+const { pgHost, pgPort } = require('../../config');
 
 const sequelize = new Sequelize({
-  host: 'localhost',
+  host: pgHost,
   dialect: 'postgres',
   database: 'reviews',
+  port: pgPort,
   define: {
     timestamps: false,
   },
