@@ -21,6 +21,7 @@ const copyGuitars = () => new Promise((resolve, reject) => {
     fileStream.pipe(stream);
     stream.on('finish', () => {
       // returns promise
+      console.log('Finished copying guitars from CSV.');
       resolve(db.sequelize.connectionManager.disconnect(client));
     });
   });
@@ -46,6 +47,7 @@ const copyReviews = () => new Promise((resolve, reject) => {
     fileStream.pipe(stream);
     stream.on('finish', () => {
       // returns promise
+      console.log('Finished copying reviews from CSV.');
       resolve(db.sequelize.connectionManager.disconnect(client));
     });
   });
