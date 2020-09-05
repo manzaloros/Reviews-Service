@@ -13,7 +13,7 @@ const copyGuitars = () => new Promise((resolve, reject) => {
                  CSV HEADER`;
   db.sequelize.connectionManager.getConnection().then((client) => {
     const stream = client.query(copyFrom(stmt));
-    const fileStream = fs.createReadStream(path.resolve('..', 'seedFiles', 'guitars.csv'));
+    const fileStream = fs.createReadStream(path.resolve(__dirname, '..', 'seedFiles', 'guitars.csv'));
     fileStream.on('error', (err) => {
       client.end();
       reject(err);
@@ -38,7 +38,7 @@ const copyReviews = () => new Promise((resolve, reject) => {
                 CSV HEADER`;
   db.sequelize.connectionManager.getConnection().then((client) => {
     const stream = client.query(copyFrom(stmt));
-    const fileStream = fs.createReadStream(path.resolve('..', 'seedFiles', 'reviews.csv'));
+    const fileStream = fs.createReadStream(path.resolve(__dirname, '..', 'seedFiles', 'reviews.csv'));
     fileStream.on('error', (err) => {
       client.end();
       reject(err);
