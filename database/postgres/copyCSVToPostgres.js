@@ -1,5 +1,6 @@
 const copyFrom = require('pg-copy-streams').from;
 const fs = require('fs');
+const path = require('path');
 const db = require('../index');
 
 /*
@@ -12,7 +13,7 @@ const copyGuitars = () => new Promise((resolve, reject) => {
                  CSV HEADER`;
   db.sequelize.connectionManager.getConnection().then((client) => {
     const stream = client.query(copyFrom(stmt));
-    const fileStream = fs.createReadStream('./seedFiles/guitars.csv');
+    const fileStream = fs.createReadStream(path.resolve('..', 'seedFiles', 'guitars.csv'));
     fileStream.on('error', (err) => {
       client.end();
       reject(err);
@@ -37,7 +38,7 @@ const copyReviews = () => new Promise((resolve, reject) => {
                 CSV HEADER`;
   db.sequelize.connectionManager.getConnection().then((client) => {
     const stream = client.query(copyFrom(stmt));
-    const fileStream = fs.createReadStream('./seedFiles/reviews.csv');
+    const fileStream = fs.createReadStream(path.resolve('..', 'seedFiles', 'reviews.csv'));
     fileStream.on('error', (err) => {
       client.end();
       reject(err);
