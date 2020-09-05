@@ -1,10 +1,14 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const { Guitar } = require('./postgres/guitarSchema');
 const { Review } = require('./postgres/reviewSchema');
-const { pgHost, pgPort } = require('../config');
+const {
+  pgHost, pgPort, pgUsername, pgPassword,
+} = require('../config');
 
 const sequelize = new Sequelize({
   host: pgHost,
+  username: pgUsername,
+  password: pgPassword,
   dialect: 'postgres',
   database: 'reviews',
   port: pgPort,
