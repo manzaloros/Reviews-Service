@@ -1,12 +1,12 @@
-const { guitarSchema, sequelize } = require('./guitarSchema.js');
-const reviewSchema = require('./reviewSchema.js');
+const { Guitar, sequelize } = require('./guitarSchema.js');
+const { Review } = require('./reviewSchema.js');
 
 /*
  * Drop and create new Guitar and Review tables in reviews database
  */
-guitarSchema.sequelize.sync(({ force: true }))
+Guitar.sequelize.sync(({ force: true }))
   .then(() => {
-    reviewSchema.sequelize.sync({ force: true });
+    Review.sequelize.sync({ force: true });
   })
   .finally(() => {
     sequelize.close();
