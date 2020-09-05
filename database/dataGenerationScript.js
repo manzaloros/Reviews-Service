@@ -7,9 +7,9 @@ const path = require('path');
 const csvWriter = require('csv-write-stream');
 
 /*
-  Number of Primary Records
+Number of Primary Records
 */
-const limit = 1e7;
+const { numberOfRecords } = require('../config.js');
 
 /*
   CSV Writer Class
@@ -101,4 +101,4 @@ const generateData = (l) => {
   // console.log(`generateData() took ${Math.floor((end - start) / 60000)} minutes`.green);
 };
 
-generateData(limit);
+generateData(numberOfRecords);

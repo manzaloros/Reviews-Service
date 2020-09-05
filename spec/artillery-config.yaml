@@ -1,0 +1,28 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 1000
+      name: Ramp up load
+    - duration: 300
+      arrivalRate: 1000
+      name: Sustained load
+  processor:
+    "./artilleryIdGeneration.js"
+scenarios:
+  # We define one scenario:
+  - name: "Search"
+    flow:
+      # Generate a back-weighted random number
+      - function: "generateRandomId"
+      # Get a product at an id
+      # Change for testing service / proxy
+      - get:
+          url: "/item/ {{ id }}"
+      # Pause for 3 seconds:
+      - think: 3
+      # - log: "Sent a request to /reviews/api/item/{{ id }}/reviews"

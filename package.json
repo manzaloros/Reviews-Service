@@ -1,23 +1,24 @@
 {
   "name": "seller-reviews",
   "version": "1.0.0",
-  "description": "For seller reviews (and item specs if we have time).",
+  "description": "Seller Reviews Module.",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "start": "nodemon server/index.js",
+    "test": "$(npm bin)/artillery run spec/artillery-config.yaml",
+    "start": "NODE_ENV=production node server/index.js",
+    "dev": "nodemon -r dotenv/config server/index.js",
     "build": "webpack -p",
     "build:watch": "webpack -d --watch",
     "seed": "node database/dataGenerationScript.js",
-    "copyPgToCsv": "node database/postgres/copyToCSV.js",
-    "copyFromCsv": "node database/copyToDatabase.js",
-    "migrate": "node ./database/migrate.js"
+    "copypgtocsv": "node database/postgres/copyToCSV.js",
+    "copyfromcsv": "node database/copyToDatabase.js",
+    "createpgtables": "node ./database/postgres/createPgTables.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HRR47-FEC-Burke/seller-reviews.git"
   },
-  "author": "",
+  "author": "Zach Mansell",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/HRR47-FEC-Burke/seller-reviews/issues"
@@ -59,6 +60,7 @@
     "@babel/preset-react": "^7.10.4",
     "artillery": "^1.6.1",
     "babel-plugin-styled-components": "^1.11.1",
+    "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.3",
     "eslint": "^7.6.0",
@@ -76,6 +78,7 @@
     "jest": "^26.3.0",
     "jest-enzyme": "^7.1.2",
     "sinon": "^9.0.2",
+    "tweed-random": "^1.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   }
