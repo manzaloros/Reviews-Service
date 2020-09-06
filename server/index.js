@@ -11,6 +11,7 @@ const db = require('../database');
 
 app.use('/item/:user', express.static(path.join(__dirname, './../public')));
 app.use('/dist', express.static(path.join(__dirname, './../dist')));
+// app.use(express.json());
 /*
  *  Response needs to return an guitar object with an _id property
  *  linked to the following GET request listingId
@@ -52,6 +53,18 @@ app.get('*/reviews/api/item/:id', async (req, res) => {
     res.status(500).end(error);
   }
 });
+
+// /*
+//  *  Add a guitar {name, productId} to the database
+//  */
+// app.post('*/guitars', async (req, res) => {
+//   try {
+//     const result = await db.insertGuitar(req.body);
+//     res.send(result);
+//   } catch (error) {
+//     res.status(500).end(error);
+//   }
+// });
 
 app.listen(port, () => {
   console.log(`Reviews Service listening at http://${url}:${port}`);

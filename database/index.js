@@ -52,6 +52,20 @@ const findMatchingReviews = async (guitarId) => {
   }
 };
 
+// /*
+//  *   Add a guitar to the database
+//  */
+// const insertGuitar = async ({ name, productId }) => {
+//   try {
+//     const result = await Guitar.create({
+//       name, productId,
+//     });
+//     return result;
+//   } catch (err) {
+//     return err;
+//   }
+// };
+
 module.exports = {
   sequelize, DataTypes, Model, findGuitar, findMatchingReviews,
 };
