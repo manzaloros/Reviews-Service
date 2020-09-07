@@ -58,14 +58,16 @@ npm run seed
 
 CSV will be seeded with x item listings.
 
-<!-- NOTE: Before seeding, go to ```database/index.js``` and uncomment out
-> the mongoDB URL depending on if your service is local or deployed. -->
-
 ### Database Setup
 
 Postgres join table copy from tables to single CSV:
 ```sh
 node database/postgres/copyToCSV.js
+```
+
+Create an index on the Reviews table once copied from CSV
+```sh
+CREATE INDEX ON “Reviews”(“guitarID”);
 ```
 
 Cassandra copy from CSV file:
