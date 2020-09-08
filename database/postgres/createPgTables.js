@@ -8,6 +8,9 @@ Guitar.sequelize.sync(({ force: true }))
   .then(() => {
     Review.sequelize.sync({ force: true });
   })
+  .catch((error) => {
+    console.log(error);
+  })
   .finally(() => {
     sequelize.close();
   });
