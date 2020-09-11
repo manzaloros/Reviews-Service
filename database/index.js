@@ -18,21 +18,27 @@ const sequelize = new Sequelize({
   define: {
     timestamps: false,
   },
+  pool: {
+    max: 100,
+  },
 });
 
 /*
  *  Find a single guitar given an id
  */
 const findGuitar = async (id) => {
+  let guitar;
   try {
-    const guitar = await Guitar.findAll({
+    guitar = await Guitar.findAll({
       where: {
         id,
       },
     });
+  } catch (error) {
+    return error;
+  }
+  if (guitar.length) {
     return guitar;
-  } catch (err) {
-    return err;
   }
 };
 
@@ -40,15 +46,18 @@ const findGuitar = async (id) => {
  *  Find reviews that match guitar id
  */
 const findMatchingReviews = async (guitarId) => {
+  let reviews;
   try {
-    const reviews = await Review.findAll({
+    reviews = await Review.findAll({
       where: {
         guitarId,
       },
     });
-    return reviews;
   } catch (err) {
     return err;
+  }
+  if (reviews.length) {
+    return reviews;
   }
 };
 

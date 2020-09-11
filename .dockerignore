@@ -1,2 +1,7 @@
 node_modules
 npm-debug.log
+database/cassandra
+database/seedFiles
+database/dataGenerationScript.js
+database/legacyDatabase
+server/legacyServer

@@ -1,7 +1,7 @@
 const copyTo = require('pg-copy-streams').to;
 const fs = require('fs');
 const path = require('path');
-const db = require('../guitarSchema.js');
+const db = require('./guitarSchema');
 
 /*
  * Copy Postgres databases to single CSV file

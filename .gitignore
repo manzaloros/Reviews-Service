@@ -35,3 +35,7 @@ database/seedFiles/*
 
 # New Relic API key #
 newrelic.js
+newrelic-legacy.js
+
+# Loader verification token
+loaderio-27c89d28eabc75aa3aa709ffb5ba0029.txt
