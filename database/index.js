@@ -18,6 +18,9 @@ const sequelize = new Sequelize({
   define: {
     timestamps: false,
   },
+  pool: {
+    max: 100,
+  },
 });
 
 /*
