@@ -1,7 +1,7 @@
 # seller-reviews
 > Displays reviews that an item's seller has received.
 
-## Related Projects
+## Related Projects 
 
 > Sidebar Service: https://github.com/HRR47-SDC-OMalley/sidebar-service
 > Main Photo Service: https://github.com/HRR47-SDC-OMalley/main-photo
